@@ -1,11 +1,10 @@
 from django.conf.urls import patterns, include, url
 
-# Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^portfolios/?$', include('portfolios.urls')),
+    url(r'^portfolios/?', include('portfolios.urls')),
 
     # Examples:
     # url(r'^$', 'portfolioapp.views.home', name='home'),
