@@ -5,6 +5,8 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
+    url(r'^portfolios/?$', include('portfolios.urls')),
+
     # Examples:
     # url(r'^$', 'portfolioapp.views.home', name='home'),
     # url(r'^portfolioapp/', include('portfolioapp.foo.urls')),
