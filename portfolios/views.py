@@ -1,7 +1,18 @@
-from django.http import HttpResponse
+from django.shortcuts import render, get_object_or_404
+
+from portfolios.models import Portfolio
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the Portfolio index page.")
+    portfolio_list = Portfolio.objects.order_by('name')
+
+    context = {
+        'portfolio_list': portfolio_list
+    }
+
+    return render(request, 'portfolios/index.html', context)
+
 
 def detail(request, portfolio_id):
-    return HttpResponse("This is the details page for portfolio with id %s" % portfolio_id)
+    portfolio = get_object_or_404(Portfolio, pk=portfolio_id)
+
+    return render(request, 'portfolios/detail.html', {'portfolio': portfolio})
