@@ -1,1 +1,16 @@
-hi
+{% extends "base.html" %}
+
+{% block title %}Portfolios{% endblock %}
+
+{% block content %}
+
+<h1>Portfolios</h1>
+
+{% for portfolio in portfolio_list %}
+<div>
+  <h3>{{ portfolio.name }}</h2>
+  <p>{{ portfolio.date_created }}</p>
+</div>
+{% endfor %}
+
+{% endblock %}
