@@ -4,7 +4,7 @@
         "pk": 1,
         "fields": {
             "name": "My First Portfolio",
-            "date_created": "2012-12-25 12:34:01"
+            "date_created": "2012-12-25 12:34:01+08:00"
         }
     },
     {
@@ -12,7 +12,7 @@
         "pk": 2,
         "fields": {
             "name": "My Holdings",
-            "date_created": "2012-12-27 03:15:38"
+            "date_created": "2012-12-27 03:15:38+08:00"
         }
     },
     {
@@ -20,7 +20,7 @@
         "pk": 3,
         "fields": {
             "name": "Another portfolio",
-            "date_created": "2013-01-04 16:56:25"
+            "date_created": "2013-01-04 16:56:25+08:00"
         }
     },
     {
@@ -28,7 +28,7 @@
         "pk": 4,
         "fields": {
             "name": "Advanced portfolio",
-            "date_created": "2013-01-07 07:02:55"
+            "date_created": "2013-01-07 07:02:55+08:00"
         }
     },
     {
@@ -36,7 +36,41 @@
         "pk": 5,
         "fields": {
             "name": "Watching",
-            "date_created": "2012-12-29 14:44:21"
+            "date_created": "2012-12-29 14:44:21+08:00"
+        }
+    },
+
+    {
+        "model": "holdings.holding",
+        "pk": 1,
+        "fields": {
+            "portfolio": 1,
+            "market": "TSE",
+            "name": "Research in Motion",
+            "symbol": "RIM",
+            "date_created": "2012-12-25 12:34:01+08:00"
+        }
+    },
+    {
+        "model": "holdings.holding",
+        "pk": 2,
+        "fields": {
+            "portfolio": 1,
+            "market": "TSE",
+            "name": "Royal Bank of Canada",
+            "symbol": "RY",
+            "date_created": "2012-12-26 12:34:01+08:00"
+        }
+    },
+    {
+        "model": "holdings.holding",
+        "pk": 3,
+        "fields": {
+            "portfolio": 1,
+            "market": "TSE",
+            "name": "TD Canada Trust",
+            "symbol": "TD",
+            "date_created": "2013-01-02 12:34:01+08:00"
         }
     }
 ]

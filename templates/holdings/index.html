@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Holdings{% endblock %}
+
+{% block content %}
+
+  <h1>Holdings</h1>
+  <table>
+  {% for holding in holding_list %}
+    <tr>
+      <td>{{ holding.name }}</td>
+      <td>{{ holding.market }}</td>
+      <td>{{ holding.symbol }}</td>
+    </tr>
+  {% endfor %}
+  </table>
+
+{% endblock %}
