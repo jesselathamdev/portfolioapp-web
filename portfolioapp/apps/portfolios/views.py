@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 
-from portfolios.models import Portfolio
+from portfolioapp.apps.portfolios.models import Portfolio
 
 def index(request):
     portfolio_list = Portfolio.objects.order_by('name')

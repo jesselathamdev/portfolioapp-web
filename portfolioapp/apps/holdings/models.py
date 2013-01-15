@@ -1,6 +1,6 @@
 from django.db import models
 
-from portfolios.models import Portfolio
+from portfolioapp.apps.portfolios.models import Portfolio
 
 class Holding(models.Model):
     portfolio = models.ForeignKey(Portfolio)

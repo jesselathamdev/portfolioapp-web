@@ -1,8 +1,0 @@
--e git://github.com/django/django.git@72ef63bf86b12e752f186d562d9094cfde30af27#egg=Django-dev
-South==0.7.6
-distribute==0.6.34
-django-extensions==1.0.2
-ipython==0.13.1
-psycopg2==2.4.6
-readline==6.2.4.1
-wsgiref==0.1.2

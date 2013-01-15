@@ -65,7 +65,7 @@ STATIC_URL = '/assets/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    '/Projects/django/portfolioapp/static',
+    '/Projects/django/portfolioapp/assets',
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -118,8 +118,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     #portfolio app specific
-    'portfolios',
-    'holdings',
+    'portfolioapp.apps.portfolios',
+    'portfolioapp.apps.holdings',
 
     #development tools
     'django.contrib.admin',

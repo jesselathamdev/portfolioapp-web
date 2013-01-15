@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from holdings.models import Holding
+from portfolioapp.apps.holdings.models import Holding
 
 def index(request, portfolio_id):
     holding_list = Holding.objects.filter(portfolio_id=portfolio_id)
