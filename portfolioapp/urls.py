@@ -6,6 +6,8 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
+    url(r'^sign-in/$', 'django.contrib.auth.views.login', {'template_name': 'signin.html'}),
+
     url(r'^$', views.index, name="home_index"),
     url(r'^portfolios/', include('portfolioapp.apps.portfolios.urls')),
 
