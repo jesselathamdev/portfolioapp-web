@@ -121,12 +121,14 @@ INSTALLED_APPS = (
     #portfolio app specific
     'portfolioapp.apps.portfolios',
     'portfolioapp.apps.holdings',
+    'portfolioapp.apps.core',
 
     #development tools
-    'django.contrib.admin',
     'south',
     'django_extensions',
 )
+
+AUTH_USER_MODEL = 'core.User'
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
