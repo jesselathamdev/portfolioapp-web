@@ -112,11 +112,12 @@ TEMPLATE_DIRS = ('/Projects/django/portfolioapp/templates',
 )
 
 INSTALLED_APPS = (
+    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    #'django.contrib.messages',
     'django.contrib.staticfiles',
+    #'django.contrib.messages',
 
     #portfolio app specific
     'portfolioapp.apps.portfolios',
@@ -129,6 +130,7 @@ INSTALLED_APPS = (
 )
 
 AUTH_USER_MODEL = 'core.User'
+AUTHENTICATION_BACKENDS = ('portfolioapp.apps.core.backends.Auth',)
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
