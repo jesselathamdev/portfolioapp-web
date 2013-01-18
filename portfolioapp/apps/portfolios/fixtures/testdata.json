@@ -1,5 +1,20 @@
 [
     {
+        "pk": 1,
+        "model": "core.user",
+        "fields": {
+            "first_name": "Jesse",
+            "last_name": "Latham",
+            "date_updated": "2013-01-17T06:54:43.968Z",
+            "is_active": true,
+            "last_login": "2013-01-17T07:55:03.056Z",
+            "date_created": "2013-01-17T06:54:28.519Z",
+            "is_admin": false,
+            "password": "pbkdf2_sha256$10000$ubCj1AQfkZhM$G4iUbQudz5qkmpIV8dBzwwsRl6+Khoj/UY9RPmlA2B4=",
+            "email": "jesse.latham@gmail.com"
+        }
+    },
+    {
         "model": "portfolios.portfolio",
         "pk": 1,
         "fields": {
@@ -46,7 +61,7 @@
     },
 
     {
-        "model": "holdings.holding",
+        "model": "portfolios.holding",
         "pk": 1,
         "fields": {
             "portfolio": 1,
@@ -58,7 +73,7 @@
         }
     },
     {
-        "model": "holdings.holding",
+        "model": "portfolios.holding",
         "pk": 2,
         "fields": {
             "portfolio": 1,
@@ -70,7 +85,7 @@
         }
     },
     {
-        "model": "holdings.holding",
+        "model": "portfolios.holding",
         "pk": 3,
         "fields": {
             "portfolio": 1,
@@ -83,22 +98,7 @@
     },
     {
         "pk": 1,
-        "model": "core.user",
-        "fields": {
-            "first_name": "Jesse",
-            "last_name": "Latham",
-            "date_updated": "2013-01-17T06:54:43.968Z",
-            "is_active": true,
-            "last_login": "2013-01-17T07:55:03.056Z",
-            "date_created": "2013-01-17T06:54:28.519Z",
-            "is_admin": false,
-            "password": "pbkdf2_sha256$10000$ubCj1AQfkZhM$G4iUbQudz5qkmpIV8dBzwwsRl6+Khoj/UY9RPmlA2B4=",
-            "email": "jesse.latham@gmail.com"
-        }
-    },
-    {
-        "pk": 1,
-        "model": "transactions.transaction",
+        "model": "portfolios.transaction",
         "fields": {
             "holding": 1,
             "quantity": 10.0,

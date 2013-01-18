@@ -8,7 +8,7 @@
 
 {% for portfolio in portfolio_list %}
 <div>
-  <a href="{% url 'portfolio_detail' portfolio.id %}">{{ portfolio.name }}</a>
+  <a href="{% url 'holding_index' portfolio.id %}">{{ portfolio.name }}</a>
   <p>{{ portfolio.date_created }}</p>
 </div>
 {% endfor %}

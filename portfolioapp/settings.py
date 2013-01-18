@@ -121,8 +121,6 @@ INSTALLED_APPS = (
 
     #portfolio app specific
     'portfolioapp.apps.portfolios',
-    'portfolioapp.apps.holdings',
-    'portfolioapp.apps.transactions',
     'portfolioapp.apps.core',
 
     #development tools

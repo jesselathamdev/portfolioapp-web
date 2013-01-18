@@ -6,13 +6,17 @@
 
   <h1>Holdings</h1>
   <table>
+  {% if holding_list %}
   {% for holding in holding_list %}
     <tr>
-      <td>{{ holding.name }}</td>
+      <td><a href="{% url 'transaction_index' portfolio.id %}">{{ holding.name }}</a></td>
       <td>{{ holding.market }}</td>
       <td>{{ holding.symbol }}</td>
     </tr>
   {% endfor %}
+  {% else %}
+  <p>You have no holdings in this portfolio</p>
+  {% endif %}
   </table>
 
 {% endblock %}
