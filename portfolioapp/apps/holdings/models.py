@@ -7,7 +7,8 @@ class Holding(models.Model):
     market = models.CharField(max_length=10)
     symbol = models.CharField(max_length=10)
     name = models.CharField(max_length=250)
-    date_created = models.DateTimeField(auto_now=True)
+    date_updated = models.DateTimeField(auto_now=True)
+    date_created = models.DateTimeField(auto_now_add=True)
 
     def __unicode__(self):
         return self.name + " (" + self.market + ":" + self.symbol + ")"
