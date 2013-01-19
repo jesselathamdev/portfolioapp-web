@@ -9,7 +9,7 @@
   {% if holding_list %}
   {% for holding in holding_list %}
     <tr>
-      <td><a href="{% url 'transaction_index' portfolio.id %}">{{ holding.name }}</a></td>
+      <td>{{ holding.name }}</td>
       <td>{{ holding.market }}</td>
       <td>{{ holding.symbol }}</td>
     </tr>

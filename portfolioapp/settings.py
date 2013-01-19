@@ -90,7 +90,6 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
-    'portfolioapp.apps.core.middleware.development.QueryCountDebugMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -112,24 +111,26 @@ TEMPLATE_DIRS = ('/Projects/django/portfolioapp/templates',
 )
 
 INSTALLED_APPS = (
+    # django core apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.staticfiles',
-    #'django.contrib.messages',
+    'django.contrib.messages',
 
-    #portfolio app specific
+    # portfolioapp specific
+    'portfolioapp.apps.profiles',
     'portfolioapp.apps.portfolios',
-    'portfolioapp.apps.core',
 
-    #development tools
+    # development tools
     'south',
     'django_extensions',
 )
 
-AUTH_USER_MODEL = 'core.User'
-AUTHENTICATION_BACKENDS = ('portfolioapp.apps.core.backends.Auth',)
+AUTH_USER_MODEL = 'profiles.User'
+
+AUTHENTICATION_BACKENDS = ('portfolioapp.apps.profiles.backends.Auth',)
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
@@ -162,10 +163,6 @@ LOGGING = {
             'propagate': True,
         },
         'django.db.backends': {
-            'level': 'DEBUG',
-            'handlers': ['console'],
-        },
-        'portfolioapp.apps.core.middleware.development.QueryCountDebugMiddleware': {
             'level': 'DEBUG',
             'handlers': ['console'],
         }

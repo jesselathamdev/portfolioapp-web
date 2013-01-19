@@ -1,4 +1,4 @@
-from portfolioapp.apps.core.models import User
+from .models import User
 
 class Auth(object):
     def authenticate(self, username=None, password=None):

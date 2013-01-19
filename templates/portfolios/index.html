@@ -6,11 +6,21 @@
 
 <h1>Portfolios</h1>
 
+{% if portfolio_list %}
+<table class="table">
+  <tr>
+    <th>Name</th>
+    <th>Holdings</th>
+  </tr>
 {% for portfolio in portfolio_list %}
-<div>
-  <a href="{% url 'holding_index' portfolio.id %}">{{ portfolio.name }}</a>
-  <p>{{ portfolio.date_created }}</p>
-</div>
+  <tr>
+    <td><a href="{% url 'holding_index' portfolio.id %}">{{ portfolio.name }}</a></td>
+    <td class="align-right">{{ portfolio.holding_set.count }}</td>
+  </tr>
 {% endfor %}
+</table>
+{% else %}
+<p>No portfolios have been created yet</p>
+{% endif %}
 
 {% endblock %}
