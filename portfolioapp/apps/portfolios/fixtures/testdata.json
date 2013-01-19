@@ -18,6 +18,7 @@
         "model": "portfolios.portfolio",
         "pk": 1,
         "fields": {
+            "user": 1,
             "name": "My First Portfolio",
             "date_updated": "2013-01-17 4:54:03-08:00",
             "date_created": "2012-12-25 12:34:01-08:00"
@@ -27,6 +28,7 @@
         "model": "portfolios.portfolio",
         "pk": 2,
         "fields": {
+            "user": 1,
             "name": "My Holdings",
             "date_updated": "2013-01-17 4:54:03-08:00",
             "date_created": "2012-12-27 03:15:38-08:00"
@@ -36,6 +38,7 @@
         "model": "portfolios.portfolio",
         "pk": 3,
         "fields": {
+            "user": 1,
             "name": "Another portfolio",
             "date_updated": "2013-01-17 4:54:03-08:00",
             "date_created": "2013-01-04 16:56:25-08:00"
@@ -45,6 +48,7 @@
         "model": "portfolios.portfolio",
         "pk": 4,
         "fields": {
+            "user": 1,
             "name": "Advanced portfolio",
             "date_updated": "2013-01-17 4:54:03-08:00",
             "date_created": "2013-01-07 07:02:55-08:00"
@@ -54,6 +58,7 @@
         "model": "portfolios.portfolio",
         "pk": 5,
         "fields": {
+            "user": 1,
             "name": "Watching",
             "date_updated": "2013-01-17 4:54:03-08:00",
             "date_created": "2012-12-29 14:44:21-08:00"

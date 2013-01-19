@@ -1,6 +1,9 @@
+# portfolios/models.py
 from django.db import models
+from portfolioapp.apps.core.models import User
 
 class Portfolio(models.Model):
+    user = models.ForeignKey(User)
     name = models.CharField(max_length=200)
     date_updated = models.DateTimeField(auto_now=True)
     date_created = models.DateTimeField(auto_now_add=True)
