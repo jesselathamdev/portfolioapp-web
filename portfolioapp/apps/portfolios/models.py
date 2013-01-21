@@ -31,5 +31,8 @@ class Transaction(models.Model):
     holding = models.ForeignKey(Holding)
     quantity = models.DecimalField(default=0.0, decimal_places=5, max_digits=7)
     amount = models.DecimalField(default=0.0, decimal_places=2, max_digits=7)
-    date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
+    date_created = models.DateTimeField(auto_now_add=True)
+
+    def __unicode__(self):
+        return u"%s (%s)" % (self.holding.name, self.quantity) #risky, queries for each name of parent

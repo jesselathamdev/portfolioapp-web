@@ -84,5 +84,60 @@
         "portfolio": 1, 
         "market": "US"
     }
+},
+{
+    "pk": 1, 
+    "model": "portfolios.transaction", 
+    "fields": {
+        "date_updated": "2013-01-21T07:12:40.997Z", 
+        "date_created": "2013-01-21T07:12:40.997Z", 
+        "amount": "27.43", 
+        "holding": 1, 
+        "quantity": "10.00000"
+    }
+},
+{
+    "pk": 2, 
+    "model": "portfolios.transaction", 
+    "fields": {
+        "date_updated": "2013-01-21T07:12:54.868Z", 
+        "date_created": "2013-01-21T07:12:54.868Z", 
+        "amount": "19.75", 
+        "holding": 1, 
+        "quantity": "20.00000"
+    }
+},
+{
+    "pk": 3, 
+    "model": "portfolios.transaction", 
+    "fields": {
+        "date_updated": "2013-01-21T07:13:09.693Z", 
+        "date_created": "2013-01-21T07:13:09.693Z", 
+        "amount": "11.14", 
+        "holding": 1, 
+        "quantity": "40.00000"
+    }
+},
+{
+    "pk": 4, 
+    "model": "portfolios.transaction", 
+    "fields": {
+        "date_updated": "2013-01-21T07:13:28.826Z", 
+        "date_created": "2013-01-21T07:13:28.826Z", 
+        "amount": "7.98", 
+        "holding": 1, 
+        "quantity": "45.00000"
+    }
+},
+{
+    "pk": 5, 
+    "model": "portfolios.transaction", 
+    "fields": {
+        "date_updated": "2013-01-21T07:13:41.327Z", 
+        "date_created": "2013-01-21T07:13:41.327Z", 
+        "amount": "12.44", 
+        "holding": 1, 
+        "quantity": "30.00000"
+    }
 }
 ]

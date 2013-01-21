@@ -7,6 +7,13 @@
 
 <p>This is the edit profile screen.</p>
 
+{% if form.errors %}
+<div class="alert alert-error">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <strong>Whoops!</strong> There were some errors on the page that occurred while saving.
+</div>
+{% endif %}
+
 <form method="post" action="" class="form-horizontal">
   {% csrf_token %}
   <div class="control-group">
@@ -40,3 +47,7 @@
 {% block content_sidebar %}
 <p>Sidebar</p>
 {% endblock content_sidebar %}
+
+{% block script %}
+
+{% endblock script %}

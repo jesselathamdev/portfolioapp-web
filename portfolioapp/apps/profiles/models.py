@@ -33,7 +33,7 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    email = models.CharField(verbose_name='email address', max_length=150, unique=True, db_index=True)
+    email = models.EmailField(verbose_name='email address', unique=True, db_index=True)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
 

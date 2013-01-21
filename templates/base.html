@@ -42,16 +42,25 @@
 <body>
 
 <header>
-  <div class="container">
-    <div class="pull-left"><a href="/">PortfolioApp</a></div>
-    <div class="pull-right">
-      <a href="/admin">Admin</a> &nbsp;|&nbsp;
-      {% if user and user.is_authenticated %}
-      <a href="{% url 'profile_edit' %}">{{ user.get_full_name }}</a> &nbsp;|&nbsp;
-      <a href="{% url 'signout' %}">Sign out</a>
-      {% else %}
-      <a href="{% url 'signin' %}">Sign in</a>
-      {% endif %}
+  <div class="navbar navbar-static-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <a class="brand" href="/">PortfolioApp</a>
+        <ul class="nav">
+          <li><a href="/portfolios">Portfolios</a></li>
+        </ul>
+        <ul class="nav pull-right">
+          {% if user.is_staff %}
+          <li><a href="/admin">Admin</a></li>
+          {% endif %}
+          {% if user.is_authenticated %}
+          <li><a href="{% url 'profile_edit' %}">{{ user.get_full_name }}</a></li>
+          <li><a href="{% url 'signout' %}">Sign out</a></li>
+          {% else %}
+          <li><a href="{% url 'signin' %}">Sign in</a></li>
+          {% endif %}
+        </ul>
+      </div>
     </div>
   </div>
 </header>
@@ -73,6 +82,8 @@
     </div>
   </div>
 </footer>
+
+{% block script %}{% endblock script %}
 
 </body>
 </html>

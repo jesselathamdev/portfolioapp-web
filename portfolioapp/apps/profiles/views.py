@@ -4,5 +4,10 @@ from django.contrib.auth import get_user_model
 from .forms import EditUserProfile
 
 def profile_edit(request):
-    form = EditUserProfile(instance=request.user)
+    if request.method == "POST":
+        form = EditUserProfile(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+    else:
+        form = EditUserProfile(instance=request.user)
     return render(request, 'profiles/edit.html', {'form': form})
