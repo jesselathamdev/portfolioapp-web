@@ -2,3 +2,5 @@
 .idea
 .idea/*
 *.pyc
+src
+src/*

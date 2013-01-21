@@ -43,10 +43,46 @@
     "pk": 5, 
     "model": "portfolios.portfolio", 
     "fields": {
-        "date_updated": "2013-01-19T22:07:52.849Z", 
+        "date_updated": "2013-01-19T22:32:48.916Z", 
         "date_created": "2013-01-19T22:07:52.849Z", 
         "user": 3, 
         "name": "Blue Chips"
+    }
+},
+{
+    "pk": 1, 
+    "model": "portfolios.holding", 
+    "fields": {
+        "name": "Research in Motion", 
+        "date_updated": "2013-01-20T02:31:14.075Z", 
+        "symbol": "RIM", 
+        "date_created": "2013-01-20T02:31:14.075Z", 
+        "portfolio": 1, 
+        "market": "TSE"
+    }
+},
+{
+    "pk": 2, 
+    "model": "portfolios.holding", 
+    "fields": {
+        "name": "Royal Bank", 
+        "date_updated": "2013-01-20T02:32:15.708Z", 
+        "symbol": "RY", 
+        "date_created": "2013-01-20T02:32:15.708Z", 
+        "portfolio": 1, 
+        "market": "TSE"
+    }
+},
+{
+    "pk": 3, 
+    "model": "portfolios.holding", 
+    "fields": {
+        "name": "Yahoo Inc.", 
+        "date_updated": "2013-01-20T02:32:33.946Z", 
+        "symbol": "YHOO", 
+        "date_created": "2013-01-20T02:32:33.946Z", 
+        "portfolio": 1, 
+        "market": "US"
     }
 }
 ]

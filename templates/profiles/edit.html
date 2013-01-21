@@ -1,0 +1,42 @@
+{% extends "base_two_columns.html" %}
+
+{% block title %}Edit Profile{% endblock %}
+
+{% block content_inner %}
+<h1>Edit Profile</h1>
+
+<p>This is the edit profile screen.</p>
+
+<form method="post" action="" class="form-horizontal">
+  {% csrf_token %}
+  <div class="control-group">
+    <label class="control-label" for="{{ form.email.auto_id }}">Email</label>
+    <div class="controls">
+      <input type="text" id="{{ form.email.auto_id }}" name="{{ form.email.html_name }}" value="{{ form.email.value }}" placeholder="Email address...">
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="{{ form.first_name.auto_id }}">First Name</label>
+    <div class="controls">
+      <input type="text" id="{{ form.first_name.auto_id }}" name="{{ form.first_name.html_name }}" value="{{ form.first_name.value }}" placeholder="First name...">
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="{{ form.last_name.auto_id }}">Last Name</label>
+    <div class="controls">
+      <input type="text" id="{{ form.last_name.auto_id }}" name="{{ form.last_name.html_name }}" value="{{ form.last_name.value }}" placeholder="Last name...">
+    </div>
+  </div>
+  <div class="control-group">
+    <div class="controls">
+      <button type="submit" class="btn btn-primary">Save profile</button>
+      <button type="submit" class="btn">Cancel</button>
+    </div>
+  </div>
+</form>
+
+{% endblock content_inner %}
+
+{% block content_sidebar %}
+<p>Sidebar</p>
+{% endblock content_sidebar %}

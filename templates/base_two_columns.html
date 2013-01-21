@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content_outer %}
+      <div class="row">
+        <div class="span10">
+          {% block content_inner %}{% endblock content_inner %}
+        </div>
+        <div class="span4">
+          {% block content_sidebar %}{% endblock content_sidebar %}
+        </div>
+      </div>
+{% endblock content_outer %}

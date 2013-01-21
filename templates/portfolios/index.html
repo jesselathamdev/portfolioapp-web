@@ -1,26 +1,35 @@
-{% extends "base.html" %}
+{% extends "base_two_columns.html" %}
 
 {% block title %}Portfolios{% endblock %}
 
-{% block content %}
+{% block content_inner %}
+      <h1>Portfolios</h1>
 
-<h1>Portfolios</h1>
+      {% if portfolio_list %}
+      <table class="table">
+        <tr>
+          <th>Name</th>
+          <th>Holdings</th>
+          <th>Book Value</th>
+          <th>Market Value</th>
+          <th>Growth</th>
+        </tr>
+      {% for portfolio in portfolio_list %}
+        <tr>
+          <td><a href="{% url 'holding_index' portfolio.id %}">{{ portfolio.name }}</a></td>
+          <td class="align-right">{{ portfolio.holding_set.count }}</td>
+          <td class="align-right">$1000.00</td>
+          <td class="align-right">$2000.00</td>
+          <td class="align-right">$1000.00 (100.0%)</td>
+        </tr>
+      {% endfor %}
+      </table>
+      {% else %}
+      <p>No portfolios have been created yet</p>
+      {% endif %}
 
-{% if portfolio_list %}
-<table class="table">
-  <tr>
-    <th>Name</th>
-    <th>Holdings</th>
-  </tr>
-{% for portfolio in portfolio_list %}
-  <tr>
-    <td><a href="{% url 'holding_index' portfolio.id %}">{{ portfolio.name }}</a></td>
-    <td class="align-right">{{ portfolio.holding_set.count }}</td>
-  </tr>
-{% endfor %}
-</table>
-{% else %}
-<p>No portfolios have been created yet</p>
-{% endif %}
+{% endblock content_inner %}
 
-{% endblock %}
+{% block content_sidebar %}
+      Sidebar
+{% endblock content_sidebar %}

@@ -22,6 +22,8 @@
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js" type="text/javascript"></script>
+
   <meta property="og:locale" content="en_US">
   <meta property="og:title" content="">
   <meta property="og:type" content="article">
@@ -38,6 +40,39 @@
   <meta name="twitter:creator" content="">
 </head>
 <body>
-{% block content %}{% endblock %}
+
+<header>
+  <div class="container">
+    <div class="pull-left"><a href="/">PortfolioApp</a></div>
+    <div class="pull-right">
+      <a href="/admin">Admin</a> &nbsp;|&nbsp;
+      {% if user and user.is_authenticated %}
+      <a href="{% url 'profile_edit' %}">{{ user.get_full_name }}</a> &nbsp;|&nbsp;
+      <a href="{% url 'signout' %}">Sign out</a>
+      {% else %}
+      <a href="{% url 'signin' %}">Sign in</a>
+      {% endif %}
+    </div>
+  </div>
+</header>
+
+<hr />
+
+<section role="body" class="container">
+  {% block content_outer %}{% endblock content_outer %}
+</section>
+
+<hr />
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="span14">
+        Footer
+      </div>
+    </div>
+  </div>
+</footer>
+
 </body>
 </html>

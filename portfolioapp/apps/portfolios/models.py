@@ -23,6 +23,9 @@ class Holding(models.Model):
     def __unicode__(self):
         return self.name + " (" + self.market + ":" + self.symbol + ")"
 
+    def market_symbol(self):
+        return "%s:%s" % (self.market, self.symbol)
+
 
 class Transaction(models.Model):
     holding = models.ForeignKey(Holding)

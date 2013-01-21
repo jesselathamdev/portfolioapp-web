@@ -1,7 +1,16 @@
 body {
-  background-color: #f1f1f1;
+  background-color: #fbfbfb;
 }
 
 .align-right {
   text-align: right;
+}
+
+table tr td.align-right {
+  text-align: right;
+}
+
+
+table th {
+  background-color: #f1f1f1;
 }
