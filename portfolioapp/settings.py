@@ -26,8 +26,6 @@ DATABASES = {
     }
 }
 
-INTERNAL_IPS = ('127.0.0.1',)
-
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
@@ -111,6 +109,9 @@ INSTALLED_APPS = (
     'debug_toolbar',
 )
 
+# Required for debug_toolbar
+INTERNAL_IPS = ('127.0.0.1',)
+
 DEBUG_TOOLBAR_PANELS = (
     'debug_toolbar.panels.version.VersionDebugPanel',
     'debug_toolbar.panels.timer.TimerDebugPanel',
@@ -128,10 +129,8 @@ DEBUG_TOOLBAR_CONFIG = {
 }
 
 AUTH_USER_MODEL = 'profiles.User'
-
 AUTHENTICATION_BACKENDS = ('portfolioapp.apps.profiles.backends.Auth',)
-
-LOGIN_REDIRECT_URL = '/profile'
+LOGIN_REDIRECT_URL = '/portfolios'
 LOGIN_URL = '/sign-in'
 
 # A sample logging configuration. The only tangible logging

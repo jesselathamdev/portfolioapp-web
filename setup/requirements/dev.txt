@@ -1,10 +1,12 @@
--e git://github.com/django/django.git@72ef63bf86b12e752f186d562d9094cfde30af27#egg=Django-dev
+-e git://github.com/django/django.git@stable/1.5.x#egg=Django
 South==0.7.6
+Unipath==0.2.1
 Werkzeug==0.8.3
 distribute==0.6.34
 django-debug-toolbar==0.9.4
 django-extensions==1.0.2
 ipython==0.13.1
 psycopg2==2.4.6
+pygraphviz==1.1
 readline==6.2.4.1
 wsgiref==0.1.2
