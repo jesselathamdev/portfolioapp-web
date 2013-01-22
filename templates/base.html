@@ -65,18 +65,20 @@
   </div>
 </header>
 
-<hr />
-
 <section role="body" class="container">
+  <div class="row">
+    <div class="span14 breadcrumbs">
+      {% block breadcrumbs %}{% endblock breadcrumbs %}
+    </div>
+  </div>
   {% block content_outer %}{% endblock content_outer %}
 </section>
-
-<hr />
 
 <footer>
   <div class="container">
     <div class="row">
       <div class="span14">
+        <hr />
         Footer
       </div>
     </div>

@@ -31,4 +31,5 @@ def holding_detail(request, portfolio_id, holding_id):
 def transaction_index(request, portfolio_id, holding_id):
     portfolio = Portfolio.objects.get(pk=portfolio_id)
     holding = Holding.objects.get(pk=holding_id)
-    return render(request, 'transactions/index.html')
+    transaction_list = holding.transaction_set.all().order_by('date_created')
+    return render(request, 'transactions/index.html', {'portfolio': portfolio, 'holding': holding, 'transaction_list': transaction_list})

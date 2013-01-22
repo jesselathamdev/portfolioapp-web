@@ -1,9 +1,10 @@
 {% extends "base_two_columns.html" %}
 
-{% block title %}Portfolios{% endblock %}
+{% block title %}Portfolios{% endblock title %}
 
-{% block content_inner %}
-<div><a href="/">Home</a> / Portfolios</div>
+{% block breadcrumbs %}<a href="/">Home</a> &rarr; Portfolios{% endblock breadcrumbs %}
+
+{% block content %}
 
 <h1>Portfolios</h1>
 
@@ -30,8 +31,8 @@
 <p>No portfolios have been created yet</p>
 {% endif %}
 
-{% endblock content_inner %}
+{% endblock content %}
 
-{% block content_sidebar %}
+{% block sidebar %}
 Sidebar
-{% endblock content_sidebar %}
+{% endblock sidebar %}

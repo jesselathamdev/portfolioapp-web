@@ -1,39 +1,34 @@
 {% extends "base_two_columns.html" %}
 
-{% block title %}Transactions{% endblock %}
+{% block title %}Transactions{% endblock title %}
 
-{% block content_inner %}
-<div><a href="/">Home</a> / <a href="{% url 'portfolio_index' %}">Portfolios</a> / {{ portfolio.name }}</div>
+{% block breadcrumbs %}<a href="/">Home</a> &rarr; <a href="{% url 'portfolio_index' %}">Portfolios</a> &rarr; <a href="{% url 'holding_index' portfolio.id %}">{{ portfolio.name }}</a> &rarr; {{ holding.name }} ({{ holding.market }}:{{ holding.symbol }}){% endblock breadcrumbs %}
+
+{% block content %}
 
 <h1>Transactions</h1>
 
-{#{% if holding_list %}#}
-{#<table class="table">#}
-{#  <tr>#}
-{#    <th>Name</th>#}
-{#    <th>Symbol</th>#}
-{#    <th>Quantity</th>#}
-{#    <th>Current Price</th>#}
-{#    <th>Book Value</th>#}
-{#    <th>Market Value</th>#}
-{#  </tr>#}
-{#  {% for holding in holding_list %}#}
-{#  <tr>#}
-{#    <td>{{ holding.name }}</td>#}
-{#    <td>{{ holding.market_symbol }}</td>#}
-{#    <td class="align-right">1.2345</td>#}
-{#    <td class="align-right">1.23</td>#}
-{#    <td class="align-right">$100.00</td>#}
-{#    <td class="align-right">$1000.00</td>#}
-{#  </tr>#}
-{#  {% endfor %}#}
-{#{% else %}#}
-{#<p>You currently have no holdings in this portfolio - <a href="#">go ahead and add some now!</a></p>#}
-{#{% endif %}#}
-{#</table>#}
+{% if transaction_list %}
+<table class="table">
+  <tr>
+    <th>Date</th>
+    <th>Quantity</th>
+    <th>Amount</th>
+  </tr>
+  {% for transaction in transaction_list %}
+  <tr>
+    <td>{{ transaction.date_created }}</td>
+    <td>{{ transaction.quantity }}</td>
+    <td>{{ transaction.amount }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+<p>You currently have no transactions for this holding - <a href="#">go ahead and add some now!</a></p>
+{% endif %}
 
-{% endblock content_inner %}
+{% endblock content %}
 
-{% block content_sidebar %}
+{% block sidebar %}
 Sidebar
-{% endblock content_sidebar %}
+{% endblock sidebar %}

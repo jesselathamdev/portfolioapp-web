@@ -1,10 +1,12 @@
 {% extends "base.html" %}
 
-{% block title %}Portfolios Details{% endblock %}
+{% block title %}Portfolios Details{% endblock title %}
 
 {% block content %}
+
 <h1>Portfolio Details</h1>
 
 <h3>{{ portfolio.name }}</h3>
 <p>{{ portfolio.date_created }}</p>
-{% endblock %}
+
+{% endblock content %}

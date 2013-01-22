@@ -10,7 +10,14 @@ table tr td.align-right {
   text-align: right;
 }
 
-
 table th {
   background-color: #f1f1f1;
+}
+
+.navbar {
+  height: 70px;
+}
+
+.breadcrumbs{
+  font-size: 12px;
 }

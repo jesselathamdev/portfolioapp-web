@@ -1,9 +1,10 @@
 {% extends "base_two_columns.html" %}
 
-{% block title %}Holdings{% endblock %}
+{% block title %}Holdings{% endblock title %}
 
-{% block content_inner %}
-<div><a href="/">Home</a> / <a href="{% url 'portfolio_index' %}">Portfolios</a> / {{ portfolio.name }}</div>
+{% block breadcrumbs %}<a href="/">Home</a> &rarr; <a href="{% url 'portfolio_index' %}">Portfolios</a> &rarr; {{ portfolio.name }}{% endblock breadcrumbs %}
+
+{% block content %}
 
 <h1>Holdings</h1>
 
@@ -19,7 +20,7 @@
   </tr>
   {% for holding in holding_list %}
   <tr>
-    <td><a href="#">{{ holding.name }}</a></td>
+    <td><a href="{% url 'transaction_index' portfolio.id holding.id %}">{{ holding.name }}</a></td>
     <td>{{ holding.market_symbol }}</td>
     <td class="align-right">1.2345</td>
     <td class="align-right">1.23</td>
@@ -27,13 +28,13 @@
     <td class="align-right">$1000.00</td>
   </tr>
   {% endfor %}
+</table>
 {% else %}
 <p>You currently have no holdings in this portfolio - <a href="#">go ahead and add some now!</a></p>
 {% endif %}
-</table>
 
-{% endblock content_inner %}
+{% endblock content %}
 
-{% block content_sidebar %}
+{% block sidebar %}
 Sidebar
-{% endblock content_sidebar %}
+{% endblock sidebar %}
