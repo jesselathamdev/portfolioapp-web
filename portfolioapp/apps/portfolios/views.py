@@ -1,7 +1,10 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
+from django.core.urlresolvers import reverse
+
+from .forms import CreateHolding
 
 from portfolioapp.apps.portfolios.models import Portfolio, Holding, Transaction
 
@@ -23,9 +26,16 @@ def holding_index(request, portfolio_id):
     return render(request, 'holdings/index.html', {'portfolio': portfolio, 'holding_list': holding_list})
 
 @login_required
-def holding_detail(request, portfolio_id, holding_id):
-    strResponse = "%s %s" % (portfolio_id, holding_id)
-    return HttpResponse()
+def holding_create(request, portfolio_id):
+    portfolio = Portfolio.objects.get(pk=portfolio_id)
+    if request.method == "POST":
+        form = CreateHolding(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('holding_index'))
+    else:
+        form = CreateHolding()
+        return render(request, 'holdings/detail.html', {'portfolio': portfolio, 'form': form})
 
 @login_required
 def transaction_index(request, portfolio_id, holding_id):

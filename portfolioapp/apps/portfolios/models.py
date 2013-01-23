@@ -11,7 +11,6 @@ class Portfolio(models.Model):
     def __unicode__(self):
         return self.name
 
-
 class Holding(models.Model):
     portfolio = models.ForeignKey(Portfolio)
     market = models.CharField(max_length=10)
@@ -25,7 +24,6 @@ class Holding(models.Model):
 
     def market_symbol(self):
         return "%s:%s" % (self.market, self.symbol)
-
 
 class Transaction(models.Model):
     holding = models.ForeignKey(Holding)

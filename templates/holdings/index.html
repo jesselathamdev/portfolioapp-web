@@ -14,9 +14,12 @@
     <th>Name</th>
     <th>Symbol</th>
     <th>Quantity</th>
-    <th>Current Price</th>
+    <th>Price</th>
     <th>Book Value</th>
     <th>Market Value</th>
+    <th>Gain/Loss ($)</th>
+    <th>Gain/Loss (%)</th>
+    <th>Portion of Account</th>
   </tr>
   {% for holding in holding_list %}
   <tr>
@@ -26,11 +29,24 @@
     <td class="align-right">1.23</td>
     <td class="align-right">$100.00</td>
     <td class="align-right">$1000.00</td>
+    <td class="align-right">1.23</td>
+    <td class="align-right">$100.00</td>
+    <td class="align-right">$1000.00</td>
   </tr>
   {% endfor %}
+  <tr>
+    <td colspan="5">Cash</td>
+    <td class="align-right">$100.32</td>
+    <td colspan="3">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="5"><strong>Total</strong></td>
+    <td class="align-right"><strong>$3456.33</strong></td>
+    <td colspan="3">&nbsp;</td>
+  </tr>
 </table>
 {% else %}
-<p>You currently have no holdings in this portfolio - <a href="#">go ahead and add some now!</a></p>
+<p>You currently have no holdings in this portfolio - <a href="{% url 'holding_create' portfolio.id %}">go ahead and add some now!</a></p>
 {% endif %}
 
 {% endblock content %}
