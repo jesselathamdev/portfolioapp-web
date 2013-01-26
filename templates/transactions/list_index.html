@@ -1,0 +1,34 @@
+{% extends "base_two_columns.html" %}
+
+{% block title %}Transactions{% endblock title %}
+
+{% block breadcrumbs %}<a href="/">Home</a> &rarr; Transactions</a>{% endblock breadcrumbs %}
+
+{% block content %}
+
+<h1>Transactions</h1>
+
+  {% if transaction_list %}
+  <table class="table">
+    <tr>
+      <th>Date</th>
+      <th>Quantity</th>
+      <th>Amount</th>
+    </tr>
+    {% for transaction in transaction_list %}
+    <tr>
+      <td>{{ transaction.date_created }}</td>
+      <td>{{ transaction.quantity }}</td>
+      <td>{{ transaction.amount }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  {% else %}
+  <p>You currently have no transactions.</p>
+  {% endif %}
+
+{% endblock content %}
+
+{% block sidebar %}
+Sidebar
+{% endblock sidebar %}

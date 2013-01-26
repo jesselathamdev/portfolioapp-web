@@ -43,3 +43,9 @@ def transaction_index(request, portfolio_id, holding_id):
     holding = Holding.objects.get(pk=holding_id)
     transaction_list = holding.transaction_set.all().order_by('date_created')
     return render(request, 'transactions/index.html', {'portfolio': portfolio, 'holding': holding, 'transaction_list': transaction_list})
+
+@login_required
+def transaction_list_index(request):
+    
+    transaction_list = Transaction.objects.all().order_by('date_created')
+    return render(request, 'transactions/list_index.html', {'transaction_list': transaction_list})
