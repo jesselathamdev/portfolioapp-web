@@ -58,7 +58,7 @@
         "symbol": "RIM", 
         "date_created": "2013-01-20T02:31:14.075Z", 
         "portfolio": 1, 
-        "market": "TSE"
+        "market": "TSX"
     }
 },
 {
@@ -70,7 +70,7 @@
         "symbol": "RY", 
         "date_created": "2013-01-20T02:32:15.708Z", 
         "portfolio": 1, 
-        "market": "TSE"
+        "market": "TSX"
     }
 },
 {
@@ -82,7 +82,7 @@
         "symbol": "YHOO", 
         "date_created": "2013-01-20T02:32:33.946Z", 
         "portfolio": 1, 
-        "market": "US"
+        "market": "TSX"
     }
 },
 {
@@ -91,8 +91,9 @@
     "fields": {
         "date_updated": "2013-01-21T07:12:40.997Z", 
         "date_created": "2013-01-21T07:12:40.997Z", 
-        "amount": "27.43", 
-        "holding": 1, 
+        "price": "27.43",
+        "holding": 1,
+        "category_id": 5,
         "quantity": "10.00000"
     }
 },
@@ -102,8 +103,9 @@
     "fields": {
         "date_updated": "2013-01-21T07:12:54.868Z", 
         "date_created": "2013-01-21T07:12:54.868Z", 
-        "amount": "19.75", 
-        "holding": 1, 
+        "price": "19.75",
+        "holding": 1,
+        "category_id": 5,
         "quantity": "20.00000"
     }
 },
@@ -113,9 +115,10 @@
     "fields": {
         "date_updated": "2013-01-21T07:13:09.693Z", 
         "date_created": "2013-01-21T07:13:09.693Z", 
-        "amount": "11.14", 
-        "holding": 1, 
-        "quantity": "40.00000"
+        "price": "11.14",
+        "holding": 1,
+        "category_id": 5,
+        "quantity": "40.12345   "
     }
 },
 {
@@ -124,8 +127,9 @@
     "fields": {
         "date_updated": "2013-01-21T07:13:28.826Z", 
         "date_created": "2013-01-21T07:13:28.826Z", 
-        "amount": "7.98", 
-        "holding": 1, 
+        "price": "7.98",
+        "holding": 1,
+        "category_id": 5,
         "quantity": "45.00000"
     }
 },
@@ -135,8 +139,9 @@
     "fields": {
         "date_updated": "2013-01-21T07:13:41.327Z", 
         "date_created": "2013-01-21T07:13:41.327Z", 
-        "amount": "12.44", 
-        "holding": 1, 
+        "price": "12.44",
+        "holding": 1,
+        "category_id": 5,
         "quantity": "30.00000"
     }
 }

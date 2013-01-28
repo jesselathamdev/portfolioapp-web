@@ -8,50 +8,23 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding model 'Portfolio'
-        db.create_table(u'portfolios_portfolio', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['profiles.User'])),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=200)),
-            ('date_updated', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
-            ('date_created', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-        ))
-        db.send_create_signal(u'portfolios', ['Portfolio'])
+        # Deleting field 'Transaction.category'
+        db.delete_column(u'portfolios_transaction', 'category')
 
-        # Adding model 'Holding'
-        db.create_table(u'portfolios_holding', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('portfolio', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['portfolios.Portfolio'])),
-            ('market', self.gf('django.db.models.fields.CharField')(max_length=10)),
-            ('symbol', self.gf('django.db.models.fields.CharField')(max_length=10)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=250)),
-            ('date_updated', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
-            ('date_created', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-        ))
-        db.send_create_signal(u'portfolios', ['Holding'])
-
-        # Adding model 'Transaction'
-        db.create_table(u'portfolios_transaction', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('holding', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['portfolios.Holding'])),
-            ('quantity', self.gf('django.db.models.fields.DecimalField')(default=0.0, max_digits=7, decimal_places=5)),
-            ('price', self.gf('django.db.models.fields.DecimalField')(default=0.0, max_digits=7, decimal_places=2)),
-            ('category', self.gf('django.db.models.fields.PositiveSmallIntegerField')()),
-            ('date_updated', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
-            ('date_created', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-        ))
-        db.send_create_signal(u'portfolios', ['Transaction'])
+        # Adding field 'Transaction.category_id'
+        db.add_column(u'portfolios_transaction', 'category_id',
+                      self.gf('django.db.models.fields.PositiveSmallIntegerField')(default=5),
+                      keep_default=False)
 
 
     def backwards(self, orm):
-        # Deleting model 'Portfolio'
-        db.delete_table(u'portfolios_portfolio')
+        # Adding field 'Transaction.category'
+        db.add_column(u'portfolios_transaction', 'category',
+                      self.gf('django.db.models.fields.PositiveSmallIntegerField')(default=5),
+                      keep_default=False)
 
-        # Deleting model 'Holding'
-        db.delete_table(u'portfolios_holding')
-
-        # Deleting model 'Transaction'
-        db.delete_table(u'portfolios_transaction')
+        # Deleting field 'Transaction.category_id'
+        db.delete_column(u'portfolios_transaction', 'category_id')
 
 
     models = {
@@ -95,7 +68,7 @@ class Migration(SchemaMigration):
         },
         u'portfolios.transaction': {
             'Meta': {'object_name': 'Transaction'},
-            'category': ('django.db.models.fields.PositiveSmallIntegerField', [], {}),
+            'category_id': ('django.db.models.fields.PositiveSmallIntegerField', [], {}),
             'date_created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'date_updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'holding': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['portfolios.Holding']"}),

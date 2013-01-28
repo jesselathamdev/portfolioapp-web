@@ -12,14 +12,18 @@
   <table class="table">
     <tr>
       <th>Date</th>
+      <th>Holding</th>
+      <th>Type</th>
       <th>Quantity</th>
-      <th>Amount</th>
+      <th>Price</th>
     </tr>
     {% for transaction in transaction_list %}
     <tr>
       <td>{{ transaction.date_created }}</td>
-      <td>{{ transaction.quantity }}</td>
-      <td>{{ transaction.amount }}</td>
+      <td>{{ transaction.holding.name }} ({{ transaction.holding.market }}:{{ transaction.holding.symbol }})</td>
+      <td>{{ transaction.get_category_id_display }}</td>
+      <td>{{ transaction.quantity|floatformat:"-5" }}</td>
+      <td class="align-right">${{ transaction.price|floatformat:2 }}</td>
     </tr>
     {% endfor %}
   </table>

@@ -24,9 +24,9 @@ class TransactionAdmin(admin.ModelAdmin):
     class Meta:
         model = Transaction
 
-    list_display = ('quantity', 'amount',)
+    list_display = ('quantity', 'price',)
     readonly_fields = ('date_created', 'date_updated',)
-    fields = ('holding', 'quantity', 'amount', ('date_created', 'date_updated',),)
+    fields = ('holding', 'quantity', 'price', ('date_created', 'date_updated',),)
 
 admin.site.register(Portfolio, PortfolioAdmin)
 admin.site.register(Holding, HoldingAdmin)

@@ -26,6 +26,11 @@ DATABASES = {
     }
 }
 
+# taken from: http://code.google.com/p/wadofstuff/wiki/DjangoFullSerializers; extends the existing json serializer with some extra goodness
+SERIALIZATION_MODULES = {
+    'json': 'wadofstuff.django.serializers.json'
+}
+
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
