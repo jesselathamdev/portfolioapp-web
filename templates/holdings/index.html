@@ -8,11 +8,10 @@
 
 <h1>Holdings</h1>
 
-{% if holding_list %}
+{% if holdings %}
 <table class="table">
   <tr>
     <th>Name</th>
-    <th>Symbol</th>
     <th>Quantity</th>
     <th>Price</th>
     <th>Book Value</th>
@@ -21,13 +20,12 @@
     <th>Gain/Loss (%)</th>
     <th>Portion of Account</th>
   </tr>
-  {% for holding in holding_list %}
+  {% for holding in holdings %}
   <tr>
-    <td><a href="{% url 'transaction_index' portfolio.id holding.id %}">{{ holding.name }}</a></td>
-    <td>{{ holding.market_symbol }}</td>
-    <td class="align-right">1.2345</td>
-    <td class="align-right">1.23</td>
-    <td class="align-right">$100.00</td>
+    <td><a href="#">{{ holding.name }} ({{ holding.market }}:{{ holding.symbol }})</a></td>
+    <td class="align-right">{{ holding.total_quantity|default_if_none:"0.00" }}</td>
+    <td class="align-right">${{ holding.total_price|default_if_none:"0.00"|floatformat:2 }}</td>
+    <td class="align-right">${{ holding.book_value|floatformat:2 }}</td>
     <td class="align-right">$1000.00</td>
     <td class="align-right">1.23</td>
     <td class="align-right">$100.00</td>

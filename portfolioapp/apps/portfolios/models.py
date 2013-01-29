@@ -26,6 +26,12 @@ class Holding(models.Model):
     def market_symbol(self):
         return "%s:%s" % (self.market, self.symbol)
 
+    def get_total_price(self):
+        tot = 0
+        for transaction in Transaction.objects.filter(holding=self):
+            tot += transaction.price
+        return tot
+
 
 class Transaction(models.Model):
     SHARES_IN = 0
