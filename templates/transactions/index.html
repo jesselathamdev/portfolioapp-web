@@ -18,6 +18,7 @@
   {% for transaction in transaction_list %}
   <tr>
     <td>{{ transaction.date_created }}</td>
+    <td>{{ transaction.get_type_display }}
     <td>{{ transaction.quantity }}</td>
     <td>{{ transaction.price }}</td>
   </tr>

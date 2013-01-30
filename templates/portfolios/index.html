@@ -1,4 +1,5 @@
 {% extends "base_two_columns.html" %}
+{% load humanize %}
 
 {% block title %}Portfolios{% endblock title %}
 
@@ -8,7 +9,7 @@
 
 <h1>Portfolios</h1>
 
-{% if portfolio_list %}
+{% if portfolios %}
 <table class="table">
   <tr>
     <th>Name</th>
@@ -17,11 +18,11 @@
     <th>Market Value</th>
     <th>Growth</th>
   </tr>
-{% for portfolio in portfolio_list %}
+{% for portfolio in portfolios %}
   <tr>
     <td><a href="{% url 'holding_index' portfolio.id %}">{{ portfolio.name }}</a></td>
-    <td class="align-right">{{ portfolio.num_holdings }}</td>
-    <td class="align-right">$1000.00</td>
+    <td class="align-right">{{ portfolio.holding_count|intcomma }}</td>
+    <td class="align-right">${{ portfolio.book_value|floatformat:2|intcomma }}</td>
     <td class="align-right">$2000.00</td>
     <td class="align-right">$1000.00 (100.0%)</td>
   </tr>

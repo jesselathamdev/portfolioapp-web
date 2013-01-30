@@ -20,13 +20,21 @@ class HoldingAdmin(admin.ModelAdmin):
     readonly_fields = ('date_created', 'date_updated',)
     fields = ('portfolio', 'name', 'market', 'symbol', ('date_created', 'date_updated',),)
 
+
 class TransactionAdmin(admin.ModelAdmin):
     class Meta:
         model = Transaction
 
-    list_display = ('quantity', 'price',)
+    list_display = ('get_type', 'quantity', 'price', 'date_transacted',)
     readonly_fields = ('date_created', 'date_updated',)
-    fields = ('holding', 'quantity', 'price', ('date_created', 'date_updated',),)
+    fields = ('holding', 'type', 'quantity', 'price', 'date_transacted', ('date_created', 'date_updated',),)
+
+    # returns the friendly name of the select key/value pair so that it can be used in the admin column header
+    def get_type(self, object):
+        return '%s' % object.get_type_display()
+
+    get_type.short_description = 'Type'
+
 
 admin.site.register(Portfolio, PortfolioAdmin)
 admin.site.register(Holding, HoldingAdmin)

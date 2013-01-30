@@ -1,4 +1,5 @@
 {% extends "base_two_columns.html" %}
+{% load humanize %}
 
 {% block title %}Holdings{% endblock title %}
 
@@ -23,9 +24,9 @@
   {% for holding in holdings %}
   <tr>
     <td><a href="#">{{ holding.name }} ({{ holding.market }}:{{ holding.symbol }})</a></td>
-    <td class="align-right">{{ holding.total_quantity|default_if_none:"0.00" }}</td>
-    <td class="align-right">${{ holding.total_price|default_if_none:"0.00"|floatformat:2 }}</td>
-    <td class="align-right">${{ holding.book_value|floatformat:2 }}</td>
+    <td class="align-right">{{ holding.total_quantity|default_if_none:"0.00"|intcomma }}</td>
+    <td class="align-right">${{ holding.total_price|default_if_none:"0.00"|floatformat:2|intcomma }}</td>
+    <td class="align-right">${{ holding.book_value|floatformat:2|intcomma }}</td>
     <td class="align-right">$1000.00</td>
     <td class="align-right">1.23</td>
     <td class="align-right">$100.00</td>

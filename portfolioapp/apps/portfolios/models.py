@@ -1,6 +1,10 @@
 # portfolios/models.py
+import datetime
+
 from django.conf import settings
 from django.db import models
+
+from .managers import PortfolioManager, HoldingManager
 
 class Portfolio(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
@@ -10,6 +14,8 @@ class Portfolio(models.Model):
 
     def __unicode__(self):
         return self.name
+
+    objects = PortfolioManager()
 
 
 class Holding(models.Model):
@@ -26,11 +32,7 @@ class Holding(models.Model):
     def market_symbol(self):
         return "%s:%s" % (self.market, self.symbol)
 
-    def get_total_price(self):
-        tot = 0
-        for transaction in Transaction.objects.filter(holding=self):
-            tot += transaction.price
-        return tot
+    objects = HoldingManager()
 
 
 class Transaction(models.Model):
@@ -39,20 +41,21 @@ class Transaction(models.Model):
     BUY = 5
     SELL = 6
 
-    CATEGORY_CHOICES = (
-        (SHARES_IN, "Shares in"),
-        (SHARES_OUT, "Shares out"),
+    TYPE_CHOICES = (
         (BUY, "Buy"),
         (SELL, "Sell"),
+        (SHARES_IN, "Shares in"),
+        (SHARES_OUT, "Shares out"),
     )
 
     holding = models.ForeignKey(Holding)
-    quantity = models.DecimalField(default=0.0, decimal_places=5, max_digits=7)
+    quantity = models.DecimalField(default=0.0, decimal_places=5, max_digits=10)
     price = models.DecimalField(default=0.0, decimal_places=2, max_digits=7)
-    category_id = models.PositiveSmallIntegerField(choices=CATEGORY_CHOICES, default=5)
+    type = models.PositiveSmallIntegerField(choices=TYPE_CHOICES, default=5)
+    date_transacted = models.DateTimeField(default=datetime.datetime.now)
     date_updated = models.DateTimeField(auto_now=True)
     date_created = models.DateTimeField(auto_now_add=True)
 
     def __unicode__(self):
-        return self.date_created.strftime("%M/%d/%y")
+        return '%s %s on %s' % (self.get_type_display(), self.quantity, self.date_created.strftime("%M/%d/%y"))
         # return u"%s (%s)" % (self.holding.name, self.quantity) #risky, queries for each name of parent

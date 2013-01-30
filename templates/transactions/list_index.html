@@ -21,7 +21,7 @@
     <tr>
       <td>{{ transaction.date_created }}</td>
       <td>{{ transaction.holding.name }} ({{ transaction.holding.market }}:{{ transaction.holding.symbol }})</td>
-      <td>{{ transaction.get_category_id_display }}</td>
+      <td>{{ transaction.get_type_display }}</td>
       <td>{{ transaction.quantity|floatformat:"-5" }}</td>
       <td class="align-right">${{ transaction.price|floatformat:2 }}</td>
     </tr>
