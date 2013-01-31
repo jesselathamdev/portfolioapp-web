@@ -8,7 +8,7 @@
 
 <h1>Transactions</h1>
 
-  {% if transaction_list %}
+  {% if transactions %}
   <table class="table">
     <tr>
       <th>Date</th>
@@ -17,7 +17,7 @@
       <th>Quantity</th>
       <th>Price</th>
     </tr>
-    {% for transaction in transaction_list %}
+    {% for transaction in transactions %}
     <tr>
       <td>{{ transaction.date_created }}</td>
       <td>{{ transaction.holding.name }} ({{ transaction.holding.market }}:{{ transaction.holding.symbol }})</td>

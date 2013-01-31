@@ -6,21 +6,26 @@
 
 {% block content %}
 
-<h1>Transactions</h1>
+<h1>Transactions <span class="link-add">( <a href="#">add</a> )</span></h1>
 
-{% if transaction_list %}
+{% if transactions %}
 <table class="table">
   <tr>
+    <th>Type</th>
     <th>Date</th>
     <th>Quantity</th>
     <th>Amount</th>
+    <th>Commission</th>
+    <th>Comment</th>
   </tr>
-  {% for transaction in transaction_list %}
+  {% for transaction in transactions %}
   <tr>
-    <td>{{ transaction.date_created }}</td>
-    <td>{{ transaction.get_type_display }}
-    <td>{{ transaction.quantity }}</td>
-    <td>{{ transaction.price }}</td>
+    <td>{{ transaction.get_type_display }}</td>
+    <td>{{ transaction.date_transacted|date:"m/d/Y" }}</td>
+    <td class="align-right">{{ transaction.quantity }}</td>
+    <td class="align-right">${{ transaction.price|floatformat:2 }}</td>
+    <td class="align-right">${{ transaction.commission|floatformat:2 }}</td>
+    <td>{{ transaction.comment|default_if_none:"" }}</td>
   </tr>
   {% endfor %}
 </table>

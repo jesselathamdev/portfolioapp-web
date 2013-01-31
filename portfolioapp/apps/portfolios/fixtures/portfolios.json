@@ -89,9 +89,11 @@
         "pk": 1, 
         "model": "portfolios.transaction", 
         "fields": {
-            "date_updated": "2013-01-21T07:12:40.997Z", 
+            "comment": null, 
+            "date_transacted": "2013-01-30T05:50:24Z", 
+            "date_updated": "2013-01-31T07:33:44.797Z", 
             "price": "27.43", 
-            "date_transacted": "2013-01-30T05:50:24.162Z", 
+            "commission": "0.00", 
             "holding": 1, 
             "date_created": "2013-01-21T07:12:40.997Z", 
             "type": 5, 
@@ -102,22 +104,26 @@
         "pk": 2, 
         "model": "portfolios.transaction", 
         "fields": {
-            "date_updated": "2013-01-21T07:12:54.868Z", 
+            "comment": null, 
+            "date_transacted": "2013-01-30T05:50:24Z", 
+            "date_updated": "2013-01-31T07:35:04.008Z", 
             "price": "19.75", 
-            "date_transacted": "2013-01-30T05:50:24.162Z", 
+            "commission": "0.00", 
             "holding": 1, 
             "date_created": "2013-01-21T07:12:54.868Z", 
-            "type": 5, 
-            "quantity": "20.00000"
+            "type": 6, 
+            "quantity": "-5.00000"
         }
     }, 
     {
         "pk": 3, 
         "model": "portfolios.transaction", 
         "fields": {
+            "comment": null, 
+            "date_transacted": "2013-01-30T05:50:24.162Z", 
             "date_updated": "2013-01-21T07:13:09.693Z", 
             "price": "11.14", 
-            "date_transacted": "2013-01-30T05:50:24.162Z", 
+            "commission": "0.00", 
             "holding": 1, 
             "date_created": "2013-01-21T07:13:09.693Z", 
             "type": 5, 
@@ -128,9 +134,11 @@
         "pk": 4, 
         "model": "portfolios.transaction", 
         "fields": {
+            "comment": null, 
+            "date_transacted": "2013-01-30T05:50:24.162Z", 
             "date_updated": "2013-01-21T07:13:28.826Z", 
             "price": "7.98", 
-            "date_transacted": "2013-01-30T05:50:24.162Z", 
+            "commission": "29.99", 
             "holding": 1, 
             "date_created": "2013-01-21T07:13:28.826Z", 
             "type": 5, 
@@ -141,9 +149,11 @@
         "pk": 5, 
         "model": "portfolios.transaction", 
         "fields": {
+            "comment": null, 
+            "date_transacted": "2013-01-30T05:50:24.162Z", 
             "date_updated": "2013-01-21T07:13:41.327Z", 
             "price": "12.44", 
-            "date_transacted": "2013-01-30T05:50:24.162Z", 
+            "commission": "0.00", 
             "holding": 1, 
             "date_created": "2013-01-21T07:13:41.327Z", 
             "type": 5, 
@@ -154,9 +164,11 @@
         "pk": 6, 
         "model": "portfolios.transaction", 
         "fields": {
+            "comment": "Initial purchase", 
+            "date_transacted": "2012-03-18T16:34:42Z", 
             "date_updated": "2013-01-30T05:52:42.532Z", 
             "price": "58.58", 
-            "date_transacted": "2012-03-18T16:34:42Z", 
+            "commission": "29.99", 
             "holding": 2, 
             "date_created": "2013-01-30T05:52:42.532Z", 
             "type": 5, 
@@ -167,9 +179,11 @@
         "pk": 7, 
         "model": "portfolios.transaction", 
         "fields": {
+            "comment": null, 
+            "date_transacted": "2012-04-08T19:42:11Z", 
             "date_updated": "2013-01-30T06:01:04.170Z", 
             "price": "56.08", 
-            "date_transacted": "2012-04-08T19:42:11Z", 
+            "commission": "0.00", 
             "holding": 2, 
             "date_created": "2013-01-30T05:53:30.989Z", 
             "type": 5, 
@@ -180,9 +194,11 @@
         "pk": 8, 
         "model": "portfolios.transaction", 
         "fields": {
+            "comment": null, 
+            "date_transacted": "2012-05-30T20:55:44Z", 
             "date_updated": "2013-01-30T06:01:15.372Z", 
             "price": "49.16", 
-            "date_transacted": "2012-05-30T20:55:44Z", 
+            "commission": "0.00", 
             "holding": 2, 
             "date_created": "2013-01-30T05:54:32.558Z", 
             "type": 5, 
@@ -193,9 +209,11 @@
         "pk": 9, 
         "model": "portfolios.transaction", 
         "fields": {
+            "comment": null, 
+            "date_transacted": "2013-01-24T20:00:00Z", 
             "date_updated": "2013-01-30T05:56:01.253Z", 
             "price": "51.50", 
-            "date_transacted": "2013-01-24T20:00:00Z", 
+            "commission": "29.99", 
             "holding": 2, 
             "date_created": "2013-01-30T05:56:01.253Z", 
             "type": 5, 
@@ -206,9 +224,11 @@
         "pk": 10, 
         "model": "portfolios.transaction", 
         "fields": {
+            "comment": null, 
+            "date_transacted": "2012-10-05T18:23:11Z", 
             "date_updated": "2013-01-30T06:02:47.415Z", 
             "price": "58.69", 
-            "date_transacted": "2012-10-05T18:23:11Z", 
+            "commission": "0.00", 
             "holding": 2, 
             "date_created": "2013-01-30T06:02:47.415Z", 
             "type": 5, 
@@ -219,9 +239,11 @@
         "pk": 11, 
         "model": "portfolios.transaction", 
         "fields": {
+            "comment": null, 
+            "date_transacted": "2012-11-14T22:55:22Z", 
             "date_updated": "2013-01-30T06:03:37.742Z", 
             "price": "55.11", 
-            "date_transacted": "2012-11-14T22:55:22Z", 
+            "commission": "0.00", 
             "holding": 2, 
             "date_created": "2013-01-30T06:03:37.742Z", 
             "type": 5, 
@@ -232,13 +254,90 @@
         "pk": 12, 
         "model": "portfolios.transaction", 
         "fields": {
+            "comment": null, 
+            "date_transacted": "2012-12-21T23:04:21Z", 
             "date_updated": "2013-01-30T06:32:26.964Z", 
             "price": "60.88", 
-            "date_transacted": "2012-12-21T23:04:21Z", 
+            "commission": "0.00", 
             "holding": 2, 
             "date_created": "2013-01-30T06:04:24.834Z", 
             "type": 5, 
             "quantity": "180.00000"
+        }
+    }, 
+    {
+        "pk": 13, 
+        "model": "portfolios.transaction", 
+        "fields": {
+            "comment": "", 
+            "date_transacted": "2012-06-12T06:33:50Z", 
+            "date_updated": "2013-01-31T07:36:10.780Z", 
+            "price": "19.88", 
+            "commission": "0.00", 
+            "holding": 3, 
+            "date_created": "2013-01-31T07:34:16.090Z", 
+            "type": 5, 
+            "quantity": "100.00000"
+        }
+    }, 
+    {
+        "pk": 14, 
+        "model": "portfolios.transaction", 
+        "fields": {
+            "comment": "", 
+            "date_transacted": "2012-08-26T06:34:23Z", 
+            "date_updated": "2013-01-31T07:36:22.816Z", 
+            "price": "0.00", 
+            "commission": "0.00", 
+            "holding": 3, 
+            "date_created": "2013-01-31T07:34:36.157Z", 
+            "type": 1, 
+            "quantity": "-10.00000"
+        }
+    }, 
+    {
+        "pk": 15, 
+        "model": "portfolios.transaction", 
+        "fields": {
+            "comment": "", 
+            "date_transacted": "2012-09-15T06:35:10Z", 
+            "date_updated": "2013-01-31T07:37:24.626Z", 
+            "price": "20.02", 
+            "commission": "0.00", 
+            "holding": 3, 
+            "date_created": "2013-01-31T07:35:24.007Z", 
+            "type": 5, 
+            "quantity": "25.00000"
+        }
+    }, 
+    {
+        "pk": 16, 
+        "model": "portfolios.transaction", 
+        "fields": {
+            "comment": "", 
+            "date_transacted": "2012-11-23T07:35:30Z", 
+            "date_updated": "2013-01-31T07:36:58.498Z", 
+            "price": "0.00", 
+            "commission": "0.00", 
+            "holding": 2, 
+            "date_created": "2013-01-31T07:35:52.623Z", 
+            "type": 0, 
+            "quantity": "0.65562"
+        }
+    }, 
+    {
+        "pk": 17, 
+        "model": "portfolios.transaction", 
+        "fields": {
+            "comment": "", 
+            "date_transacted": "2011-12-31T07:39:53Z", 
+            "date_updated": "2013-01-31T07:40:31.673Z", 
+            "price": "17.88", 
+            "commission": "0.00", 
+            "holding": 3, 
+            "date_created": "2013-01-31T07:40:16.866Z", 
+            "type": 5, 
+            "quantity": "10.00000"
         }
     }
 ]

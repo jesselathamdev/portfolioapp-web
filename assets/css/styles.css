@@ -18,6 +18,14 @@ table th {
   height: 70px;
 }
 
-.breadcrumbs{
+.breadcrumbs {
   font-size: 12px;
+}
+
+.table {
+  font-size: 13px;
+}
+
+.link-add {
+  font-size: 15px;
 }

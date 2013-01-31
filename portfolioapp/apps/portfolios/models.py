@@ -52,6 +52,8 @@ class Transaction(models.Model):
     quantity = models.DecimalField(default=0.0, decimal_places=5, max_digits=10)
     price = models.DecimalField(default=0.0, decimal_places=2, max_digits=7)
     type = models.PositiveSmallIntegerField(choices=TYPE_CHOICES, default=5)
+    comment = models.CharField(max_length=250, default='', blank=True, null=True)
+    commission = models.DecimalField(default=0.0, decimal_places=2, max_digits=6)
     date_transacted = models.DateTimeField(default=datetime.datetime.now)
     date_updated = models.DateTimeField(auto_now=True)
     date_created = models.DateTimeField(auto_now_add=True)
@@ -59,3 +61,11 @@ class Transaction(models.Model):
     def __unicode__(self):
         return '%s %s on %s' % (self.get_type_display(), self.quantity, self.date_created.strftime("%M/%d/%y"))
         # return u"%s (%s)" % (self.holding.name, self.quantity) #risky, queries for each name of parent
+
+    def save(self, *args, **kwargs):
+        # change the sign of the quantity being saved depending on the type of transaction
+        if (self.type == self.SHARES_OUT or self.type == self.SELL) and self.quantity >= 0:
+            self.quantity *= -1
+        elif (self.type == self.SHARES_IN or self.type == self.BUY) and self.quantity <= 0:
+            self.quantity *= -1
+        super(Transaction, self).save(*args, **kwargs)
