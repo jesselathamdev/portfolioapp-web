@@ -47,18 +47,23 @@
       <div class="container">
         <a class="brand" href="/">PortfolioApp</a>
         <ul class="nav">
+          {% if user.is_authenticated %}
           <li><a href="/portfolios">Portfolios</a></li>
           <li><a href="/transactions">Transactions</a></li>
+          {% endif %}
         </ul>
         <ul class="nav pull-right">
           {% if user.is_staff %}
           <li><a href="/admin">Admin</a></li>
           {% endif %}
+          {% if not user.is_authenticated %}
+          <li><a href="{% url 'profile_create' %}">Sign up</a></li>
+          {% endif %}
           {% if user.is_authenticated %}
           <li><a href="{% url 'profile_edit' %}">{{ user.get_full_name }}</a></li>
-          <li><a href="{% url 'signout' %}">Sign out</a></li>
+          <li><a href="{% url 'profile_signout' %}">Sign out</a></li>
           {% else %}
-          <li><a href="{% url 'signin' %}">Sign in</a></li>
+          <li><a href="{% url 'profile_signin' %}">Sign in</a></li>
           {% endif %}
         </ul>
       </div>

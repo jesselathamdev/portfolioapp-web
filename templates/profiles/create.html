@@ -1,0 +1,73 @@
+{% extends "base_two_columns.html" %}
+
+{% block title %}Create Profile{% endblock title %}
+
+{% block breadcrumbs %}<a href="/">Home</a> &rarr; Create Profile{% endblock breadcrumbs %}
+
+{% block content %}
+
+<h1>Create Profile</h1>
+
+<p>This is the create profile screen.</p>
+
+{% if form.errors %}
+<div class="alert alert-error">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <strong>Whoops!</strong> There were some errors on the page that occurred while saving.
+</div>
+{% endif %}
+
+<form method="post" action="" class="form-horizontal">
+  {% csrf_token %}
+  <div class="control-group">
+    <label class="control-label" for="{{ form.email.auto_id }}">Email</label>
+    <div class="controls">
+      <input type="text" id="{{ form.email.auto_id }}" name="{{ form.email.html_name }}" value="{{ form.email.value }}" placeholder="Email address...">
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="{{ form.password1.auto_id }}">Password</label>
+    <div class="controls">
+      <input type="password" id="{{ form.password1.auto_id }}" name="{{ form.password1.html_name }}" value="{{ form.password1.value }}" placeholder="Password...">
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="{{ form.password2.auto_id }}">Confirm Password</label>
+    <div class="controls">
+      <input type="password" id="{{ form.password2.auto_id }}" name="{{ form.password2.html_name }}" value="{{ form.password2.value }}" placeholder="Confirm your password...">
+    </div>
+  </div>
+  <div>&nbsp;</div>
+  <div class="control-group">
+    <label class="control-label" for="{{ form.first_name.auto_id }}">First Name</label>
+    <div class="controls">
+      <input type="text" id="{{ form.first_name.auto_id }}" name="{{ form.first_name.html_name }}" value="{{ form.first_name.value }}" placeholder="First name...">
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="{{ form.last_name.auto_id }}">Last Name</label>
+    <div class="controls">
+      <input type="text" id="{{ form.last_name.auto_id }}" name="{{ form.last_name.html_name }}" value="{{ form.last_name.value }}" placeholder="Last name...">
+    </div>
+  </div>
+  <div class="control-group">
+    <div class="controls">
+      <button type="submit" class="btn btn-primary">Save profile</button>
+      <button type="submit" class="btn" name="cancel">Cancel</button>
+    </div>
+  </div>
+</form>
+
+{% endblock content %}
+
+{% block sidebar %}
+<p>Sidebar</p>
+{% endblock sidebar %}
+
+{#{% block script %}#}
+{#<script type="text/javascript">#}
+{#  $(document).ready(function(){#}
+{#    $('#id_email').focus();#}
+{#  });#}
+{#</script>#}
+{#{% endblock script %}#}

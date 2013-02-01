@@ -25,7 +25,7 @@ class TransactionAdmin(admin.ModelAdmin):
     class Meta:
         model = Transaction
 
-    list_display = ('get_type', 'quantity', 'price', 'date_transacted',)
+    list_display = ('holding', 'get_type', 'quantity', 'price', 'date_transacted',)
     readonly_fields = ('date_created', 'date_updated',)
     fields = ('holding', 'type', 'quantity', 'price', 'date_transacted', ('date_created', 'date_updated',),)
 
