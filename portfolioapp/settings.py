@@ -85,10 +85,19 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'portfolioapp.apps.middleware.ProfilerMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
+
+STATSD_PATCHES = [
+    'django_statsd.patches.db',
+    'django_statsd.patches.cache',
+]
+
+STATSD_CLIENT = 'django_statsd.clients.toolbar'
 
 ROOT_URLCONF = 'portfolioapp.urls'
 
@@ -113,6 +122,7 @@ INSTALLED_APPS = (
     'south',
     'django_extensions',
     'debug_toolbar',
+    'django_statsd',
 )
 
 # Required for debug_toolbar
@@ -128,6 +138,7 @@ DEBUG_TOOLBAR_PANELS = (
     'debug_toolbar.panels.sql.SQLDebugPanel',
     'debug_toolbar.panels.signals.SignalDebugPanel',
     'debug_toolbar.panels.logger.LoggingPanel',
+    'django_statsd.panel.StatsdPanel',
 )
 
 DEBUG_TOOLBAR_CONFIG = {
