@@ -50,7 +50,7 @@ class Transaction(models.Model):
 
     holding = models.ForeignKey(Holding)
     quantity = models.DecimalField(default=0.0, decimal_places=5, max_digits=10)
-    price = models.DecimalField(default=0.0, decimal_places=2, max_digits=7)
+    cost = models.DecimalField(default=0.0, decimal_places=2, max_digits=7)
     type = models.PositiveSmallIntegerField(choices=TYPE_CHOICES, default=5)
     comment = models.CharField(max_length=250, default='', blank=True, null=True)
     commission = models.DecimalField(default=0.0, decimal_places=2, max_digits=6)

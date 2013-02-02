@@ -2,18 +2,6 @@ body {
   background-color: #fbfbfb;
 }
 
-.align-right {
-  text-align: right;
-}
-
-table tr td.align-right {
-  text-align: right;
-}
-
-table th {
-  background-color: #f1f1f1;
-}
-
 .navbar {
   height: 70px;
 }
@@ -22,10 +10,31 @@ table th {
   font-size: 12px;
 }
 
+.link-add {
+  font-size: 15px;
+}
+
 .table {
   font-size: 13px;
 }
 
-.link-add {
-  font-size: 15px;
+table th {
+  background-color: #f1f1f1;
+}
+
+table tr th.align-right,
+table tr td.align-right {
+  text-align: right;
+}
+
+.table .small {
+  font-size: 11px;
+}
+
+.indicator-gain {
+  color: #32cd32;
+}
+
+.indicator-loss {
+  color: #ff0000;
 }

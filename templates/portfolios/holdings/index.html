@@ -13,35 +13,41 @@
 <table class="table">
   <tr>
     <th>Name</th>
-    <th>Quantity</th>
-    <th>Price</th>
-    <th>Book Value</th>
-    <th>Market Value</th>
-    <th>Gain/Loss ($)</th>
-    <th>Gain/Loss (%)</th>
-    <th>Portion of Account</th>
+    <th class="align-right">Position</th>
+    <th class="align-right">Cost<br /><span class="small">Avg</span></th>
+    <th class="align-right">Book Value</th>
+    <th class="align-right">Last Price</th>
+    <th class="align-right">Market Value</th>
+    <th class="align-right">Net Gain ($)<br /><span class="small">(%)</span></th>
+    <th class="align-right">% of Portfolio</th>
   </tr>
   {% for holding in holdings %}
   <tr>
     <td><a href="{% url 'transaction_index' portfolio.id holding.id %}">{{ holding.name }} ({{ holding.market }}:{{ holding.symbol }})</a></td>
-    <td class="align-right">{{ holding.total_quantity|default_if_none:"0.00"|intcomma }}</td>
-    <td class="align-right">${{ holding.total_price|default_if_none:"0.00"|floatformat:2|intcomma }}</td>
+    <td class="align-right">{{ holding.total_quantity|default_if_none:"0.00"|floatformat:5|intcomma }}</td>
+    <td class="align-right">${{ holding.total_cost|default_if_none:"0.00"|floatformat:2|intcomma }}<br /><span class="small">$34.44</span></td>
     <td class="align-right">${{ holding.book_value|floatformat:2|intcomma }}</td>
+    <td class="align-right">$45.12<br /><span class="small">1:00pm PST</span></td>
     <td class="align-right">$1000.00</td>
-    <td class="align-right">1.23</td>
-    <td class="align-right">$100.00</td>
-    <td class="align-right">$1000.00</td>
+    <td {% if holding.market_value > holding.book_value %}class="align-right indicator-gain"{% elif holding.market_value < holding.book_value %}class="align-right indicator-gain"{% else %}class="align-right indicator-gain"{% endif %}>$1.33<br /><span class="small">0.23%</span></td>
+    <td class="align-right">32.33%</td>
   </tr>
   {% endfor %}
   <tr>
-    <td colspan="5">Cash</td>
+    <td colspan="3">Cash</td>
     <td class="align-right">$100.32</td>
-    <td colspan="3">&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class="align-right">$100.32</td>
+    <td>&nbsp;</td>
+    <td class="align-right">3.00%</td>
   </tr>
   <tr>
-    <td colspan="5"><strong>Total</strong></td>
+    <td colspan="3"><strong>Total</strong></td>
     <td class="align-right"><strong>$3456.33</strong></td>
-    <td colspan="3">&nbsp;</td>
+    <td>&nbsp;</td>
+    <td class="align-right"><strong>$3456.33</strong></td>
+    <td>&nbsp;</td>
+    <td class="align-right">100%</td>
   </tr>
 </table>
 {% else %}

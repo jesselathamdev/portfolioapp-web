@@ -9,12 +9,7 @@ from .forms import CreateHolding
 
 @login_required
 def portfolio_index(request):
-    # TODO: remove old queries below
-    # portfolio_list = Portfolio.objects.filter(user=request.user).annotate(num_holdings=Count('holding')).order_by('name')
-    # portfolios = Portfolio.objects.filter(user_id=request.user.id).annotate(total_price=Sum('holding__transaction__price')).order_by('name')
-
     portfolios = Portfolio.objects.detailed_view(request.user.id)
-    Portfolio.objects.detailed_view(request.user.id)
     return render(request, 'portfolios/portfolios/index.html', {'portfolios': portfolios})
 
 
@@ -27,7 +22,7 @@ def portfolio_detail(request, portfolio_id):
 @login_required
 def holding_index(request, portfolio_id):
     portfolio = Portfolio.objects.get(pk=portfolio_id)
-    holdings = Holding.objects.current_activity(request.user.id)
+    holdings = Holding.objects.detailed_view(portfolio_id)
     return render(request, 'portfolios/holdings/index.html', {'portfolio': portfolio, 'holdings': holdings})
 
 
@@ -55,8 +50,5 @@ def transaction_index(request, portfolio_id, holding_id):
 
 @login_required
 def transaction_list_index(request):
-    # the following is great as it returns a small subset for what's needed, but then you can't use the magic function of .get_category_id_display; use .select_related instead
-    # transaction_list = Transaction.objects.values('holding__name', 'holding__market', 'holding__symbol', 'category_id', 'date_created', 'quantity', 'price').filter(holding__portfolio__user_id=request.user).order_by('date_created')
-    # holdings = Holding.objects.filter(portfolio__user_id=2).annotate(total_price=Sum('transaction__price'))
-    transactions = Transaction.objects.select_related('holding__name', 'holding__market', 'holding__symbol', 'type', 'date_created', 'quantity', 'price').filter(holding__portfolio__user_id=request.user).order_by('date_created')
+    transactions = Transaction.objects.select_related('holding__name', 'holding__market', 'holding__symbol', 'type', 'date_created', 'quantity', 'cost').filter(holding__portfolio__user_id=request.user).order_by('date_created')
     return render(request, 'portfolios/transactions/list_index.html', {'transactions': transactions})
