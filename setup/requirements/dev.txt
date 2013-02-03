@@ -1,4 +1,4 @@
--e git://github.com/django/django.git@72ef63bf86b12e752f186d562d9094cfde30af27#egg=Django-dev
+-e git://github.com/django/django.git@stable/1.5.x#egg=Django
 Jinja2==2.6
 Pygments==1.6rc1
 South==0.7.6
@@ -12,7 +12,6 @@ django-statsd-mozilla==0.3.8.4
 fake-factory==0.2
 ipython==0.13.1
 psycopg2==2.4.6
-pygraphviz==1.1
 python-statsd==1.5.7
 readline==6.2.4.1
 statsd==1.0.0

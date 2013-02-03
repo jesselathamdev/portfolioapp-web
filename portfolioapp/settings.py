@@ -117,6 +117,7 @@ INSTALLED_APPS = (
     # portfolioapp specific
     'portfolioapp.apps.profiles',
     'portfolioapp.apps.portfolios',
+    'portfolioapp.apps.markets',
 
     # development tools
     'south',

@@ -47,14 +47,15 @@ class HoldingManager(models.Manager):
                 ph.name,
                 ph.market,
                 ph.symbol,
+                (SELECT 45.00) as last_price,
                 COALESCE(SUM(pt.quantity), 0) as total_quantity,
-                COALESCE(SUM(pt.cost), 0) as total_cost,
                 COALESCE(AVG(pt.cost), 0) as avg_cost,
                 COALESCE(MAX(pt.cost), 0) as max_cost,
                 COALESCE(MIN(pt.cost), 0) as min_cost,
-                (COALESCE(SUM(pt.quantity), 0) * COALESCE(SUM(pt.cost), 0)) as book_value,
-                (SELECT 45.00) as last_price,
-                (COALESCE(SUM(pt.quantity), 0) * (SELECT 45)) as market_value
+                COALESCE(SUM(pt.quantity * pt.cost), 0) as book_value,
+                (COALESCE(SUM(pt.quantity), 0) * (SELECT 45)) as market_value,
+                2.00 as net_gain_dollar,
+                0.0025 as net_gain_percent
             FROM
                 portfolios_holding ph
                 LEFT JOIN portfolios_transaction pt ON ph.id = pt.holding_id
@@ -66,14 +67,15 @@ class HoldingManager(models.Manager):
         holdings = []
         for row in cursor.fetchall():
             holding = self.model(id=row[0], name=row[1], market=row[2], symbol=row[3])
-            holding.total_quantity = row[4]
-            holding.total_cost = row[5]
+            holding.last_price = row[4]
+            holding.total_quantity = row[5]
             holding.avg_cost = row[6]
             holding.max_cost = row[7]
             holding.min_cost = row[8]
             holding.book_value = row[9]
-            holding.last_price = row[10]
-            holding.market_value = row[11]
+            holding.market_value = row[10]
+            holding.net_gain_dollar = row[11]
+            holding.net_gain_percent = row[12]
             holdings.append(holding)
 
         return holdings

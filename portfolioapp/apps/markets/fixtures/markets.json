@@ -1,0 +1,66 @@
+[
+    {
+        "pk": 1, 
+        "model": "markets.market", 
+        "fields": {
+            "website": "www.tse.com", 
+            "city": "Toronto", 
+            "name": "Toronto Stock Exchange", 
+            "date_updated": "2013-02-03T20:29:32.844Z", 
+            "country": "Canada", 
+            "mic": "XTSE", 
+            "acr": "TSX", 
+            "country_code": "CA", 
+            "active": true, 
+            "date_created": "2013-02-03T20:29:32.844Z"
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "markets.market", 
+        "fields": {
+            "website": "www.tsx.com", 
+            "city": "Toronto", 
+            "name": "TSX Venture Exchange", 
+            "date_updated": "2013-02-03T20:30:42.328Z", 
+            "country": "Canada", 
+            "mic": "XTSX", 
+            "acr": "TSX-V", 
+            "country_code": "CA", 
+            "active": true, 
+            "date_created": "2013-02-03T20:30:42.328Z"
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "markets.market", 
+        "fields": {
+            "website": "www.nasdaq.com", 
+            "city": "New York", 
+            "name": "NASDAQ", 
+            "date_updated": "2013-02-03T20:31:32.863Z", 
+            "country": "United States of America", 
+            "mic": "XNAS", 
+            "acr": "NASDAQ", 
+            "country_code": "US", 
+            "active": true, 
+            "date_created": "2013-02-03T20:31:32.863Z"
+        }
+    }, 
+    {
+        "pk": 4, 
+        "model": "markets.market", 
+        "fields": {
+            "website": "www.nyse.com", 
+            "city": "New York", 
+            "name": "New York Stock Exchange, Inc.", 
+            "date_updated": "2013-02-03T20:32:43.707Z", 
+            "country": "United States of America", 
+            "mic": "XNYS", 
+            "acr": "NYSE", 
+            "country_code": "US", 
+            "active": true, 
+            "date_created": "2013-02-03T20:32:43.707Z"
+        }
+    }
+]
