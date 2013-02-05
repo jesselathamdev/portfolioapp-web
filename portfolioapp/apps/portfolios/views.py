@@ -14,16 +14,24 @@ def portfolio_index(request):
 
 
 @login_required
-def portfolio_detail(request, portfolio_id):
-    portfolio = get_object_or_404(Portfolio, pk=portfolio_id)
-    return render(request, 'portfolios/portfolios/detail.html', {'portfolio': portfolio})
-
-
-@login_required
 def holding_index(request, portfolio_id):
     portfolio = Portfolio.objects.get(pk=portfolio_id)
     holdings = Holding.objects.detailed_view(portfolio_id)
     return render(request, 'portfolios/holdings/index.html', {'portfolio': portfolio, 'holdings': holdings})
+
+
+@login_required
+def transaction_index(request, portfolio_id, holding_id):
+    holding = Holding.objects.select_related('portfolio').get(pk=holding_id)
+    transactions = Transaction.objects.select_related('portfolio', 'portfolio__holding').filter(holding__id=holding_id).order_by('-date_transacted')
+    return render(request, 'portfolios/transactions/index.html', {'holding': holding, 'transactions': transactions})
+
+
+
+@login_required
+def portfolio_detail(request, portfolio_id):
+    portfolio = get_object_or_404(Portfolio, pk=portfolio_id)
+    return render(request, 'portfolios/portfolios/detail.html', {'portfolio': portfolio})
 
 
 @login_required
@@ -38,14 +46,6 @@ def holding_create(request, portfolio_id):
     else:
         form = CreateHolding()
         return render(request, 'portfolios/holdings/detail.html', {'portfolio': portfolio, 'form': form})
-
-
-@login_required
-def transaction_index(request, portfolio_id, holding_id):
-    portfolio = Portfolio.objects.get(pk=portfolio_id)
-    holding = Holding.objects.get(pk=holding_id)
-    transactions = holding.transaction_set.all().order_by('-date_transacted')
-    return render(request, 'portfolios/transactions/index.html', {'portfolio': portfolio, 'holding': holding, 'transactions': transactions})
 
 
 @login_required

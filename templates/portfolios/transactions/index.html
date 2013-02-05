@@ -2,7 +2,7 @@
 
 {% block title %}Transactions{% endblock title %}
 
-{% block breadcrumbs %}<a href="/">Home</a> &rarr; <a href="{% url 'portfolio_index' %}">Portfolios</a> &rarr; <a href="{% url 'holding_index' portfolio.id %}">{{ portfolio.name }}</a> &rarr; {{ holding.name }} ({{ holding.market }}:{{ holding.symbol }}){% endblock breadcrumbs %}
+{% block breadcrumbs %}<a href="/">Home</a> &rarr; <a href="{% url 'portfolio_index' %}">Portfolios</a> &rarr; <a href="{% url 'holding_index' holding.portfolio.id %}">{{ holding.portfolio.name }}</a> &rarr; {{ holding.full_name }}{% endblock breadcrumbs %}
 
 {% block content %}
 
@@ -13,9 +13,9 @@
   <tr>
     <th>Type</th>
     <th>Date</th>
-    <th>Quantity</th>
-    <th>Amount</th>
-    <th>Commission</th>
+    <th class="align-right">Quantity</th>
+    <th class="align-right">Value</th>
+    <th class="align-right">Commission</th>
     <th>Comment</th>
   </tr>
   {% for transaction in transactions %}
@@ -23,7 +23,7 @@
     <td>{{ transaction.get_type_display }}</td>
     <td>{{ transaction.date_transacted|date:"m/d/Y" }}</td>
     <td class="align-right">{{ transaction.quantity }}</td>
-    <td class="align-right">${{ transaction.price|floatformat:2 }}</td>
+    <td class="align-right">${{ transaction.value|floatformat:2 }}</td>
     <td class="align-right">${{ transaction.commission|floatformat:2 }}</td>
     <td>{{ transaction.comment|default_if_none:"" }}</td>
   </tr>

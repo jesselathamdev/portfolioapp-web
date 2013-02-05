@@ -85,7 +85,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'portfolioapp.apps.middleware.ProfilerMiddleware',
+    'portfolioapp.apps.core.middleware.ProfilerMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 
     # Uncomment the next line for simple clickjacking protection:
@@ -118,6 +118,7 @@ INSTALLED_APPS = (
     'portfolioapp.apps.profiles',
     'portfolioapp.apps.portfolios',
     'portfolioapp.apps.markets',
+    'portfolioapp.apps.core',
 
     # development tools
     'south',

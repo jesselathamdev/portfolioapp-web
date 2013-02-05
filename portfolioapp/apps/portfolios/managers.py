@@ -1,6 +1,9 @@
+# portfolios/managers.py
 from django.db import models
 
-class PortfolioManager(models.Manager):
+from portfolioapp.apps.core import mixins
+
+class PortfolioManager(models.Manager, mixins.ORMMixin):
     def detailed_view(self, user_id):
         """
         Returns a query that is used for the detailed list view with custom logic at the database
@@ -13,7 +16,7 @@ class PortfolioManager(models.Manager):
             SELECT
                 pp.id,
                 pp.name,
-                COALESCE(SUM(pt.quantity*pt.cost), 0) as book_value
+                COALESCE(SUM(pt.quantity*pt.value), 0) as book_value
             FROM
                 portfolios_portfolio pp
                 LEFT JOIN portfolios_holding ph ON pp.id = ph.portfolio_id
@@ -33,7 +36,7 @@ class PortfolioManager(models.Manager):
         return portfolios
 
 
-class HoldingManager(models.Manager):
+class HoldingManager(models.Manager, mixins.ORMMixin):
     def detailed_view(self, portfolio_id):
         """
         Returns a query that is used for the detailed list view with custom logic at the database
@@ -45,28 +48,30 @@ class HoldingManager(models.Manager):
             SELECT
                 ph.id,
                 ph.name,
-                ph.market,
                 ph.symbol,
-                (SELECT 45.00) as last_price,
+                mm.acr,
+                23.00 as last_price,
                 COALESCE(SUM(pt.quantity), 0) as total_quantity,
-                COALESCE(AVG(pt.cost), 0) as avg_cost,
-                COALESCE(MAX(pt.cost), 0) as max_cost,
-                COALESCE(MIN(pt.cost), 0) as min_cost,
-                COALESCE(SUM(pt.quantity * pt.cost), 0) as book_value,
-                (COALESCE(SUM(pt.quantity), 0) * (SELECT 45)) as market_value,
-                2.00 as net_gain_dollar,
-                0.0025 as net_gain_percent
+                COALESCE(AVG(pt.value), 0) as avg_cost,
+                COALESCE(MAX(pt.value), 0) as max_cost,
+                COALESCE(MIN(pt.value), 0) as min_cost,
+                COALESCE(SUM(pt.quantity * pt.value), 0) as book_value,
+                (COALESCE(SUM(pt.quantity), 0) * 23.00) as market_value,
+		COALESCE(SUM(pt.quantity) * 23.00 - SUM(pt.quantity * pt.value), 0) as net_gain_dollar,
+		COALESCE((SUM(pt.quantity) * 23.00 - SUM(pt.quantity * pt.value)) / SUM(pt.quantity * pt.value) * 100, 0) as net_gain_percent
             FROM
                 portfolios_holding ph
                 LEFT JOIN portfolios_transaction pt ON ph.id = pt.holding_id
                 INNER JOIN portfolios_portfolio pp ON pp.id = ph.portfolio_id
+                INNER JOIN markets_market mm on ph.market_id = mm.id
             WHERE pp.id = %s
-            GROUP BY ph.id
+            GROUP BY ph.id, mm.acr
             ORDER BY ph.name''', [portfolio_id])
 
         holdings = []
         for row in cursor.fetchall():
-            holding = self.model(id=row[0], name=row[1], market=row[2], symbol=row[3])
+            holding = self.model(id=row[0], name=row[1], symbol=row[2])
+            holding.market_name = row[3]
             holding.last_price = row[4]
             holding.total_quantity = row[5]
             holding.avg_cost = row[6]

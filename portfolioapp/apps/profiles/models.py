@@ -1,6 +1,8 @@
 # profiles/models.py
 from django.db import models
-from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager, PermissionsMixin)
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+
+from portfolioapp.apps.core.mixins import TimeStampMixin
 
 class UserManager(BaseUserManager):
     def create_user(self, email, first_name, last_name, password=None):
@@ -32,7 +34,7 @@ class UserManager(BaseUserManager):
         return self.get(email=email)
 
 
-class User(AbstractBaseUser, PermissionsMixin):
+class User(AbstractBaseUser, PermissionsMixin, TimeStampMixin):
     email = models.EmailField(verbose_name='email address', unique=True, db_index=True)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
@@ -40,9 +42,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
-
-    date_created = models.DateTimeField(auto_now_add=True, blank=False)
-    date_updated = models.DateTimeField(auto_now=True, blank=False)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ('first_name', 'last_name',)
