@@ -47,40 +47,45 @@ class HoldingManager(models.Manager, mixins.ORMMixin):
         cursor.execute('''
             SELECT
                 ph.id,
-                ph.name,
-                ph.symbol,
+                ms.name,
+                ms.symbol,
                 mm.acr,
-                23.00 as last_price,
+                ms.last_price,
+                ms.date_last_price_updated,
                 COALESCE(SUM(pt.quantity), 0) as total_quantity,
                 COALESCE(AVG(pt.value), 0) as avg_cost,
                 COALESCE(MAX(pt.value), 0) as max_cost,
                 COALESCE(MIN(pt.value), 0) as min_cost,
                 COALESCE(SUM(pt.quantity * pt.value), 0) as book_value,
-                (COALESCE(SUM(pt.quantity), 0) * 23.00) as market_value,
-		COALESCE(SUM(pt.quantity) * 23.00 - SUM(pt.quantity * pt.value), 0) as net_gain_dollar,
-		COALESCE((SUM(pt.quantity) * 23.00 - SUM(pt.quantity * pt.value)) / SUM(pt.quantity * pt.value) * 100, 0) as net_gain_percent
+                (COALESCE(SUM(pt.quantity), 0) * ms.last_price) as market_value,
+                COALESCE(SUM(pt.quantity) * ms.last_price - SUM(pt.quantity * pt.value), 0) as net_gain_dollar,
+                COALESCE((SUM(pt.quantity) * ms.last_price - SUM(pt.quantity * pt.value)) / SUM(pt.quantity * pt.value) * 100, 0) as net_gain_percent
             FROM
                 portfolios_holding ph
                 LEFT JOIN portfolios_transaction pt ON ph.id = pt.holding_id
                 INNER JOIN portfolios_portfolio pp ON pp.id = ph.portfolio_id
                 INNER JOIN markets_market mm on ph.market_id = mm.id
+                INNER JOIN markets_stock ms on ph.stock_id = ms.id
             WHERE pp.id = %s
-            GROUP BY ph.id, mm.acr
-            ORDER BY ph.name''', [portfolio_id])
+            GROUP BY ph.id, ms.name, ms.symbol, mm.acr, ms.last_price, ms.date_last_price_updated
+            ORDER BY ms.name''', [portfolio_id])
 
         holdings = []
         for row in cursor.fetchall():
-            holding = self.model(id=row[0], name=row[1], symbol=row[2])
-            holding.market_name = row[3]
+            holding = self.model(id=row[0])
+            holding.stock_name = row[1]
+            holding.stock_symbol = row[2]
+            holding.market_code = row[3]
             holding.last_price = row[4]
-            holding.total_quantity = row[5]
-            holding.avg_cost = row[6]
-            holding.max_cost = row[7]
-            holding.min_cost = row[8]
-            holding.book_value = row[9]
-            holding.market_value = row[10]
-            holding.net_gain_dollar = row[11]
-            holding.net_gain_percent = row[12]
+            holding.date_last_price_updated = row[5]
+            holding.total_quantity = row[6]
+            holding.avg_cost = row[7]
+            holding.max_cost = row[8]
+            holding.min_cost = row[9]
+            holding.book_value = row[10]
+            holding.market_value = row[11]
+            holding.net_gain_dollar = row[12]
+            holding.net_gain_percent = row[13]
             holdings.append(holding)
 
         return holdings

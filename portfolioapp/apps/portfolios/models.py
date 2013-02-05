@@ -5,7 +5,7 @@ from django.conf import settings
 from django.db import models
 
 from .managers import PortfolioManager, HoldingManager
-from portfolioapp.apps.markets.models import Market
+from portfolioapp.apps.markets.models import Market, Stock
 from portfolioapp.apps.core.mixins import TimeStampMixin
 
 class Portfolio(TimeStampMixin, models.Model):
@@ -20,20 +20,16 @@ class Portfolio(TimeStampMixin, models.Model):
 
 class Holding(TimeStampMixin, models.Model):
     portfolio = models.ForeignKey(Portfolio)
-    name = models.CharField(max_length=250)
     market = models.ForeignKey(Market, default=1)
-    symbol = models.CharField(max_length=10)
+    stock = models.ForeignKey(Stock, default=1)
 
     objects = HoldingManager()
 
     def __unicode__(self):
-        return self.name + " (" + self.market.name + ":" + self.symbol + ")"
-
-    def market_symbol(self):
-        return '%s:%s' % (self.market.acr, self.symbol)
+        return self.full_name()
 
     def full_name(self):
-        return '%s (%s:%s)' % (self.name, self.symbol, self.market.acr)
+        return '%s (%s:%s)' % (self.stock.name, self.stock.symbol, self.market.acr)
 
 
 class Transaction(TimeStampMixin, models.Model):
