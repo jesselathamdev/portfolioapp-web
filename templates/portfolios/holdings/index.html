@@ -11,40 +11,46 @@
 
 {% if holdings %}
 <table class="table">
-  <tr>
-    <th>Name</th>
-    <th class="align-right">Last Price</th>
-    <th class="align-right">Position</th>
-    <th class="align-right">Book Value<br /><span class="small">Avg Cost</span></th>
-    <th class="align-right">Net Gain ($)<br /><span class="small">(%)</span></th>
-    <th class="align-right">Market Value</th>
-    <th class="align-right">Portfolio Makeup</th>
-  </tr>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th class="align-right">Last Price</th>
+      <th class="align-right">Position</th>
+      <th class="align-right">Book Value<br /><span class="small">Avg Cost</span></th>
+      <th class="align-right">Net Gain ($)<br /><span class="small">(%)</span></th>
+      <th class="align-right">Market Value</th>
+      <th class="align-right">Portfolio Makeup</th>
+    </tr>
+  </thead>
+  <tbody>
   {% for holding in holdings %}
-  <tr>
-    <td><a href="{% url 'transaction_index' portfolio.id holding.id %}">{{ holding.stock_name }} ({{ holding.stock_symbol }}:{{ holding.market_code }})</a></td>
-    <td class="align-right">${{ holding.last_price|floatformat:2|intcomma }}<br /><span class="small">{{ holding.date_last_price_updated }}</span></td>
-    <td class="align-right">{{ holding.total_quantity|default_if_none:"0.00"|floatformat:5|intcomma }}</td>
-    <td class="align-right">${{ holding.book_value|floatformat:2|intcomma }}<br /><span class="small">${{ holding.avg_cost|default_if_none:"0.00"|floatformat:2|intcomma }}</span></td>
-    <td {% if holding.market_value > holding.book_value %}class="align-right indicator-gain"{% elif holding.market_value < holding.book_value %}class="align-right indicator-loss"{% else %}class="align-right"{% endif %}>${{ holding.net_gain_dollar|floatformat:2|intcomma }}<br /><span class="small">{{ holding.net_gain_percent|floatformat:2|intcomma }}%</span></td>
-    <td class="align-right">${{ holding.market_value|floatformat:2|intcomma }}</td>
-    <td class="align-right">32.33%</td>
-  </tr>
+    <tr>
+      <td><a href="{% url 'transaction_index' portfolio.id holding.id %}">{{ holding.stock_name }} ({{ holding.stock_symbol }}:{{ holding.market_code }})</a></td>
+      <td class="align-right">${{ holding.last_price|floatformat:2|intcomma }}<br /><span class="small">{{ holding.date_last_price_updated }}</span></td>
+      <td class="align-right">{{ holding.total_quantity|default_if_none:"0.00"|floatformat:5|intcomma }}</td>
+      <td class="align-right">${{ holding.book_value|floatformat:2|intcomma }}<br /><span class="small">${{ holding.avg_cost|default_if_none:"0.00"|floatformat:2|intcomma }}</span></td>
+      <td {% if holding.market_value > holding.book_value %}class="align-right indicator-gain"{% elif holding.market_value < holding.book_value %}class="align-right indicator-loss"{% else %}class="align-right"{% endif %}>${{ holding.net_gain_dollar|floatformat:2|intcomma }}<br /><span class="small">{{ holding.net_gain_percent|floatformat:2|intcomma }}%</span></td>
+      <td class="align-right">${{ holding.market_value|floatformat:2|intcomma }}</td>
+      <td class="align-right">32.33%</td>
+    </tr>
   {% endfor %}
-  <tr>
-    <td colspan="3">Cash</td>
-    <td class="align-right">$100.32</td>
-    <td>&nbsp;</td>
-    <td class="align-right">$100.32</td>
-    <td class="align-right">3.00%</td>
-  </tr>
-  <tr>
-    <td colspan="3"><strong>Total</strong></td>
-    <td class="align-right"><strong>$3456.33</strong></td>
-    <td>&nbsp;</td>
-    <td class="align-right"><strong>$3456.33</strong></td>
-    <td class="align-right">100%</td>
-  </tr>
+  </tbody>
+  <tfoot>
+{#    <tr>#}
+{#      <td colspan="3">Cash</td>#}
+{#      <td class="align-right">$100.32</td>#}
+{#      <td>&nbsp;</td>#}
+{#      <td class="align-right">$100.32</td>#}
+{#      <td class="align-right">3.00%</td>#}
+{#    </tr>#}
+    <tr>
+      <td colspan="3"><strong>Total</strong></td>
+      <td class="align-right"><strong>$3456.33</strong></td>
+      <td>&nbsp;</td>
+      <td class="align-right"><strong>$3456.33</strong></td>
+      <td class="align-right">100%</td>
+    </tr>
+  </tfoot>
 </table>
 {% else %}
 <p>You currently have no holdings in this portfolio - <a href="{% url 'holding_create' portfolio.id %}">go ahead and add some now!</a></p>
