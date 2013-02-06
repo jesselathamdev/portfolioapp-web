@@ -19,7 +19,7 @@ class Market(TimeStampMixin, models.Model):
 
 class Stock(TimeStampMixin, models.Model):
     name = models.CharField(max_length=250, blank=False) # ex: BlackBerry Inc., Microsoft Inc.
-    symbol = models.CharField(max_length=5, blank=False) # ex: BB:TSX, MSFT:NASDAQ
+    symbol = models.CharField(max_length=8, blank=False) # ex: BB:TSX, MSFT:NASDAQ
     last_price = models.DecimalField(default=0.0, decimal_places=2, max_digits=6)
     date_last_price_updated = models.DateTimeField(default=datetime.now())
     market = models.ForeignKey(Market)
