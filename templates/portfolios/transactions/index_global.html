@@ -1,0 +1,39 @@
+{% extends "base_two_columns.html" %}
+{% load humanize %}
+
+{% block title %}Transactions{% endblock title %}
+
+{% block breadcrumbs %}<a href="/">Home</a> &rarr; Transactions</a>{% endblock breadcrumbs %}
+
+{% block content %}
+
+<h1>Transactions</h1>
+
+{% if transactions %}
+<table class="table">
+  <tr>
+    <th>Date</th>
+    <th>Type</th>
+    <th>Holding</th>
+    <th class="align-right">Quantity</th>
+    <th class="align-right">Price</th>
+  </tr>
+  {% for transaction in transactions %}
+  <tr>
+    <td>{{ transaction.date_created }}</td>
+    <td>{{ transaction.get_type_display }}</td>
+    <td>{{ transaction.holding.stock.name }} ({{ transaction.holding.stock.symbol }}:{{ transaction.holding.market.acr }})</td>
+    <td class="align-right">{{ transaction.quantity|floatformat:2|intcomma }}</td>
+    <td class="align-right">${{ transaction.value|floatformat:2|intcomma }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+<p>You currently have no transactions.</p>
+{% endif %}
+
+{% endblock content %}
+
+{% block sidebar %}
+Sidebar
+{% endblock sidebar %}

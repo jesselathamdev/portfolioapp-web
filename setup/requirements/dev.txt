@@ -13,7 +13,7 @@ fake-factory==0.2
 ipython==0.13.1
 psycopg2==2.4.6
 python-statsd==1.5.7
-readline==6.2.4.1
 statsd==1.0.0
 wadofstuff-django-serializers==1.1.0
 wsgiref==0.1.2
+yolk==0.4.3

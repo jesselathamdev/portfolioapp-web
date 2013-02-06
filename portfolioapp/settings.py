@@ -120,6 +120,9 @@ INSTALLED_APPS = (
     'portfolioapp.apps.markets',
     'portfolioapp.apps.core',
 
+    # 3rd party addons
+    #
+
     # development tools
     'south',
     'django_extensions',

@@ -27,6 +27,11 @@ def transaction_index(request, portfolio_id, holding_id):
     return render(request, 'portfolios/transactions/index.html', {'holding': holding, 'transactions': transactions})
 
 
+@login_required
+def transaction_list_index(request):
+    transactions = Transaction.objects.select_related('holding__market__name', 'holding__stock__name', 'holding__stock__symbol', 'type', 'date_transacted', 'quantity', 'value').filter(holding__portfolio__user_id=request.user).order_by('date_transacted')
+    return render(request, 'portfolios/transactions/index_global.html', {'transactions': transactions})
+
 
 @login_required
 def portfolio_detail(request, portfolio_id):
@@ -48,7 +53,3 @@ def holding_create(request, portfolio_id):
         return render(request, 'portfolios/holdings/detail.html', {'portfolio': portfolio, 'form': form})
 
 
-@login_required
-def transaction_list_index(request):
-    transactions = Transaction.objects.select_related('holding__name', 'holding__market', 'holding__symbol', 'type', 'date_created', 'quantity', 'cost').filter(holding__portfolio__user_id=request.user).order_by('date_created')
-    return render(request, 'portfolios/transactions/list_index.html', {'transactions': transactions})
