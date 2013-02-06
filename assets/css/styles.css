@@ -38,3 +38,13 @@ table tr td.align-right {
 .indicator-loss {
   color: #ff0000;
 }
+
+/* jquery-ui */
+
+.ui-autocomplete-loading { background:url('../img/ui-anim_basic_16x16.gif') no-repeat right center }
+
+.ui-autocomplete {
+    max-height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }

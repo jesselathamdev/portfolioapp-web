@@ -21,6 +21,9 @@ urlpatterns = patterns('',
     # portfolios
     url(r'^portfolios/', include('portfolioapp.apps.portfolios.urls')),
 
+    # apis
+    url(r'^api/markets/stocks/$', 'portfolioapp.apps.markets.views_api.stock_index', name='api_stock_index'),
+
     # django admin
     url(r'^admin/', include(admin.site.urls), name='admin'),
 )

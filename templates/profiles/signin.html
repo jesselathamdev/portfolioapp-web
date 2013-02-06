@@ -1,36 +1,50 @@
 {% extends "base_one_column.html" %}
 
-{% block title %}Sign In{% endblock title %}
+{% block title %}Sign in{% endblock title %}
+
+{% block breadcrumbs %}<a href="/">Home</a> &rarr; Sign in{% endblock breadcrumbs %}
 
 {% block content %}
 
 <h1>Sign in</h1>
 
 {% if form.errors %}
-<p>Your email address and password didn't match. Please try again.</p>
+<div class="alert alert-error">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <strong>Whoops!</strong> Your email address and password didn't match. Please try again.
+</div>
 {% endif %}
+
+<p>&nbsp;</p>
 
 <form method="post" action="{% url 'django.contrib.auth.views.login' %}" class="form-horizontal">
   {% csrf_token %}
   <div class="control-group">
     <label class="control-label" for="{{ form.username.auto_id }}">Email</label>
     <div class="controls">
-      <input type="text" id="{{ form.username.auto_id }}" placeholder="Email" name="{{ form.username.html_name }}">
+      <input type="text" id="{{ form.username.auto_id }}" name="{{ form.username.html_name }}" placeholder="email address...">
     </div>
   </div>
   <div class="control-group">
     <label class="control-label" for="{{ form.password.auto_id }}">Password</label>
     <div class="controls">
-      <input type="password" id="{{ form.password.auto_id }}" placeholder="Password" name="{{ form.password.html_name }}">
+      <input type="password" id="{{ form.password.auto_id }}" name="{{ form.password.html_name }}" placeholder="password...">
     </div>
   </div>
   <div class="control-group">
     <div class="controls">
       <input type="submit" value="Sign in" class="btn btn-primary" />
-      <input type="hidden" name="next" value="{{ next }}" />
     </div>
   </div>
 
 </form>
 
 {% endblock content %}
+
+{% block script %}
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('#id_username').focus();
+  });
+</script>
+{% endblock script %}

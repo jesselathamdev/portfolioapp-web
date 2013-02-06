@@ -21,11 +21,11 @@ def profile_create(request):
                     login(request, user)
                     return HttpResponseRedirect(reverse('portfolio_index'))
         else:
-            return render(request, 'profiles/create.html', {'form': form})
+            return render(request, 'profiles/signup.html', {'form': form})
 
     else:
         form = CreateUserProfileForm()
-        return render(request, 'profiles/create.html', {'form': form})
+        return render(request, 'profiles/signup.html', {'form': form})
 
 
 @login_required

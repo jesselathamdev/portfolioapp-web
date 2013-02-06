@@ -7,7 +7,7 @@
 
 {% block content %}
 
-<h1>Holdings</h1>
+<h1>Holdings <span class="link-add">( <a href="{% url 'holding_create' portfolio.id %}">add</a> )</span></h1>
 
 {% if holdings %}
 <table class="table">
