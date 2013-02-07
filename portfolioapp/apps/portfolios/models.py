@@ -20,7 +20,6 @@ class Portfolio(TimeStampMixin, models.Model):
 
 class Holding(TimeStampMixin, models.Model):
     portfolio = models.ForeignKey(Portfolio)
-    market = models.ForeignKey(Market, default=1)
     stock = models.ForeignKey(Stock, default=1)
 
     objects = HoldingManager()
@@ -29,7 +28,7 @@ class Holding(TimeStampMixin, models.Model):
         return self.full_name()
 
     def full_name(self):
-        return '%s (%s:%s)' % (self.stock.name, self.stock.symbol, self.market.acr)
+        return '%s (%s:%s)' % (self.stock.name, self.stock.symbol, self.stock.market.acr)
 
 
 class Transaction(TimeStampMixin, models.Model):

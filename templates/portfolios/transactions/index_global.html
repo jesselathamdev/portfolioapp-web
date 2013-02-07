@@ -22,7 +22,7 @@
   <tr>
     <td>{{ transaction.date_created }}</td>
     <td>{{ transaction.get_type_display }}</td>
-    <td>{{ transaction.holding.stock.name }} ({{ transaction.holding.stock.symbol }}:{{ transaction.holding.market.acr }})</td>
+    <td>{{ transaction.holding.stock.name }} ({{ transaction.holding.stock.symbol }}:{{ transaction.holding.stock.market.acr }})</td>
     <td class="align-right">{{ transaction.quantity|floatformat:2|intcomma }}</td>
     <td class="align-right">${{ transaction.value|floatformat:2|intcomma }}</td>
   </tr>

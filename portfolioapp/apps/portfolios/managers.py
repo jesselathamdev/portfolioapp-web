@@ -64,8 +64,8 @@ class HoldingManager(models.Manager, mixins.ORMMixin):
                 portfolios_holding ph
                 LEFT JOIN portfolios_transaction pt ON ph.id = pt.holding_id
                 INNER JOIN portfolios_portfolio pp ON pp.id = ph.portfolio_id
-                INNER JOIN markets_market mm on ph.market_id = mm.id
                 INNER JOIN markets_stock ms on ph.stock_id = ms.id
+                INNER JOIN markets_market mm on ms.market_id = mm.id
             WHERE pp.id = %s
             GROUP BY ph.id, ms.name, ms.symbol, mm.acr, ms.last_price, ms.date_last_price_updated
             ORDER BY ms.name''', [portfolio_id])

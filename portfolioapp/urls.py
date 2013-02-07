@@ -16,7 +16,7 @@ urlpatterns = patterns('',
     url(r'^$', views.index, name="home_index"),
 
     # transactions through portfolios
-    url(r'^transactions/', 'portfolioapp.apps.portfolios.views.transaction_list_index', name='transaction_list_index'),
+    url(r'^transactions/', 'portfolioapp.apps.portfolios.views.transaction_index_global', name='transaction_index_global'),
 
     # portfolios
     url(r'^portfolios/', include('portfolioapp.apps.portfolios.urls')),

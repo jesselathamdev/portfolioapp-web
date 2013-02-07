@@ -55,8 +55,7 @@
         "fields": {
             "date_updated": "2013-01-20T02:31:14.075Z", 
             "date_created": "2013-01-20T02:31:14.075Z", 
-            "stock": 6268,
-            "market": 1, 
+            "stock": 6268, 
             "portfolio": 1
         }
     }, 
@@ -66,8 +65,7 @@
         "fields": {
             "date_updated": "2013-01-20T02:32:15.708Z", 
             "date_created": "2013-01-20T02:32:15.708Z", 
-            "stock": 6429,
-            "market": 1,
+            "stock": 6429, 
             "portfolio": 1
         }
     }, 
@@ -77,8 +75,7 @@
         "fields": {
             "date_updated": "2013-01-20T02:32:33.946Z", 
             "date_created": "2013-01-20T02:32:33.946Z", 
-            "stock": 8142,
-            "market": 1, 
+            "stock": 8142, 
             "portfolio": 1
         }
     }, 

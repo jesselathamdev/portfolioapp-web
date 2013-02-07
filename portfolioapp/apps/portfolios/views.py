@@ -25,7 +25,12 @@ def holding_create(request, portfolio_id):
     portfolio = Portfolio.objects.get(pk=portfolio_id)
 
     if request.method == 'POST':
-        return HttpResponse(request)
+        form = CreateHolding(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('holding_index', args=(portfolio_id,)))
+        else:
+            return render(request, 'portfolios/holdings/create.html', {'form': form})
     else:
         form = CreateHolding()
         return render(request, 'portfolios/holdings/create.html', {'portfolio': portfolio, 'form': form })
@@ -39,8 +44,8 @@ def transaction_index(request, portfolio_id, holding_id):
 
 
 @login_required
-def transaction_list_index(request):
-    transactions = Transaction.objects.select_related('holding__market__name', 'holding__stock__name', 'holding__stock__symbol', 'type', 'date_transacted', 'quantity', 'value').filter(holding__portfolio__user_id=request.user).order_by('date_transacted')
+def transaction_index_global(request):
+    transactions = Transaction.objects.select_related('holding__stock__name', 'holding__stock__symbol', 'holding__stock__market__acr', 'type', 'date_transacted', 'quantity', 'value').filter(holding__portfolio__user_id=request.user).order_by('date_transacted')
     return render(request, 'portfolios/transactions/index_global.html', {'transactions': transactions})
 
 
