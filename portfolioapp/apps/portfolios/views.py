@@ -23,7 +23,12 @@ def holding_index(request, portfolio_id):
 @login_required
 def holding_create(request, portfolio_id):
     portfolio = Portfolio.objects.get(pk=portfolio_id)
-    return render(request, 'portfolios/holdings/create.html', {'portfolio': portfolio})
+
+    if request.method == 'POST':
+        return HttpResponse(request)
+    else:
+        form = CreateHolding()
+        return render(request, 'portfolios/holdings/create.html', {'portfolio': portfolio, 'form': form })
 
 
 @login_required
@@ -43,8 +48,6 @@ def transaction_list_index(request):
 def portfolio_detail(request, portfolio_id):
     portfolio = get_object_or_404(Portfolio, pk=portfolio_id)
     return render(request, 'portfolios/portfolios/detail.html', {'portfolio': portfolio})
-
-
 
 
 #@login_required

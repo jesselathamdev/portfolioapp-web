@@ -10,20 +10,21 @@
 
 <p>&nbsp;</p>
 
-<form action="" class="form-horizontal">
+<form method="post" action="" class="form-horizontal">
+  {% csrf_token %}
   <div class="control-group">
     <label class="control-label" for="stocks">Stock: </label>
     <div class="controls">
-      <input id="stocks" type="text" placeholder="examples: BlackBerry:TSX, Microsoft Corp:NASDAQ" class="input-xxlarge">
+      <input id="stock_display" type="text" name="stock_display" class="input-xxlarge" placeholder="examples: BlackBerry:TSX, Microsoft Corp:NASDAQ" />
     </div>
   </div>
   <div class="control-group">
     <div class="controls">
-      <input type="submit" class="btn btn-primary" value="Create holding" />
+      <input type="submit" class="btn btn-primary" value="Add holding" />
     </div>
   </div>
+  <input type="hidden" id="stock_id" name="stock_id" />
 </form>
-
 
 {% endblock content %}
 

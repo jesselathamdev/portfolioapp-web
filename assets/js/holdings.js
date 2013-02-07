@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  $('#stocks').focus();
+  $('#stock_display').focus();
 });
 
 // creates custom HTML in lookup list; also solves for custom autocomplete functionality across all autocompletes on a page rather than just one
@@ -7,22 +7,25 @@ $(document).ready(function(){
 
 
 // simple example, no modification of returned results
-$(function(){
-  $('#stocks').autocomplete({
-    source: '/api/markets/stocks',
-    minLength: 2,
-    autoFocus: true,
-    delay: 200
-  });
-});
+//$(function(){
+//  $('#stock_display').autocomplete({
+//    source: '/api/markets/stocks',
+//    minLength: 2,
+//    autoFocus: true,
+//    delay: 200
+//  });
+//});
 
 // more complex which customizes the results in the select
 $(function(){
-  $('#stocks').autocomplete({
+  $('#stock_display').autocomplete({
     source: '/api/markets/stocks',
     minLength: 2,
     autoFocus: true,
-    delay: 200
+    delay: 200,
+    select:function(event,ui){
+        $("#stock_id").val(ui.item.id)
+    }
   })
   .data('uiAutocomplete')._renderItem = function(ul, item){
     item.label = item.label.replace(new RegExp("(?![^&;]+;)(?!<[^<>]*)(" + $.ui.autocomplete.escapeRegex(this.term) + ")(?![^<>]*>)(?![^&;]+;)", "gi"), "<strong>$1</strong>");

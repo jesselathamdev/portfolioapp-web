@@ -1,7 +1,14 @@
 # portfolios/forms.py
-from django.forms import ModelForm
+from django import forms
+
 from .models import Holding
 
-class CreateHolding(ModelForm):
+class CreateHolding(forms.ModelForm):
+    stock_id = forms.CharField(max_length=100)
+
     class Meta:
         model = Holding
+        fields = ('stock_id',)
+
+
+
