@@ -31,7 +31,7 @@
       <td class="align-right">${{ holding.book_value|floatformat:2|intcomma }}<br /><span class="small">${{ holding.avg_cost|default_if_none:"0.00"|floatformat:2|intcomma }}</span></td>
       <td {% if holding.market_value > holding.book_value %}class="align-right indicator-gain"{% elif holding.market_value < holding.book_value %}class="align-right indicator-loss"{% else %}class="align-right"{% endif %}>${{ holding.net_gain_dollar|floatformat:2|intcomma }}<br /><span class="small">{{ holding.net_gain_percent|floatformat:2|intcomma }}%</span></td>
       <td class="align-right">${{ holding.market_value|floatformat:2|intcomma }}</td>
-      <td class="align-right">32.33%</td>
+      <td class="align-right">{{ holding.portfolio_makeup_percent|floatformat:2 }}%</td>
     </tr>
   {% endfor %}
   </tbody>

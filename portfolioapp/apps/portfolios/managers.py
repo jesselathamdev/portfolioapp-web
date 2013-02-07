@@ -45,30 +45,48 @@ class HoldingManager(models.Manager, mixins.ORMMixin):
 
         cursor = connection.cursor()
         cursor.execute('''
-            SELECT
-                ph.id,
-                ms.name,
-                ms.symbol,
-                mm.acr,
-                ms.last_price,
-                ms.date_last_price_updated,
-                COALESCE(SUM(pt.quantity), 0) as total_quantity,
-                COALESCE(AVG(NULLIF(pt.value, 0)), 0) as avg_cost,
-                COALESCE(MAX(pt.value), 0) as max_cost,
-                COALESCE(MIN(NULLIF(pt.value, 0)), 0) as min_cost,
-                COALESCE(SUM(pt.quantity * pt.value), 0) as book_value,
-                (COALESCE(SUM(pt.quantity), 0) * ms.last_price) as market_value,
-                COALESCE(SUM(pt.quantity) * ms.last_price - SUM(pt.quantity * pt.value), 0) as net_gain_dollar,
-                COALESCE((SUM(pt.quantity) * ms.last_price - SUM(pt.quantity * pt.value)) / SUM(pt.quantity * pt.value) * 100, 0) as net_gain_percent
-            FROM
-                portfolios_holding ph
-                LEFT JOIN portfolios_transaction pt ON ph.id = pt.holding_id
-                INNER JOIN portfolios_portfolio pp ON pp.id = ph.portfolio_id
-                INNER JOIN markets_stock ms on ph.stock_id = ms.id
-                INNER JOIN markets_market mm on ms.market_id = mm.id
-            WHERE pp.id = %s
-            GROUP BY ph.id, ms.name, ms.symbol, mm.acr, ms.last_price, ms.date_last_price_updated
-            ORDER BY ms.name''', [portfolio_id])
+            SELECT id,
+                name,
+                symbol,
+                acr,
+                last_price,
+                date_last_price_updated,
+                total_quantity,
+                avg_cost,
+                max_cost,
+                min_cost,
+                book_value,
+                market_value,
+                net_gain_dollar,
+                net_gain_percent,
+                market_value/sum(market_value) OVER () * 100 AS portfolio_makeup_percent
+            FROM (
+                SELECT
+                    ph.id,
+                    ms.name,
+                    ms.symbol,
+                    mm.acr,
+                    ms.last_price,
+                    ms.date_last_price_updated,
+                    COALESCE(SUM(pt.quantity), 0) as total_quantity,
+                    COALESCE(AVG(NULLIF(pt.value, 0)), 0) as avg_cost,
+                    COALESCE(MAX(pt.value), 0) as max_cost,
+                    COALESCE(MIN(NULLIF(pt.value, 0)), 0) as min_cost,
+                    COALESCE(SUM(pt.quantity * pt.value), 0) as book_value,
+                    (COALESCE(SUM(pt.quantity), 0) * ms.last_price) as market_value,
+                    COALESCE(SUM(pt.quantity) * ms.last_price - SUM(pt.quantity * pt.value), 0) as net_gain_dollar,
+                    COALESCE((SUM(pt.quantity) * ms.last_price - SUM(pt.quantity * pt.value)) / SUM(pt.quantity * pt.value) * 100, 0) as net_gain_percent
+
+                FROM
+                    portfolios_holding ph
+                    LEFT JOIN portfolios_transaction pt ON ph.id = pt.holding_id
+                    INNER JOIN portfolios_portfolio pp ON pp.id = ph.portfolio_id
+                    INNER JOIN markets_stock ms on ph.stock_id = ms.id
+                    INNER JOIN markets_market mm on ms.market_id = mm.id
+                WHERE pp.id = %s
+                GROUP BY ph.id, ms.name, ms.symbol, mm.acr, ms.last_price, ms.date_last_price_updated
+            ) as holdings
+            ORDER BY name''', [portfolio_id])
 
         holdings = []
         for row in cursor.fetchall():
@@ -86,6 +104,7 @@ class HoldingManager(models.Manager, mixins.ORMMixin):
             holding.market_value = row[11]
             holding.net_gain_dollar = row[12]
             holding.net_gain_percent = row[13]
+            holding.portfolio_makeup_percent = row[14]
             holdings.append(holding)
 
         return holdings
