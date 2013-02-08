@@ -56,3 +56,11 @@ class CreateUserProfileForm(ModelForm):
         self.fields['password2'].initial = ''
         self.fields['first_name'].initial = ''
         self.fields['last_name'].initial = ''
+
+
+class LoginForm(ModelForm):
+    username = forms.CharField(max_length=75)
+
+    class Meta:
+        model = get_user_model()
+        fields = ('username', 'password')

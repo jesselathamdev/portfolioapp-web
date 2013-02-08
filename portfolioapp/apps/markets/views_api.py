@@ -18,7 +18,7 @@ def stock_index(request):
         for stock in stocks:
             stock_json = {}
             stock_json['id'] = stock.id
-            stock_json['label'] = '%s (%s:%s)' % (stock.name, stock.symbol, stock.market.acr)
+#            stock_json['label'] = '%s (%s:%s)' % (stock.name, stock.symbol, stock.market.acr)
             stock_json['value'] = '%s (%s:%s)' % (stock.name, stock.symbol, stock.market.acr)
             results.append(stock_json)
         data = json.dumps(results)

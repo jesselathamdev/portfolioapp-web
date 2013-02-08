@@ -20,5 +20,8 @@ urlpatterns = patterns('',
     url(r'^admin/', include('portfolioapp.apps.admin.urls')),
 
     # apis
-    url(r'^api/markets/stocks/$', 'portfolioapp.apps.markets.views_api.stock_index', name='api_stock_index'),
+    url(r'^api/markets/stocks/?', 'portfolioapp.apps.markets.views_api.stock_index', name='api_stock_index'),
+
+    # helpers
+    url(r'^dummy/?', 'portfolioapp.apps.core.views.dummy', name='dummy'),
 )

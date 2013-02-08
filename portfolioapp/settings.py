@@ -69,6 +69,17 @@ STATICFILES_FINDERS = (
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.debug',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.media',
+    'django.core.context_processors.static',
+    'django.core.context_processors.tz',
+    'django.contrib.messages.context_processors.messages',
+    'portfolioapp.apps.core.context_processors.global_login_form',
+)
+
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '9pl-a5047^pp6md04t!2a5r8a6(bh%@)oxc5jc370ty-w*(*23'
 

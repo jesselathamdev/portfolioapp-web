@@ -17,3 +17,4 @@ statsd==1.0.0
 wadofstuff-django-serializers==1.1.0
 wsgiref==0.1.2
 yolk==0.4.3
+gunicorn==0.17.2

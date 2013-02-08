@@ -1,7 +1,5 @@
 from django.conf.urls import patterns, url
 
-from .views import portfolio_index, portfolio_detail, holding_index, transaction_index, holding_create
-
 urlpatterns = patterns('',
     url(r'^$', 'portfolioapp.apps.portfolios.views.portfolio_index', name='portfolio_index'),
     url(r'^(?P<portfolio_id>\d+)/$', 'portfolioapp.apps.portfolios.views.portfolio_detail', name='portfolio_detail'),
