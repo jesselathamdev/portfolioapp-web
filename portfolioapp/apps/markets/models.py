@@ -23,3 +23,6 @@ class Stock(TimeStampMixin, models.Model):
     last_price = models.DecimalField(default=0.0, decimal_places=2, max_digits=6)
     date_last_price_updated = models.DateTimeField(default=datetime.now())
     market = models.ForeignKey(Market)
+
+    def __unicode__(self):
+        return '%s:%s' % (self.name, self.symbol)

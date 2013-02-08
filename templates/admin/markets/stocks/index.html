@@ -1,0 +1,26 @@
+{% extends "base_two_columns.html" %}
+
+{% block title %}Stocks - Admin{% endblock title %}
+
+{% block content %}
+{% if stocks %}
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Symbol</th>
+      <th>Market</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for stock in stocks %}
+    <tr>
+      <td>{{ stock.name }}</td>
+      <td>{{ stock.symbol }}</td>
+      <td>{{ stock.market.acr }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+{% endblock content %}

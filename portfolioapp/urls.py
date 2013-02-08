@@ -1,9 +1,4 @@
 from django.conf.urls import patterns, include, url
-from django.contrib import admin
-
-from portfolioapp.apps.home import views
-
-admin.autodiscover()
 
 urlpatterns = patterns('',
     # profiles (sign in, profile, etc)
@@ -13,7 +8,7 @@ urlpatterns = patterns('',
     url(r'^profile/$', 'portfolioapp.apps.profiles.views.profile_edit', name='profile_edit'),
 
     # home page
-    url(r'^$', views.index, name="home_index"),
+    url(r'^$', 'portfolioapp.apps.home.views.index', name='home_index'),
 
     # transactions through portfolios
     url(r'^transactions/', 'portfolioapp.apps.portfolios.views.transaction_index_global', name='transaction_index_global'),
@@ -21,9 +16,9 @@ urlpatterns = patterns('',
     # portfolios
     url(r'^portfolios/', include('portfolioapp.apps.portfolios.urls')),
 
+    # admin
+    url(r'^admin/', include('portfolioapp.apps.admin.urls')),
+
     # apis
     url(r'^api/markets/stocks/$', 'portfolioapp.apps.markets.views_api.stock_index', name='api_stock_index'),
-
-    # django admin
-    url(r'^admin/', include(admin.site.urls), name='admin'),
 )

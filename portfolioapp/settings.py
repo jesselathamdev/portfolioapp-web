@@ -106,7 +106,7 @@ WSGI_APPLICATION = 'portfolioapp.wsgi.application'
 
 INSTALLED_APPS = (
     # django core apps
-    'django.contrib.admin',
+    #'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -119,6 +119,7 @@ INSTALLED_APPS = (
     'portfolioapp.apps.portfolios',
     'portfolioapp.apps.markets',
     'portfolioapp.apps.core',
+    'portfolioapp.apps.admin',
 
     # 3rd party addons
     #
