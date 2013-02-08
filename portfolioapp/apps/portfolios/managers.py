@@ -14,16 +14,29 @@ class PortfolioManager(models.Manager, mixins.ORMMixin):
         cursor = connection.cursor()
         cursor.execute('''
             SELECT
-                pp.id,
-                pp.name,
-                COALESCE(SUM(pt.quantity*pt.value), 0) as book_value
-            FROM
-                portfolios_portfolio pp
-                LEFT JOIN portfolios_holding ph ON pp.id = ph.portfolio_id
-                LEFT JOIN portfolios_transaction pt ON ph.id = pt.holding_id
-            WHERE pp.user_id = %s
-            GROUP BY pp.id
-            ORDER BY pp.name''', [user_id])
+                id,
+                name,
+                COALESCE(SUM(book_value), 0.00) as book_value,
+                COALESCE(SUM(market_value), 0.00) as market_value,
+                COALESCE(SUM(market_value) - SUM(book_value), 0.00) as net_gain_dollar,
+                COALESCE((SUM(market_value) - SUM(book_value)) / NULLIF(SUM(book_value), 0) * 100, 0.00) as net_gain_percent
+
+            FROM (
+                SELECT
+                    pp.id,
+                    pp.name,
+                    COALESCE(SUM(pt.quantity*pt.value), 0.00) as book_value,
+                    (COALESCE(SUM(pt.quantity), 0.00) * ms.last_price) as market_value
+                FROM
+                    portfolios_portfolio pp
+                    LEFT JOIN portfolios_holding ph ON pp.id = ph.portfolio_id
+                    LEFT JOIN portfolios_transaction pt ON ph.id = pt.holding_id
+                    LEFT JOIN markets_stock ms ON ph.stock_id = ms.id
+                WHERE pp.user_id = %s
+                GROUP BY pp.id, pp.name, ms.last_price
+            ) as portfolios
+            GROUP BY id, name
+            ORDER BY name''', [user_id])
 
         # the following maps the arbitrary values back to the original model and then some extra attributes such as total_quantity, total_cost etc
         # mentioned that there may be a potential performance hit somewhere
@@ -31,6 +44,9 @@ class PortfolioManager(models.Manager, mixins.ORMMixin):
         for row in cursor.fetchall():
             portfolio = self.model(id=row[0], name=row[1])
             portfolio.book_value = row[2]
+            portfolio.market_value = row[3]
+            portfolio.net_gain_dollar = row[4]
+            portfolio.net_gain_percent = row[5]
             portfolios.append(portfolio)
 
         return portfolios
@@ -59,7 +75,7 @@ class HoldingManager(models.Manager, mixins.ORMMixin):
                 market_value,
                 net_gain_dollar,
                 net_gain_percent,
-                market_value/sum(market_value) OVER () * 100 AS portfolio_makeup_percent
+                COALESCE(market_value / NULLIF(SUM(market_value) OVER (), 0), 0.00) * 100 AS portfolio_makeup_percent
             FROM (
                 SELECT
                     ph.id,
@@ -68,14 +84,14 @@ class HoldingManager(models.Manager, mixins.ORMMixin):
                     mm.acr,
                     ms.last_price,
                     ms.date_last_price_updated,
-                    COALESCE(SUM(pt.quantity), 0) as total_quantity,
-                    COALESCE(AVG(NULLIF(pt.value, 0)), 0) as avg_cost,
-                    COALESCE(MAX(pt.value), 0) as max_cost,
-                    COALESCE(MIN(NULLIF(pt.value, 0)), 0) as min_cost,
-                    COALESCE(SUM(pt.quantity * pt.value), 0) as book_value,
-                    (COALESCE(SUM(pt.quantity), 0) * ms.last_price) as market_value,
-                    COALESCE(SUM(pt.quantity) * ms.last_price - SUM(pt.quantity * pt.value), 0) as net_gain_dollar,
-                    COALESCE((SUM(pt.quantity) * ms.last_price - SUM(pt.quantity * pt.value)) / SUM(pt.quantity * pt.value) * 100, 0) as net_gain_percent
+                    COALESCE(SUM(pt.quantity), 0.00) as total_quantity,
+                    COALESCE(AVG(NULLIF(pt.value, 0.00)), 0) as avg_cost,
+                    COALESCE(MAX(pt.value), 0.00) as max_cost,
+                    COALESCE(MIN(NULLIF(pt.value, 0)), 0.00) as min_cost,
+                    COALESCE(SUM(pt.quantity * pt.value), 0.00) as book_value,
+                    (COALESCE(SUM(pt.quantity), 0.00) * ms.last_price) as market_value,
+                    COALESCE(SUM(pt.quantity) * ms.last_price - SUM(pt.quantity * pt.value), 0.00) as net_gain_dollar,
+                    COALESCE((SUM(pt.quantity) * ms.last_price - SUM(pt.quantity * pt.value)) / NULLIF(SUM(pt.quantity * pt.value), 0) * 100, 0.00) as net_gain_percent
 
                 FROM
                     portfolios_holding ph
