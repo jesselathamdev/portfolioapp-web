@@ -1,5 +1,6 @@
 # Django settings for portfolioapp project.
 from unipath import Path
+from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -69,14 +70,8 @@ STATICFILES_FINDERS = (
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.contrib.auth.context_processors.auth',
-    'django.core.context_processors.debug',
-    'django.core.context_processors.i18n',
-    'django.core.context_processors.media',
-    'django.core.context_processors.static',
-    'django.core.context_processors.tz',
-    'django.contrib.messages.context_processors.messages',
+TEMPLATE_CONTEXT_PROCESSORS += (
+    'django.core.context_processors.request',
     'portfolioapp.apps.core.context_processors.global_login_form',
 )
 
@@ -87,7 +82,6 @@ SECRET_KEY = '9pl-a5047^pp6md04t!2a5r8a6(bh%@)oxc5jc370ty-w*(*23'
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -133,7 +127,7 @@ INSTALLED_APPS = (
     'portfolioapp.apps.admin',
 
     # 3rd party addons
-    #
+    'endless_pagination',
 
     # development tools
     'south',

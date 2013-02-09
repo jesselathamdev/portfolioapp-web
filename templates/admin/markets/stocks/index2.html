@@ -1,9 +1,11 @@
 {% extends "base_two_columns.html" %}
+{% load endless %}
 
 {% block title %}Stocks - Admin{% endblock title %}
 
 {% block content %}
 {% if stocks %}
+{% paginate stocks %}
 <table class="table">
   <thead>
     <tr>
@@ -22,21 +24,6 @@
   {% endfor %}
   </tbody>
 </table>
-
-<div class="pagination">
-  <span class="step-links">
-    {% if stocks.has_previous %}
-      <a href="?page={{ stocks.previous_page_number }}">Previous</a>
-    {% endif %}
-    <span class="current">
-      Page {{ stocks.number }} of {{ stocks.paginator.num_pages }}.
-    </span>
-    {% if stocks.has_next %}
-      <a href="?page={{ stocks.next_page_number }}">Next</a>
-    {% endif %}
-  </span>
-
-</div>
-
+{% show_pages %}
 {% endif %}
 {% endblock content %}

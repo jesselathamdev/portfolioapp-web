@@ -27,3 +27,10 @@ def stock_index(request):
         paged_stocks = paginator.page(paginator.num_pages)
 
     return render(request, 'admin/markets/stocks/index.html', {'stocks': paged_stocks})
+
+
+@user_passes_test(is_admin)
+def stock_index2(request):
+    stocks = Stock.objects.select_related('stock__name', 'stock__symbol', 'market__acr').order_by('name')
+
+    return render(request, 'admin/markets/stocks/index.html', {'stocks': stocks})

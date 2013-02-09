@@ -45,7 +45,7 @@ def transaction_index(request, portfolio_id, holding_id):
 
 @login_required
 def transaction_index_global(request):
-    transactions = Transaction.objects.select_related('holding__stock__name', 'holding__stock__symbol', 'holding__stock__market__acr', 'type', 'date_transacted', 'quantity', 'value').filter(holding__portfolio__user_id=request.user).order_by('date_transacted')
+    transactions = Transaction.objects.select_related('holding__stock__name', 'holding__stock__symbol', 'holding__stock__market__acr', 'type', 'date_transacted', 'quantity', 'value').filter(holding__portfolio__user_id=request.user).order_by('-date_transacted')
     return render(request, 'portfolios/transactions/index_global.html', {'transactions': transactions})
 
 

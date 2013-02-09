@@ -11,8 +11,8 @@
 {% if transactions %}
 <table class="table">
   <tr>
-    <th>Type</th>
     <th>Date</th>
+    <th>Type</th>
     <th class="align-right">Quantity</th>
     <th class="align-right">Value</th>
     <th class="align-right">Commission</th>
@@ -20,8 +20,8 @@
   </tr>
   {% for transaction in transactions %}
   <tr>
-    <td>{{ transaction.get_type_display }}</td>
     <td>{{ transaction.date_transacted|date:"m/d/Y" }}</td>
+    <td>{{ transaction.get_type_display }}</td>
     <td class="align-right">{{ transaction.quantity }}</td>
     <td class="align-right">${{ transaction.value|floatformat:2 }}</td>
     <td class="align-right">${{ transaction.commission|floatformat:2 }}</td>
