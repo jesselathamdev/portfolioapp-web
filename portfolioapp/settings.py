@@ -68,10 +68,12 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    'dajaxice.finders.DajaxiceFinder',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS += (
     'django.core.context_processors.request',
+    'django.contrib.messages.context_processors.messages',
     'portfolioapp.apps.core.context_processors.global_login_form',
 )
 
@@ -82,6 +84,7 @@ SECRET_KEY = '9pl-a5047^pp6md04t!2a5r8a6(bh%@)oxc5jc370ty-w*(*23'
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
+    'django.template.loaders.eggs.Loader',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -128,6 +131,8 @@ INSTALLED_APPS = (
 
     # 3rd party addons
     'endless_pagination',
+    'dajaxice',
+    'dajax',
 
     # development tools
     'south',

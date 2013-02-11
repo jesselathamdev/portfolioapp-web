@@ -1,0 +1,34 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Symbol</th>
+      <th>Market</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for i in items.object_list %}
+    <tr>
+      <td>{{ i.name }}</td>
+      <td>{{ i.symbol }}</td>
+      <td>{{ i.market.acr }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if items.has_previous %}
+            <a href="#" onclick="Dajaxice.portfolioapp.apps.admin.pagination(Dajax.process,{'p':{{ items.previous_page_number }}})">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ items.number }} of {{ items.paginator.num_pages }}.
+        </span>
+
+        {% if items.has_next %}
+            <a href="#" onclick="Dajaxice.portfolioapp.apps.admin.pagination(Dajax.process,{'p':{{ items.next_page_number }}})">next</a>
+        {% endif %}
+    </span>
+</div>

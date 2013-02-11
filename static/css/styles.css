@@ -1,0 +1,58 @@
+body {
+  background-color: #fbfbfb;
+}
+
+.navbar {
+  height: 70px;
+}
+
+.breadcrumbs {
+  font-size: 12px;
+}
+
+.link-add {
+  font-size: 15px;
+}
+
+.table {
+  font-size: 13px;
+}
+
+table th {
+  background-color: #f1f1f1;
+}
+
+table tr th.align-right,
+table tr td.align-right {
+  text-align: right;
+}
+
+.table .small {
+  font-size: 11px;
+}
+
+.indicator-gain {
+  color: #32cd32;
+}
+
+.indicator-loss {
+  color: #ff0000;
+}
+
+/* jquery-ui */
+
+.ui-autocomplete-loading { background: url('../img/ui-anim_basic_16x16.gif') no-repeat 99% center }
+
+.ui-autocomplete {
+    max-height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.ui-menu
+{
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  color: #333333;
+  line-height: 20px;
+}

@@ -4,26 +4,16 @@
 {% block title %}Stocks - Admin{% endblock title %}
 
 {% block content %}
-{% if stocks %}
-{% paginate stocks %}
-<table class="table">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Symbol</th>
-      <th>Market</th>
-    </tr>
-  </thead>
-  <tbody>
-  {% for stock in stocks %}
-    <tr>
-      <td>{{ stock.name }}</td>
-      <td>{{ stock.symbol }}</td>
-      <td>{{ stock.market.acr }}</td>
-    </tr>
-  {% endfor %}
-  </tbody>
-</table>
-{% show_pages %}
-{% endif %}
+
+<h1>Stocks</h1>
+<p>&nbsp;</p>
+<div id="paginate">
+  {% include page_template %}
+</div>
+
 {% endblock content %}
+
+{% block script %}
+<script src="{{ STATIC_URL }}js/endless-pagination.js"></script>
+<script>$.endlessPaginate({pageSelector: 'div#paginate'});</script>
+{% endblock script %}

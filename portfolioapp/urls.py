@@ -1,5 +1,8 @@
 from django.conf.urls import patterns, include, url
 
+from dajaxice.core import dajaxice_autodiscover, dajaxice_config
+dajaxice_autodiscover()
+
 urlpatterns = patterns('',
     # profiles (sign in, profile, etc)
     url(r'^sign-up/$', 'portfolioapp.apps.profiles.views.profile_create', name='profile_create'),
@@ -24,4 +27,7 @@ urlpatterns = patterns('',
 
     # helpers
     url(r'^dummy/?', 'portfolioapp.apps.core.views.dummy', name='dummy'),
+
+    # dajaxice
+    url(dajaxice_config.dajaxice_url, include('dajaxice.urls')),
 )

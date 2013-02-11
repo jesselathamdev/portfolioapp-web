@@ -1,0 +1,22 @@
+{% load endless %}
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Symbol</th>
+      <th>Market</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% paginate stocks %}
+    {% for stock in stocks %}
+    <tr>
+      <td>{{ stock.name }}</td>
+      <td>{{ stock.symbol }}</td>
+      <td>{{ stock.market.acr }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% show_pages %}
