@@ -49,10 +49,19 @@ table tr td.align-right {
     overflow-x: hidden;
 }
 
-.ui-menu
-{
+.ui-menu {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
   color: #333333;
   line-height: 20px;
+}
+
+table .pagination a {
+  font-size: 22px;
+  vertical-align: middle;
+}
+
+table .pagination input {
+  font-size: 13px;
+  width: 40px;
 }

@@ -1,0 +1,28 @@
+{% load endless %}
+
+<table class="table">
+  <thead>
+    <tr>
+      <th style="width: 70%">Name</th>
+      <th style="width: 15%">Symbol</th>
+      <th style="width: 15%">Market</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% paginate results_per_page stocks %}
+    {% for stock in stocks %}
+    <tr>
+      <td>{{ stock.name }}</td>
+      <td>{{ stock.symbol }}</td>
+      <td>{{ stock.market.acr }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="3">
+        {% include "common/list_pagination.html" %}
+      </td>
+    </tr>
+  </tfoot>
+</table>

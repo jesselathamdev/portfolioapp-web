@@ -1,0 +1,20 @@
+{% load endless %}
+{% get_pages %}
+<div class="pagination">
+  <div class="pull-left">
+    Displaying {{ pages.current_start_index }} of {{ pages.current_end_index }}
+  </div>
+  <div class="pull-right">
+    <form class="form-inline">
+      {% if not pages.current.is_first %}
+      <a href="{{ pages.1.path }}" rel="page" class="endless_page_link">&laquo;</a>
+      <a href="{{ pages.previous.path }}" rel="page" class="endless_page_link">&lsaquo;</a>
+      {% endif %}
+      Page: <input type="text" value="{{ pages.current.number }}" /> of {{ pages.last.number }}
+      {% if not pages.current.is_last %}
+      <a href="{{ pages.next.path }}" rel="page" class="endless_page_link">&rsaquo;</a>
+      <a href="{{ pages.last.path }}" rel="page" class="endless_page_link">&raquo;</a>
+      {% endif %}
+    </form>
+  </div>
+</div>
