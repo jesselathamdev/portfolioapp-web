@@ -3,9 +3,10 @@
 <table class="table">
   <thead>
     <tr>
-      <th style="width: 70%">Name</th>
+      <th style="width: 65%">Name</th>
       <th style="width: 15%">Symbol</th>
-      <th style="width: 15%">Market</th>
+      <th style="width: 10%">Market</th>
+      <th style="width: 10%" class="align-right">Last Price</th>
     </tr>
   </thead>
   <tbody>
@@ -15,12 +16,13 @@
       <td>{{ stock.name }}</td>
       <td>{{ stock.symbol }}</td>
       <td>{{ stock.market.acr }}</td>
+      <td class="align-right">${{ stock.last_price|floatformat:2 }}</td>
     </tr>
     {% endfor %}
   </tbody>
   <tfoot>
     <tr>
-      <td colspan="3">
+      <td colspan="4">
         {% include "common/list_pagination.html" %}
       </td>
     </tr>

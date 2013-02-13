@@ -11,20 +11,24 @@
 
 {% if portfolios %}
 <table class="table">
-  <tr>
-    <th style="width: 50%;">Name</th>
-    <th class="align-right" style="width: 13%;">Book Value</th>
-    <th class="align-right" style="width: 13%;">Market Value</th>
-    <th class="align-right" style="width: 14%;">Net Gain</th>
-  </tr>
-{% for portfolio in portfolios %}
-  <tr>
-    <td><a href="{% url 'holding_index' portfolio.id %}">{{ portfolio.name }}</a></td>
-    <td class="align-right">${{ portfolio.book_value|floatformat:2|intcomma }}</td>
-    <td class="align-right">${{ portfolio.market_value|floatformat:2|intcomma }}</td>
-    <td {% if portfolio.market_value > portfolio.book_value %}class="align-right indicator-gain"{% elif portfolio.market_value < portfolio.book_value %}class="align-right indicator-loss"{% else %}class="align-right"{% endif %}>${{ portfolio.net_gain_dollar|floatformat:2|intcomma }}<br /><span class="small">{{ portfolio.net_gain_percent|floatformat:2|intcomma }}%</span></td>
-  </tr>
-{% endfor %}
+  <thead>
+    <tr>
+      <th style="width: 50%;">Name</th>
+      <th class="align-right" style="width: 13%;">Book Value</th>
+      <th class="align-right" style="width: 13%;">Market Value</th>
+      <th class="align-right" style="width: 14%;">Net Gain</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for portfolio in portfolios %}
+    <tr>
+      <td><a href="{% url 'holding_index' portfolio.id %}">{{ portfolio.name }}</a></td>
+      <td class="align-right">${{ portfolio.book_value|floatformat:2|intcomma }}</td>
+      <td class="align-right">${{ portfolio.market_value|floatformat:2|intcomma }}</td>
+      <td {% if portfolio.market_value > portfolio.book_value %}class="align-right indicator-gain"{% elif portfolio.market_value < portfolio.book_value %}class="align-right indicator-loss"{% else %}class="align-right"{% endif %}>${{ portfolio.net_gain_dollar|floatformat:2|intcomma }}<br /><span class="small">{{ portfolio.net_gain_percent|floatformat:2|intcomma }}%</span></td>
+    </tr>
+  {% endfor %}
+  </tbody>
 </table>
 {% else %}
 <p>No portfolios have been created yet</p>

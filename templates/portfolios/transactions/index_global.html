@@ -1,5 +1,5 @@
 {% extends "base_two_columns.html" %}
-{% load humanize %}
+{% load endless %}
 
 {% block title %}Transactions{% endblock title %}
 
@@ -9,31 +9,16 @@
 
 <h1>Transactions</h1>
 
-{% if transactions %}
-<table class="table">
-  <tr>
-    <th>Date</th>
-    <th>Type</th>
-    <th>Holding</th>
-    <th class="align-right">Quantity</th>
-    <th class="align-right">Price</th>
-  </tr>
-  {% for transaction in transactions %}
-  <tr>
-    <td>{{ transaction.date_transacted|date:"m/d/Y" }}</td>
-    <td>{{ transaction.get_type_display }}</td>
-    <td>{{ transaction.holding.stock.name }} ({{ transaction.holding.stock.symbol }}:{{ transaction.holding.stock.market.acr }})</td>
-    <td class="align-right">{{ transaction.quantity }}</td>
-    <td class="align-right">${{ transaction.value|floatformat:2|intcomma }}</td>
-  </tr>
-  {% endfor %}
-</table>
-{% else %}
-<p>You currently have no transactions.</p>
-{% endif %}
+<div id="paginate" class="endless_page_template">
+  {% include page_template %}
+</div>
 
 {% endblock content %}
 
 {% block sidebar %}
 Sidebar
 {% endblock sidebar %}
+
+{% block script %}
+  {% include "common/list_pagination_script.html" %}
+{% endblock script %}

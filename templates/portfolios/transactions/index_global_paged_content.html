@@ -1,0 +1,39 @@
+{% load endless %}
+{% load humanize %}
+
+
+<table class="table">
+  <thead>
+    <tr>
+      <th style="width: 15%">Date</th>
+      <th style="width: 15%">Type</th>
+      <th style="width: 40%">Holding</th>
+      <th style="width: 15%" class="align-right">Quantity</th>
+      <th style="width: 15%" class="align-right">Price</th>
+    </tr>
+  </thead>
+  {% if transactions %}
+  <tbody>
+  {% paginate results_per_page transactions %}
+  {% for transaction in transactions %}
+  <tr>
+    <td>{{ transaction.date_transacted|date:"m/d/Y" }}</td>
+    <td>{{ transaction.get_type_display }}</td>
+    <td>{{ transaction.holding.stock.name }} ({{ transaction.holding.stock.symbol }}:{{ transaction.holding.stock.market.acr }})</td>
+    <td class="align-right">{{ transaction.quantity }}</td>
+    <td class="align-right">${{ transaction.value|floatformat:2|intcomma }}</td>
+  </tr>
+  {% endfor %}
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="5">
+        {% include "common/list_pagination.html" %}
+      </td>
+    </tr>
+  </tfoot>
+</table>
+  {% else %}
+</table>
+<p>You have not made any transactions.</p>
+  {% endif %}

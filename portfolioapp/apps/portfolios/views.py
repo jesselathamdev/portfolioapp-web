@@ -1,9 +1,12 @@
 # portfolios/views.py
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, render_to_response, get_object_or_404, RequestContext
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
+from endless_pagination.decorators import page_template
+
+from portfolioapp.apps.core import settings
 from .models import Portfolio, Holding, Transaction
 from .forms import CreateHolding
 
@@ -44,9 +47,15 @@ def transaction_index(request, portfolio_id, holding_id):
 
 
 @login_required
-def transaction_index_global(request):
+@page_template('portfolios/transactions/index_global_paged_content.html')
+def transaction_index_global(request, template='portfolios/transactions/index_global.html', extra_context=None):
     transactions = Transaction.objects.select_related('holding__stock__name', 'holding__stock__symbol', 'holding__stock__market__acr', 'type', 'date_transacted', 'quantity', 'value').filter(holding__portfolio__user_id=request.user).order_by('-date_transacted')
-    return render(request, 'portfolios/transactions/index_global.html', {'transactions': transactions})
+    context = {'transactions': transactions, 'results_per_page': settings.RESULTS_PER_PAGE}
+
+    if extra_context is not None:
+        context.update(extra_context)
+
+    return render_to_response(template, context, context_instance=RequestContext(request))
 
 
 @login_required

@@ -1,25 +1,26 @@
-body {
-  background-color: #fbfbfb;
-}
+body { background-color: #353535; color: #e2e2e2; }
 
-.navbar {
-  height: 70px;
-}
+.navbar { height: 70px; }
 
-.breadcrumbs {
-  font-size: 12px;
-}
+.breadcrumbs { font-size: 12px; }
 
-.link-add {
-  font-size: 15px;
-}
+h1 { padding-bottom: 15px; }
+
+.link-add { font-size: 15px; }
 
 .table {
   font-size: 13px;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  background-color: #494949;
 }
 
-table th {
-  background-color: #f1f1f1;
+.table th {
+  color: #e2e2e2;
+}
+
+.table tbody tr {
+  background-color: #353535;
 }
 
 table tr th.align-right,
@@ -27,17 +28,20 @@ table tr td.align-right {
   text-align: right;
 }
 
-.table .small {
-  font-size: 11px;
+.table .small { font-size: 11px; }
+
+table tfoot { background-color: #494949; }
+
+table tfoot .pagination a { font-size: 13px; }
+
+table tfoot .pagination input {
+  font-size: 13px;
+  width: 40px;
 }
 
-.indicator-gain {
-  color: #32cd32;
-}
+.indicator-gain { color: #32cd32; }
 
-.indicator-loss {
-  color: #ff0000;
-}
+.indicator-loss { color: #ff0000; }
 
 /* jquery-ui */
 
@@ -54,14 +58,4 @@ table tr td.align-right {
   font-size: 14px;
   color: #333333;
   line-height: 20px;
-}
-
-table .pagination a {
-  font-size: 22px;
-  vertical-align: middle;
-}
-
-table .pagination input {
-  font-size: 13px;
-  width: 40px;
 }
