@@ -3,47 +3,69 @@ body {
   color: #e1e1e1;
 }
 
+.navbar { height: 70px; }
+
+.breadcrumbs { font-size: 12px; }
+
 a { color: #0198e1; }
 
-header { background-color: rgba(20, 20, 20, 0.7); }
+section .header {
 
-header .breadcrumbs {
+  background-color: rgba(20, 20, 20, 0.7)
+}
+
+section .header .breadcrumbs {
   padding: 15px 15px 0px 15px;
-  font-size: 12px;
 }
 
-header .header {
-  height: 70px;
-}
-
-header h1 {
+section .header h1 {
   padding: 0px 15px 15px 15px;
   background: -webkit-linear-gradient(#eee, #888);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-header .menu {
-  padding: 6px 5px 0px 5px;
+section .header .menu {
   height: 40px;
   line-height: 40px;
   background-color: #0198e1;
 }
 
-header .menu .nav > li > a {
+section .header .menu ul.left { float: left; }
+section .header .menu ul.right { float: right; }
+
+section .header .menu ul {
+  margin: 0px 5px;
+  padding: 0px;
+  list-style-type: none;
+}
+
+section .header .menu ul li {
+  display: block;
+  float: left;
+  line-height: 40px;
+}
+
+section .header .menu ul li a {
+  display: block;
+  padding: 0px 10px 0px 10px;
   color: #ffffff;
+  font-weight: normal;
+  font-size: 16px;
 }
 
-header .menu .nav > li.active > a {
+section .header .menu ul li a:hover {
   background-color: #0071b6;
-}
-
-header .menu .nav > li > a:hover {
-  background-color: #0071b6;
+  text-decoration: none;
   -webkit-transition: background 200ms; /* property duration timing-function delay */
   -moz-transition: background 200ms;
   -o-transition: background 200ms;
   transition: background 200ms;
+}
+
+section .header .menu ul li.current a {
+  background-color: #0071b6;
+  font-weight: bold;
 }
 
 section .main {
@@ -57,7 +79,7 @@ section .main {
   font-size: 13px;
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
-
+  background-color: #494949;
 }
 
 .table th {
@@ -65,7 +87,7 @@ section .main {
 }
 
 .table tbody tr {
-
+  background-color: #141414;
 }
 
 table tr th.align-right,

@@ -1,13 +1,13 @@
 {% extends "base_two_columns.html" %}
 {% load endless %}
 
-{% block title %}Transactions{% endblock title %}
+{% block browser_title %}Transactions{% endblock browser_title %}
 
 {% block breadcrumbs %}<a href="/">Home</a> &rarr; Transactions</a>{% endblock breadcrumbs %}
 
-{% block content %}
+{% block page_title %}Transactions{% endblock page_title %}
 
-<h1>Transactions</h1>
+{% block content %}
 
 <div id="paginate" class="endless_page_template">
   {% include page_template %}

@@ -1,14 +1,12 @@
 {% extends "base_two_columns.html" %}
 
-{% block title %}Sign up{% endblock title %}
+{% block browser_title %}Sign up{% endblock browser_title %}
 
 {% block breadcrumbs %}<a href="/">Home</a> &rarr; Sign up{% endblock breadcrumbs %}
 
+{% block page_title %}Sign up{% endblock page_title %}
+
 {% block content %}
-
-<h1>Sign up</h1>
-
-<p>This is the create profile screen.</p>
 
 {% if form.errors %}
 <div class="alert alert-error">

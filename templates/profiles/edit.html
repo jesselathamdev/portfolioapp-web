@@ -1,14 +1,12 @@
 {% extends "base_two_columns.html" %}
 
-{% block title %}Edit Profile{% endblock title %}
+{% block browser_title %}Edit Profile{% endblock browser_title %}
 
 {% block breadcrumbs %}<a href="/">Home</a> &rarr; Profile{% endblock breadcrumbs %}
 
+{% block page_title %}Edit Profile{% endblock page_title %}
+
 {% block content %}
-
-<h1>Edit Profile</h1>
-
-<p>This is the edit profile screen.</p>
 
 {% if form.errors %}
 <div class="alert alert-error">
