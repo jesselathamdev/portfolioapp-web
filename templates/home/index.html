@@ -2,7 +2,17 @@
 
 {% block browser_title %}Home{% endblock browser_title %}
 
+{% if user.is_authenticated %}
+{% block page_title %}Overview{% endblock page_title %}
+{% endif %}
+
 {% block content %}
+
+{% if user.is_authenticated %}
+<p>This is my overview content</p>
+{% else %}
 <h1>PortfolioApp</h1>
 <h2>The easy to use, (semi)full featured portfolio tracker</h2>
+{% endif %}
+
 {% endblock content %}

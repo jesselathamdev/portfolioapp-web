@@ -33,9 +33,9 @@
   <div class="row">
     <div class="span16">
       <div class="header">
-        <div>PortfolioApp</div>
-        <div>
-          <ul class="nav pull-right">
+        <div class="logo">PortfolioApp</div>
+        <div class="utilities">
+          <ul class="nav nav-pills pull-right">
             {% if not user.is_authenticated %}
             <li><a href="{% url 'profile_create' %}">Sign up</a></li>
             {% endif %}
@@ -70,13 +70,12 @@
             </li>
             {% endif %}
           </ul>
-
         </div>
       </div>
-      <div class="menu">
+      <div class="menu clearfix">
         {% if user.is_authenticated %}
         <ul class="nav nav-pills pull-left">
-          <li class="active"><a href="#">Overview</a></li>
+          <li class="active"><a href="/">Overview</a></li>
           <li><a href="/portfolios">Portfolios</a></li>
           <li><a href="/transactions">Transactions</a></li>
         </ul>

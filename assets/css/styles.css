@@ -16,34 +16,77 @@ header .header {
   height: 70px;
 }
 
-header h1 {
-  padding: 0px 15px 15px 15px;
-  background: -webkit-linear-gradient(#eee, #888);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+header .logo {
+  float: left;
+  font-size: 28px;
+  line-height: 70px;
+}
+
+header .utilities {
+  padding-top: 20px;
+}
+
+header .utilities ul {
+
+  list-style-type: none;
+}
+
+header .utilities ul li {
+  display: block;
+  float: left;
 }
 
 header .menu {
-  padding: 6px 5px 0px 5px;
+  /* padding: 6px 5px 0px 5px; */
+  padding: 0px 5px 0px 5px;
   height: 40px;
   line-height: 40px;
   background-color: #0198e1;
 }
 
 header .menu .nav > li > a {
+  display: block;
+  margin: 0px;
+  padding: 0px 15px;
+  height: 40px;
+  line-height: 40px;
   color: #ffffff;
+  border-radius: 0px;
 }
 
 header .menu .nav > li.active > a {
   background-color: #0071b6;
+
 }
 
 header .menu .nav > li > a:hover {
+  height: 40px;
+  line-height: 40px;
   background-color: #0071b6;
   -webkit-transition: background 200ms; /* property duration timing-function delay */
   -moz-transition: background 200ms;
   -o-transition: background 200ms;
   transition: background 200ms;
+}
+
+/*header .menu .nav > li > a:hover {*/
+  /*background-color: #0071b6;*/
+  /*-webkit-transition: background 200ms; *//* property duration timing-function delay */
+  /*-moz-transition: background 200ms;*/
+  /*-o-transition: background 200ms;*/
+  /*transition: background 200ms;*/
+/*}*/
+
+header .breadcrumbs {
+  height: 20px;
+  line-height: 20px;
+}
+
+header .title h1 {
+  padding: 0px 15px 15px 15px;
+  background: -webkit-linear-gradient(#eee, #888);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 section .main {
