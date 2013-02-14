@@ -1,14 +1,16 @@
 {% extends "base.html" %}
 
 {% block content_outer %}
-<div class="row">
-  <div class="span12">
-    {% block content %}{% endblock content %}
+<section role="body" class="body container">
+  <div class="row">
+    <div class="span12">
+      {% block content %}{% endblock content %}
+    </div>
   </div>
-  <div class="span4">
-    {% block sidebar %}{% endblock sidebar %}
+  <div class="main">
+
   </div>
-</div>
+</section>
 {% endblock content_outer %}
 
 {% block script %}{% endblock script %}

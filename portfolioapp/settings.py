@@ -163,7 +163,7 @@ DEBUG_TOOLBAR_CONFIG = {
 
 AUTH_USER_MODEL = 'profiles.User'
 AUTHENTICATION_BACKENDS = ('portfolioapp.apps.profiles.backends.Auth',)
-LOGIN_REDIRECT_URL = '/portfolios'
+LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/sign-in'
 
 # A sample logging configuration. The only tangible logging

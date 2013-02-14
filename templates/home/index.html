@@ -1,14 +1,16 @@
-{% extends "base_one_column.html" %}
+{% extends "base_dashboard.html" %}
 
 {% block browser_title %}Home{% endblock browser_title %}
 
 {% if user.is_authenticated %}
-{% block page_title %}Overview{% endblock page_title %}
+{% block page_title %}Dashboard <small>Subtitle</small>{% endblock page_title %}
 {% endif %}
 
 {% block content %}
 
 {% if user.is_authenticated %}
+<h2>Title <small>Subtitle</small></h2>
+<p>This is a paragraph of helper text.</p>
 <p>This is my overview content</p>
 {% else %}
 <h1>PortfolioApp</h1>
