@@ -1,4 +1,4 @@
-{% extends "base_one_column.html" %}
+{% extends "base_unauthenticated_profile.html" %}
 
 {% block browser_title %}Sign in{% endblock browser_title %}
 
@@ -7,38 +7,25 @@
 {% block page_title %}Sign in{% endblock page_title %}
 
 {% block content %}
-
+<div class="login">
 {% if form.errors %}
 <div class="alert alert-error">
   <button type="button" class="close" data-dismiss="alert">&times;</button>
   <strong>Whoops!</strong> Your email address and password didn't match. Please try again.
 </div>
 {% endif %}
-
-<p>&nbsp;</p>
-
-<form method="post" action="{% url 'django.contrib.auth.views.login' %}" class="form-horizontal">
+<h1>PortfolioApp</h1>
+<h3>Sign in below</h3>
+<form method="post" action="{% url 'django.contrib.auth.views.login' %}">
   {% csrf_token %}
-  <div class="control-group">
-    <label class="control-label" for="{{ form.username.auto_id }}">Email</label>
-    <div class="controls">
-      <input type="text" id="{{ form.username.auto_id }}" name="{{ form.username.html_name }}" placeholder="email address...">
-    </div>
-  </div>
-  <div class="control-group">
-    <label class="control-label" for="{{ form.password.auto_id }}">Password</label>
-    <div class="controls">
-      <input type="password" id="{{ form.password.auto_id }}" name="{{ form.password.html_name }}" placeholder="password...">
-    </div>
-  </div>
-  <div class="control-group">
-    <div class="controls">
-      <input type="submit" value="Sign in" class="btn btn-primary" />
-    </div>
-  </div>
-
+    <ul>
+      <li><input type="text" id="{{ form.username.auto_id }}" name="{{ form.username.html_name }}" placeholder="email" class="input-block-level"></li>
+      <li><input type="password" id="{{ form.password.auto_id }}" name="{{ form.password.html_name }}" placeholder="password" class="input-block-level"></li>
+    </ul>
+    <hr />
+    <input type="submit" value="SIGN IN" class="btn btn-large btn-block btn-custom" />
 </form>
-
+</div>
 {% endblock content %}
 
 {% block script %}

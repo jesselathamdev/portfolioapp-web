@@ -1,15 +1,9 @@
 {% extends "base.html" %}
 
-{% block breadcrumbs %}{% endblock breadcrumbs %}
-
-{% block content_outer %}
+{% block content_base %}
   <div class="row">
-    <div class="span14">
+    <div class="span16">
       {% block content %}{% endblock content %}
     </div>
   </div>
-{% endblock content_outer %}
-
-{% block script_end_outer %}
-  {% block script %}{% endblock script %}
-{% endblock script_end_outer %}
+{% endblock content_base %}
