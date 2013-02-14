@@ -1,33 +1,36 @@
 body {
-  background: url('/assets/img/background-100x100.png') left top repeat;
+  background: url('/assets/img/background-light-310x310.png') left top repeat;
   color: #e1e1e1;
 }
 
 a { color: #0198e1; }
 
-header { background-color: rgba(20, 20, 20, 0.7); }
-
-header .breadcrumbs {
-  padding: 15px 15px 0px 15px;
-  font-size: 12px;
+header {
+  background-color: rgba(0, 0, 0, 0.12);
+  border-bottom: solid 1px rgba(0, 0, 0, 0.12);
+  margin-bottom: 20px;
 }
 
 header .header {
   height: 70px;
 }
 
-header .logo {
+header .header .title {
   float: left;
+  color: #222222;
   font-size: 28px;
+  height: 70px;
   line-height: 70px;
 }
 
-header .utilities {
-  padding-top: 20px;
+header .header .utilities {
+  float: right;
+  margin-top: 20px;
+  height: 40px;
+  line-height: 40px;
 }
 
 header .utilities ul {
-
   list-style-type: none;
 }
 
@@ -36,57 +39,50 @@ header .utilities ul li {
   float: left;
 }
 
-header .menu {
-  /* padding: 6px 5px 0px 5px; */
-  padding: 0px 5px 0px 5px;
-  height: 40px;
-  line-height: 40px;
+header .menu-container {
   background-color: #0198e1;
 }
 
-header .menu .nav > li > a {
-  display: block;
-  margin: 0px;
+header .menu-container .navbar-inner {
+  height: 41px;
+  border: none;
+  background: url('/assets/img/gradient-menu-1x41.gif') left top repeat-x;
+  box-shadow: 0 1px 10px rgba(0,0,0,.4);
+}
+
+header .menu-container .navbar-inner li > a {
   padding: 0px 15px;
-  height: 40px;
-  line-height: 40px;
+  height: 41px;
+  line-height: 41px;
+  text-shadow: none;
+}
+
+header .menu-container .navbar-inner li.active > a,
+header .menu-container .navbar-inner li.dropdown.open > .dropdown-toggle {
   color: #ffffff;
-  border-radius: 0px;
+  background-color: #222222;
 }
 
-header .menu .nav > li.active > a {
-  background-color: #0071b6;
-
+header .menu-container .navbar-inner li > a:hover {
+  background-color: #222222;
+  color: #ffffff;
+  -moz-transition: all 200ms; /* FireFox */
+  -webkit-transition: all 200ms; /* Safari / Chrome */
+  -o-transition: all 200ms; /* Opera */
+  transition: all 200ms; /* W3C */
 }
 
-header .menu .nav > li > a:hover {
-  height: 40px;
-  line-height: 40px;
-  background-color: #0071b6;
-  -webkit-transition: background 200ms; /* property duration timing-function delay */
-  -moz-transition: background 200ms;
-  -o-transition: background 200ms;
-  transition: background 200ms;
-}
-
-/*header .menu .nav > li > a:hover {*/
-  /*background-color: #0071b6;*/
-  /*-webkit-transition: background 200ms; *//* property duration timing-function delay */
-  /*-moz-transition: background 200ms;*/
-  /*-o-transition: background 200ms;*/
-  /*transition: background 200ms;*/
-/*}*/
+header .menu-container .navbar-inner li > a b { vertical-align: text-top; }
 
 header .breadcrumbs {
-  height: 20px;
-  line-height: 20px;
+  padding: 8px 15px 8px 15px;
+  font-size: 12px;
 }
 
-header .title h1 {
-  padding: 0px 15px 15px 15px;
-  background: -webkit-linear-gradient(#eee, #888);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+header .page-title h1 {
+  color: #222222;
+  padding: 0px 0px 15px 0px;
+
 }
 
 section .main {

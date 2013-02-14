@@ -29,78 +29,90 @@
 </head>
 <body>
 
-<header class="container">
-  <div class="row">
-    <div class="span16">
-      <div class="header">
-        <div class="logo">PortfolioApp</div>
-        <div class="utilities">
-          <ul class="nav nav-pills pull-right">
-            {% if not user.is_authenticated %}
-            <li><a href="{% url 'profile_create' %}">Sign up</a></li>
-            {% endif %}
+<header>
+  <div class="header">
+    <div class="container clearfix">
+      <div class="title">
+        PortfolioApp
+      </div>
+      <div class="utilities">
+        <ul class="nav nav-pills pull-right">
+          {% if not user.is_authenticated %}
+          <li><a href="{% url 'profile_create' %}">Sign up</a></li>
+          {% endif %}
+          {% if user.is_authenticated %}
+          <li><a href="{% url 'profile_edit' %}">{{ user.get_full_name }}</a></li>
+          <li><a href="{% url 'profile_signout' %}">Sign out</a></li>
+          {% else %}
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sign in <b class="caret"></b></a>
+            <div class="pull-right dropdown-menu login-menu" style="padding: 15px 15px 5px 15px;">
+              <form method="post" action="{% url 'django.contrib.auth.views.login' %}">
+                {% csrf_token %}
+                <div class="control-group">
+                  <label class="control-label" for="{{ login_form.username.auto_id }}">Email: </label>
+                  <div class="controls">
+                    <input id="{{ login_form.username.auto_id }}" type="text" name="{{ login_form.username.html_name }}" class="input-xlarge" placeholder="email address..." />
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label" for="{{ login_form.password.auto_id }}">Password: </label>
+                  <div class="controls">
+                    <input id="{{ login_form.password.auto_id }}" type="password" name="{{ login_form.password.html_name }}" class="input-xlarge" placeholder="password..." />
+                  </div>
+                </div>
+                <div class="control-group">
+                  <div class="controls">
+                    <input id="btn-login" type="submit" class="btn btn-primary" style="clear: left; width: 100%; height: 32px; font-size: 13px;" value="Sign in" />
+                  </div>
+                </div>
+              </form>
+            </div>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="menu-container">
+    <div class="navbar navbar-static-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <ul class="nav">
             {% if user.is_authenticated %}
-            <li><a href="{% url 'profile_edit' %}">{{ user.get_full_name }}</a></li>
-            <li><a href="{% url 'profile_signout' %}">Sign out</a></li>
+            <li class="active"><a href="/">Dashboard</a></li>
+            <li><a href="/portfolios">Portfolios</a></li>
+            <li><a href="/transactions">Transactions</a></li>
             {% else %}
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sign in<b class="caret"></b></a>
-              <div class="pull-right dropdown-menu login-menu" style="padding: 15px 15px 5px 15px;">
-                <form method="post" action="{% url 'django.contrib.auth.views.login' %}">
-                  {% csrf_token %}
-                  <div class="control-group">
-                    <label class="control-label" for="{{ login_form.username.auto_id }}">Email: </label>
-                    <div class="controls">
-                      <input id="{{ login_form.username.auto_id }}" type="text" name="{{ login_form.username.html_name }}" class="input-xlarge" placeholder="email address..." />
-                    </div>
-                  </div>
-                  <div class="control-group">
-                    <label class="control-label" for="{{ login_form.password.auto_id }}">Password: </label>
-                    <div class="controls">
-                      <input id="{{ login_form.password.auto_id }}" type="password" name="{{ login_form.password.html_name }}" class="input-xlarge" placeholder="password..." />
-                    </div>
-                  </div>
-                  <div class="control-group">
-                    <div class="controls">
-                      <input id="btn-login" type="submit" class="btn btn-primary" style="clear: left; width: 100%; height: 32px; font-size: 13px;" value="Sign in" />
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </li>
+            <li class="active"><a href="/">Home</a></li>
             {% endif %}
           </ul>
+          {% if user.is_admin %}
+          <ul class="nav pull-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <b class="caret"></b></a>
+              <ul class="dropdown-menu pull-right">
+                <li><a role="menuitem" tabindex="-1" href="{% url 'portfolioapp.apps.admin.views.home_index' %}">Dashboard</a></li>
+                <li class="divider"></li>
+                <li><a href="{% url 'portfolioapp.apps.admin.views.stock_index' %}">Stocks (standard)</a></li>
+                <li><a href="{% url 'portfolioapp.apps.admin.views.ep_stock_index' %}">Stocks (django-endless-pagination)</a></li>
+                <li><a tabindex="-1" href="{% url 'portfolioapp.apps.admin.views.dajax_stock_index' %}">Stocks (django-dajax)</a></li>
+              </ul>
+            </li>
+          </ul>
+          {% endif %}
         </div>
       </div>
-      <div class="menu clearfix">
-        {% if user.is_authenticated %}
-        <ul class="nav nav-pills pull-left">
-          <li class="active"><a href="/">Overview</a></li>
-          <li><a href="/portfolios">Portfolios</a></li>
-          <li><a href="/transactions">Transactions</a></li>
-        </ul>
-        {% endif %}
-        {% if user.is_admin %}
-        <ul class="nav nav-pills pull-right">
-          <li class="dropdown">
-            <a class="dropdown-toggle" id="drop4" role="button" data-toggle="dropdown" href="#">Admin <b class="caret"></b></a>
-            <ul id="menu1" class="dropdown-menu pull-right" role="menu" aria-labelledby="drop4">
-              <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'portfolioapp.apps.admin.views.home_index' %}">Dashboard</a></li>
-              <li class="divider"></li>
-              <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'portfolioapp.apps.admin.views.stock_index' %}">Stocks (standard)</a></li>
-              <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'portfolioapp.apps.admin.views.ep_stock_index' %}">Stocks (django-endless-pagination)</a></li>
-              <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'portfolioapp.apps.admin.views.dajax_stock_index' %}">Stocks (django-dajax)</a></li>
-            </ul>
-          </li>
-        </ul>
-        {% endif %}
-      </div>
       <div class="breadcrumbs">
-        {% block breadcrumbs %}{% endblock breadcrumbs %}
+        <div class="container">
+          {% block breadcrumbs %}{% endblock breadcrumbs %}&nbsp;
+        </div>
       </div>
-      <div class="title">
-        <h1>{% block page_title %}{% endblock page_title %}</h1>
-      </div>
+    </div>
+  </div>
+  <div class="page-title">
+    <div class="container">
+      <h1>{% block page_title %}{% endblock page_title %}</h1>
     </div>
   </div>
 </header>
