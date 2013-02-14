@@ -1,5 +1,4 @@
 {% extends "base_two_columns.html" %}
-{% load endless %}
 
 {% block browser_title %}Transactions{% endblock browser_title %}
 
@@ -10,7 +9,7 @@
 {% block content %}
 
 <div id="paginate" class="endless_page_template">
-  {% include page_template %}
+  Stuff
 </div>
 
 {% endblock content %}
@@ -86,7 +85,3 @@
   </div>
 </div>
 {% endblock sidebar %}
-
-{% block script %}
-  {% include "common/list_pagination_script.html" %}
-{% endblock script %}
