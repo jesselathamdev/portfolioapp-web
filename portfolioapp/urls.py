@@ -19,14 +19,15 @@ urlpatterns = patterns('',
     # portfolios
     url(r'^portfolios/', include('portfolioapp.apps.portfolios.urls')),
 
-    # admin
+    # custom admin
     url(r'^admin/', include('portfolioapp.apps.admin.urls')),
 
     # apis
     url(r'^api/markets/stocks/?', 'portfolioapp.apps.markets.views_api.stock_index', name='api_stock_index'),
 
-    # helpers
+    # dev helpers
     url(r'^dummy/?', 'portfolioapp.apps.core.views.dummy', name='dummy'),
+    url(r'^dev/', include('portfolioapp.apps.dev.urls')),
 
     # dajaxice
     url(dajaxice_config.dajaxice_url, include('dajaxice.urls')),

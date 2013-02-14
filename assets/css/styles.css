@@ -81,7 +81,16 @@ header .menu-container .navbar-inner li > a b { vertical-align: text-top; }
 
 header .breadcrumbs {
   padding: 8px 15px 8px 15px;
+  color: #b8e4ff;
+  font-weight: bold;
   font-size: 12px;
+}
+
+header .breadcrumbs a {
+  color: #294468;
+  font-weight: bold;
+  text-decoration: none;
+  text-shadow: 0px 1px 1px rgba(170, 175, 182, 1.0);
 }
 
 header .page-title {
@@ -103,18 +112,19 @@ header .page-title h1 small { color: #0198e1; }
 /* BODY
 /********************************/
 
-section.dashboard {
+.dashboard {
   color: #e6e8eb;
   background-color: #3b3d40;
   border-radius: 5px;
+  font-weight: lighter;
 }
 
-section.dashboard .main {
+.dashboard .main {
   margin: 0px;
   padding: 15px;
 }
 
-section.dashboard .main h2 {
+.dashboard .main h2 {
   margin: 0px;
   padding: 0px;
   font-size: 26px;
@@ -139,42 +149,8 @@ section.body .main h2 {
 /* WIDGETS
 /********************************/
 
-/*.widget {*/
-  /*margin-bottom: 20px;*/
-  /*border-radius: 5px;*/
-  /*color: #333333;*/
-/*}*/
-
-/*.widget-simple {*/
-  /*background-color: #f4f4f5; *//* f6f7ff */
-  /*border: 1px solid #ffffff;*/
-  /*box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.35);*/
-/*}*/
-
-/*.widget .widget-header {*/
-  /*margin: 10px 15px 0px 15px;*/
-  /*padding-bottom: 10px;*/
-  /*border-bottom: 1px solid #bbbbbb;*/
-/*}*/
-
-/*.widget .widget-header h4 {*/
-  /*margin: 0px;*/
-  /*padding: 0px;*/
-/*}*/
-
-/*.widget .widget-body {*/
-  /*margin: 0px 15px 15px 15px;*/
-  /*padding-top: 15px;*/
-  /*border-top: 1px solid #ffffff;*/
-/*}*/
-
-/*.widget .widget-footer {*/
-  /*padding: 0px 15px 15px 15px;*/
-/*}*/
-
 .widget {
   margin-bottom: 20px;
-
   border-radius: 5px;
   color: #333333;
 }
@@ -191,6 +167,7 @@ section.body .main h2 {
   border-bottom: 1px solid #bbbbbb;
 }
 
+.widget .widget-header h3,
 .widget .widget-header h4 {
   margin: 0px;
   padding: 0px;
@@ -198,7 +175,17 @@ section.body .main h2 {
 
 .widget .widget-body {
   padding-top: 15px;
+  padding-bottom: 15px;
   border-top: 1px solid #ffffff;
+}
+
+.widget .widget-body form {
+  margin: 0px;
+  padding: 0px;
+}
+
+.widget div:last-child {
+  padding-bottom: 0px;
 }
 
 .widget .widget-body ul {
@@ -227,10 +214,52 @@ section.body .main h2 {
 }
 
 .widget .widget-footer {
-  border-top: 1px solid #ffffff;
+  padding-top: 15px;
+  border-top: 1px solid #bbbbbb;
 }
 
 .widget .widget-body p:last-child { margin-bottom: 0px; }
+
+.widget-simple.dark {
+  color: #e6e8eb;
+  background-color: #36383b;
+  font-weight: lighter;
+  border: 1px solid #323437;
+}
+
+.widget-simple.dark .widget-header {
+  border-bottom: 1px solid #000000;
+}
+
+.widget-simple.dark .widget-body {
+  border-top: 1px solid #616161;
+}
+
+.widget .widget-body form {
+  margin: 0px;
+  padding: 0px;
+}
+
+.widget .widget-body form legend {
+  margin: 0px 0px 25px 0px;
+  padding: 0px;
+}
+
+.widget .widget-body form li {
+  margin: 0px;
+  padding-top: 9px;
+  padding-bottom: 9px;
+}
+
+.widget .widget-body form li.form-section {
+
+}
+
+.widget .widget-body form input {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) inset;
+}
+
+
 
 /********************************/
 /* TABLES
