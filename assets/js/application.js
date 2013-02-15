@@ -6,6 +6,4 @@ $(function() {
   $('.login-menu, #btn-login').click(function(e) {
     e.stopPropagation();
   });
-
-
 });

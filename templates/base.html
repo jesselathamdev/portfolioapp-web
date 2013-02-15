@@ -46,26 +46,15 @@
           {% else %}
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sign in <b class="caret"></b></a>
-            <div class="pull-right dropdown-menu login-menu" style="padding: 15px 15px 5px 15px;">
+            <div class="pull-right dropdown-menu login-menu widget-profile" style="padding: 15px 15px 5px 15px;">
+              <h3>Sign in below</h3>
               <form method="post" action="{% url 'django.contrib.auth.views.login' %}">
                 {% csrf_token %}
-                <div class="control-group">
-                  <label class="control-label" for="{{ login_form.username.auto_id }}">Email: </label>
-                  <div class="controls">
-                    <input id="{{ login_form.username.auto_id }}" type="text" name="{{ login_form.username.html_name }}" class="input-xlarge" placeholder="email address..." />
-                  </div>
-                </div>
-                <div class="control-group">
-                  <label class="control-label" for="{{ login_form.password.auto_id }}">Password: </label>
-                  <div class="controls">
-                    <input id="{{ login_form.password.auto_id }}" type="password" name="{{ login_form.password.html_name }}" class="input-xlarge" placeholder="password..." />
-                  </div>
-                </div>
-                <div class="control-group">
-                  <div class="controls">
-                    <input id="btn-login" type="submit" class="btn btn-primary" style="clear: left; width: 100%; height: 32px; font-size: 13px;" value="Sign in" />
-                  </div>
-                </div>
+                <ul>
+                  <li><input type="text" id="username" name="{{ form.username.html_name }}" placeholder="email" class="input-xlarge"></li>
+                  <li><input type="password" id="{{ form.password.auto_id }}" name="{{ form.password.html_name }}" placeholder="password" class="input-xlarge"></li>
+                </ul>
+                <input type="submit" value="SIGN IN" class="btn btn-large btn-block btn-custom" />
               </form>
             </div>
           </li>
