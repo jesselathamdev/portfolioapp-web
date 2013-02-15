@@ -34,13 +34,6 @@ header .header .utilities {
   line-height: 40px;
 }
 
-header .utilities ul { list-style-type: none; }
-
-header .utilities ul li {
-  display: block;
-  float: left;
-}
-
 header .menu-container {
   background-color: #0198e1;
   box-shadow: 0 1px 10px rgba(0,0,0,.4);
@@ -348,7 +341,7 @@ form.form-horizontal input {
   text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
 }
 
-.widget-profile {
+.widget-login {
   margin-bottom: 20px;
   border-radius: 5px;
   color: #333333;
@@ -358,18 +351,18 @@ form.form-horizontal input {
   box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.35);
 }
 
-.widget-profile h3 {
+.widget-login h3 {
   margin: 0px 0px 15px 0px;
   padding: 0px;
 }
 
-.widget-profile ul {
+.widget-login ul {
   margin: 0px 0px 20px 0px;
   padding: 0px;
   list-style-type: none;
 }
 
-.widget-profile ul li input {
+.widget-login ul li input {
   margin-bottom: 0;
   background-color: rgba(128, 128, 128, 0.2);
   height: 18px;
@@ -380,29 +373,29 @@ form.form-horizontal input {
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
 }
 
-.widget-profile ul li:first-child input {
+.widget-login ul li:first-child input {
   border-top-color: #a8aBBa;
   border-bottom: none;
   border-radius: 5px 5px 0 0;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) inset;
 }
 
-.widget-profile ul li:last-child input {
+.widget-login ul li:last-child input {
   border: 1px solid #c5c7d2;
   border-radius: 0 0 5px 5px;
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2), -2px 0 4px -3px rgba(0, 0, 0, 0.2) inset, 2px 0 4px -3px rgba(0, 0, 0, 0.2) inset, 0 1px 0 rgba(255, 255, 255, 0.4) inset;
 }
 
-.widget-profile ul li input:focus { border: 1px solid #c5c7d2; }
+.widget-login ul li input:focus { border: 1px solid #c5c7d2; }
 
-.widget-profile ul li:first-child input:focus {
+.widget-login ul li:first-child input:focus {
   border-top-color: #a8abba;
   border-bottom: none;
 }
 
-.widget-profile ul li input.input-block-level { height: 40px; }
+.widget-login ul li input.input-block-level { height: 40px; }
 
-.widget-profile .btn-custom {
+.widget-login .btn-custom {
   margin: 0px;
   padding: 0px;
   color: #ffffff;

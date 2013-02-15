@@ -48,7 +48,7 @@ def transaction_index(request, portfolio_id, holding_id):
 
 @login_required
 @page_template('portfolios/transactions/index_global_paged_content.html')
-def transaction_index_global(request, template='portfolios/transactions/index_global.html', extra_context=None):
+def transaction_global_index(request, template='portfolios/transactions/index_global.html', extra_context=None):
     transactions = Transaction.objects.select_related('holding__stock__name', 'holding__stock__symbol', 'holding__stock__market__acr', 'type', 'date_transacted', 'quantity', 'value').filter(holding__portfolio__user_id=request.user).order_by('-date_transacted')
     context = {'transactions': transactions, 'results_per_page': settings.RESULTS_PER_PAGE}
 

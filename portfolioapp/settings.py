@@ -75,6 +75,7 @@ TEMPLATE_CONTEXT_PROCESSORS += (
     'django.core.context_processors.request',
     'django.contrib.messages.context_processors.messages',
     'portfolioapp.apps.core.context_processors.global_login_form',
+    'portfolioapp.apps.core.context_processors.view_name_context_processor',
 )
 
 # Make this unique, and don't share it with anybody.
@@ -94,6 +95,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'portfolioapp.apps.core.middleware.ProfilerMiddleware',
+    'portfolioapp.apps.core.middleware.ViewNameMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 
     # Uncomment the next line for simple clickjacking protection:

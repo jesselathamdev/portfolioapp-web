@@ -1,0 +1,44 @@
+<ul class="nav">
+  {% if user.is_authenticated %}
+  {% if "home.views.index" in request.view_name %}
+  <li class="active"><a href="/">Dashboard</a></li>
+  {% else %}
+  <li><a href="/">Dashboard</a></li>
+  {% endif %}
+
+  {% if "portfolios.views.portfolio_index" in request.view_name %}
+  <li class="active"><a href="/portfolios">Portfolios</a></li>
+  {% else %}
+  <li><a href="/portfolios">Portfolios</a></li>
+  {% endif %}
+
+  {% if "portfolios.views.transaction_global_index" in request.view_name %}
+  <li class="active"><a href="/transactions">Transactions</a></li>
+  {% else %}
+  <li><a href="/transactions">Transactions</a></li>
+  {% endif %}
+
+  {% else %}
+  <li class="active"><a href="/">Home</a></li>
+  {% endif %}
+</ul>
+{% if user.is_admin %}
+<ul class="nav pull-right">
+
+  {% if "admin.views" in request.view_name %}
+  <li class="active" class="dropdown">
+  {% else %}
+  <li class="dropdown">
+  {% endif %}
+
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <b class="caret"></b></a>
+    <ul class="dropdown-menu pull-right">
+      <li><a role="menuitem" tabindex="-1" href="{% url 'portfolioapp.apps.admin.views.home_index' %}">Dashboard</a></li>
+      <li class="divider"></li>
+      <li><a href="{% url 'portfolioapp.apps.admin.views.stock_index' %}">Stocks (standard)</a></li>
+      <li><a href="{% url 'portfolioapp.apps.admin.views.ep_stock_index' %}">Stocks (django-endless-pagination)</a></li>
+      <li><a tabindex="-1" href="{% url 'portfolioapp.apps.admin.views.dajax_stock_index' %}">Stocks (django-dajax)</a></li>
+    </ul>
+  </li>
+</ul>
+{% endif %}

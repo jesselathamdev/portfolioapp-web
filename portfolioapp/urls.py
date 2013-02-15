@@ -13,11 +13,11 @@ urlpatterns = patterns('',
     # home page
     url(r'^$', 'portfolioapp.apps.home.views.index', name='home_index'),
 
-    # transactions through portfolios
-    url(r'^transactions/', 'portfolioapp.apps.portfolios.views.transaction_index_global', name='transaction_index_global'),
-
     # portfolios
     url(r'^portfolios/', include('portfolioapp.apps.portfolios.urls')),
+
+    # transactions through portfolios
+    url(r'^transactions/', 'portfolioapp.apps.portfolios.views.transaction_global_index', name='transaction_global_index'),
 
     # custom admin
     url(r'^admin/', include('portfolioapp.apps.admin.urls')),
