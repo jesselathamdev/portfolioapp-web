@@ -9,13 +9,14 @@ a { color: #0198e1; }
 /* HEADER
 /********************************/
 
-header.top { margin-bottom: 0px; }
+header .top { margin-bottom: 0px; }
 
 header {
-  margin-bottom: 20px;
   background-color: rgba(0, 0, 0, 0.12);
   border-bottom: solid 1px rgba(0, 0, 0, 0.12);
 }
+
+header#bottom { margin-bottom: 20px; }
 
 header .header { height: 70px; }
 
@@ -46,8 +47,6 @@ header .fixed-navbar {
   z-index: 1000;
   width: 100%;
 }
-
-header .fixed-navbar + .page-title { margin-top: 78px; }
 
 /* bootstrap override */
 header .menu-container .navbar-inner {
@@ -84,9 +83,7 @@ header .menu-container .navbar-inner li > a:hover {
 /* bootstrap override */
 header .menu-container .navbar-inner li > a b { vertical-align: text-top; }
 
-header .dropdown-menu {
-  background-color: #f4f4f5;
-}
+header .dropdown-menu { background-color: #f4f4f5; }
 
 header .breadcrumbs {
   padding: 8px 15px 8px 15px;

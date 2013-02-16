@@ -1,10 +1,10 @@
 {% extends "base_two_columns.html" %}
 
-{% block title %}Stocks - Admin{% endblock title %}
+{% block browser_title %}Stocks - Admin{% endblock browser_title %}
+
+{% block page_title %}Stocks{% endblock page_title %}
 
 {% block content %}
-
-<h1>Stocks</h1>
 
 <div id="pagination">
   {% include "admin/markets/stocks/dajax_paged_content.html" %}

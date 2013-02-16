@@ -35,7 +35,6 @@
       <div class="title">
         PortfolioApp
       </div>
-      {{ request.view_name }}
       <div class="utilities">
         <ul class="nav nav-pills pull-right">
           {% if not user.is_authenticated and not 'django.contrib.auth.views.login' in request.view_name %}
@@ -47,13 +46,13 @@
           {% elif not 'django.contrib.auth.views.login' in request.view_name %}
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sign in <b class="caret"></b></a>
-            <div class="pull-right dropdown-menu widget-login">
+            <div class="pull-right dropdown-menu login-dropdown widget-login">
               <h3>Sign in below</h3>
               <form method="post" action="{% url 'django.contrib.auth.views.login' %}">
                 {% csrf_token %}
                 <ul>
-                  <li><input type="text" id="{{ login_form.username.auto_id }}" name="{{ login_form.username.html_name }}" placeholder="email" class="input-xlarge"></li>
-                  <li><input type="password" id="{{ login_form.password.auto_id }}" name="{{ login_form.password.html_name }}" placeholder="password" class="input-xlarge"></li>
+                  <li><input type="text" id="username" name="{{ login_form.username.html_name }}" placeholder="email" class="input-xlarge"></li>
+                  <li><input type="password" id="password" name="{{ login_form.password.html_name }}" placeholder="password" class="input-xlarge"></li>
                 </ul>
                 <input type="submit" value="SIGN IN" class="btn btn-large btn-block btn-custom" />
               </form>
@@ -104,23 +103,6 @@
 
 <script src="{{ STATIC_URL }}js/application.js" type="text/javascript"></script>
 {% block script %}{% endblock script %}
-<script type="text/javascript">
-  var fixed = false;
-
-  $(document).scroll(function() {
-      if( $(this).scrollTop() >= 71 ) {
-          if( !fixed ) {
-              fixed = true;
-              $('#fixed-nav').addClass('fixed-navbar')
-          }
-      } else {
-          if( fixed ) {
-              fixed = false;
-              $('#fixed-nav').removeClass('fixed-navbar');
-          }
-      }
-  });
-</script>
 
 </body>
 </html>

@@ -9,6 +9,7 @@ from cStringIO import StringIO
 
 from django.conf import settings
 
+# the following is for profile
 class ProfilerMiddleware(object):
     def process_view(self, request, callback, callback_args, callback_kwargs):
         if settings.DEBUG and 'prof' in request.GET:

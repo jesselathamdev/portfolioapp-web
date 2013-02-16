@@ -6,19 +6,23 @@
     Displaying <strong>{{ pages.current_start_index }}</strong> to <strong>{{ pages.current_end_index }}</strong> of <strong>{{ pages.total_count }}</strong>
   </div>
   <div class="pull-right">
-    {% if not pages.current.is_first %}
-    <a href="{{ pages.1.path }}" rel="page" class="endless_page_link">&laquo; First</a> &nbsp;
-    <a href="{{ pages.previous.path }}" rel="page" class="endless_page_link">&lsaquo; Prev</a> &nbsp;
-    {% else %}
-    &laquo; First &nbsp; &lsaquo; Prev &nbsp;
-    {% endif %}
+    <form>
     Page <strong>{{ pages.current.number }}</strong> of <strong>{{ pages.last.number }}</strong> &nbsp;
 {#      Page: <input type="text" value="{{ pages.current.number }}" /> of {{ pages.last.number }}#}
-    {% if not pages.current.is_last %}
-    <a href="{{ pages.next.path }}" rel="page" class="endless_page_link">Next &rsaquo;</a> &nbsp;
-    <a href="{{ pages.last.path }}" rel="page" class="endless_page_link">Last &raquo;</a>
+    {% if not pages.current.is_first %}
+    <a href="{{ pages.1.path }}" rel="page" class="btn endless_page_link" title="First"><i class="icon-chevron-left"></i></a>
+    <a href="{{ pages.previous.path }}" rel="page" class="btn endless_page_link" title="Previous"><i class="icon-chevron-left"></i></a>
     {% else %}
-    Next &rsaquo; &nbsp; Last &raquo;
+    <a href="javascript:void(0);" rel="page" class="btn disabled" title="First"><i class="icon-chevron-left"></i></a>
+    <a href="javascript:void(0);" rel="page" class="btn disabled" title="Previous"><i class="icon-chevron-left"></i></a>
     {% endif %}
+    {% if not pages.current.is_last %}
+    <a href="{{ pages.next.path }}" rel="page" class="btn endless_page_link" title="Next"><i class="icon-chevron-right"></i></a>
+    <a href="{{ pages.last.path }}" rel="page" class="btn endless_page_link" title="Last"><i class="icon-chevron-right"></i></a>
+    {% else %}
+    <a href="javascript:void(0);" class="btn disabled"><i class="icon-chevron-right"></i></a>
+    <a href="javascript:void(0);" class="btn disabled"><i class="icon-chevron-right"></i></a>
+    {% endif %}
+    </form>
   </div>
 </div>
