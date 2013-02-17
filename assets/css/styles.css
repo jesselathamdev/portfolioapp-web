@@ -1,5 +1,5 @@
 body {
-  background: url('/assets/img/background-light-310x310.png') left top repeat;
+  background: url('/static/img/background-light-310x310.png') left top repeat;
   color: #222222; /* #e1e1e1 */
 }
 
@@ -52,7 +52,7 @@ header .fixed-navbar {
 header .menu-container .navbar-inner {
   height: 41px;
   border: none;
-  background: url('/assets/img/gradient-menu-1x41.gif') left top repeat-x;
+  background: url('/static/img/gradient-menu-1x41.gif') left top repeat-x;
   box-shadow: 0 1px 10px rgba(0,0,0,.4);
 }
 
