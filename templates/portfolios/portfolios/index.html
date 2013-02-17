@@ -10,7 +10,8 @@
 {% block content %}
 
 {% if portfolios %}
-<table class="table table-striped table-hover table-condensed">
+<table class="table table-striped table-striped-light-blue table-hover table-condensed table-bordered">
+  <caption>Current portfolios</caption>
   <thead>
     <tr>
       <th style="width: 50%;">Name</th>
@@ -29,6 +30,12 @@
     </tr>
   {% endfor %}
   </tbody>
+  <tfoot>
+    <tr class="total">
+      <th colspan="3">Total</th>
+      <th class="align-right">$6,110.27</th>
+    </tr>
+  </tfoot>
 </table>
 {% else %}
 <p>No portfolios have been created yet</p>

@@ -4,10 +4,8 @@
 
 {% block breadcrumbs %}<a href="/">Home</a> &rarr; Sign in{% endblock breadcrumbs %}
 
-{% block page_title %}Sign in{% endblock page_title %}
-
 {% block content %}
-<div class="login">
+<div class="auth-container">
   {% if form.errors %}
   <div class="alert alert-error">
     <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -16,26 +14,6 @@
   {% endif %}
 
   <h1>PortfolioApp</h1>
-  <div class="widget-login">
-    <div class="widget-body">
-      <h3>Sign in below</h3>
-      <form method="post" action="{% url 'django.contrib.auth.views.login' %}">
-        {% csrf_token %}
-        <ul>
-          <li><input type="text" id="{{ form.username.auto_id }}" name="{{ form.username.html_name }}" placeholder="email" class="input-block-level"></li>
-          <li><input type="password" id="{{ form.password.auto_id }}" name="{{ form.password.html_name }}" placeholder="password" class="input-block-level"></li>
-        </ul>
-        <input type="submit" value="SIGN IN" class="btn btn-large btn-block btn-custom" />
-      </form>
-    </div>
-  </div>
+  {% include "common/widget_login.html" %}
 </div>
 {% endblock content %}
-
-{% block script %}
-<script type="text/javascript">
-  $(document).ready(function(){
-    $('#id_username').focus();
-  });
-</script>
-{% endblock script %}

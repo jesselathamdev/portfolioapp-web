@@ -1,11 +1,14 @@
-{% extends "base_one_column.html" %}
+{% extends "base_unauthenticated_profile.html" %}
 
 {% block browser_title %}Sign out{% endblock browser_title %}
 
-{% block page_title %}Sign out{% endblock page_title %}
-
 {% block content %}
 
-<p>You have successfully been signed out.</p>
+<div class="auth-container">
+  <h1>Sign out</h1>
+  <div class="widget-auth">
+    You have successfully signed out.
+  </div>
+</div>
 
 {% endblock content %}

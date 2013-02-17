@@ -1,16 +1,20 @@
 {% extends "base_two_columns.html" %}
 {% load humanize %}
 
-{% block title %}Holdings{% endblock title %}
+{% block browser_title %}Holdings{% endblock browser_title %}
 
 {% block breadcrumbs %}<a href="/">Home</a> &rarr; <a href="{% url 'portfolio_index' %}">Portfolios</a> &rarr; {{ portfolio.name }}{% endblock breadcrumbs %}
+
+{% block page_title %}Holdings{% endblock page_title %}
 
 {% block content %}
 
 <h1>Holdings <span class="link-add">( <a href="{% url 'holding_create' portfolio.id %}">add</a> )</span></h1>
 
+<div class="widget widget-simple">
+
 {% if holdings %}
-<table class="table table-striped table-hover table-condensed">
+<table class="table table-striped table-striped-white table-hover table-bordered table-condensed">
   <thead>
     <tr>
       <th>Name</th>
@@ -43,21 +47,27 @@
 {#      <td class="align-right">$100.32</td>#}
 {#      <td class="align-right">3.00%</td>#}
 {#    </tr>#}
-    <tr>
-      <td colspan="3"><strong>Total</strong></td>
-      <td class="align-right"><strong>$3456.33</strong></td>
-      <td class="align-right"><strong>$3456.33</strong></td>
-      <td>&nbsp;</td>
-      <td class="align-right">100%</td>
+    <tr class="total">
+      <th colspan="3"><strong>Total</strong></th>
+      <th class="align-right"><strong>$3456.33</strong></th>
+      <th class="align-right"><strong>$3456.33</strong></th>
+      <th colspan="2" class="align-right">100%</th>
     </tr>
   </tfoot>
 </table>
 {% else %}
 <p>You currently have no holdings in this portfolio - <a href="{% url 'holding_create' portfolio.id %}">go ahead and add some now!</a></p>
 {% endif %}
-
+</div>
 {% endblock content %}
 
 {% block sidebar %}
-Sidebar
+<div class="widget widget-simple">
+  <div class="widget-header">
+    <h3>Header</h3>
+  </div>
+  <div class="widget-body">
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris nisl nulla, mollis a fermentum non, posuere et neque. Praesent porttitor tellus in ligula dictum molestie. Nulla facilisi. Ut in odio urna, sit amet porttitor odio. In interdum odio id lacus semper volutpat. Maecenas dapibus nunc eget eros eleifend non faucibus enim placerat. Nam semper nisi ut dui auctor sit amet elementum elit mattis. Phasellus quis lectus eros, quis pharetra felis. Donec quis libero feugiat dui vehicula egestas. Sed velit libero, fringilla ut imperdiet eu, vehicula ac massa.</p>
+  </div>
+</div>
 {% endblock sidebar %}
