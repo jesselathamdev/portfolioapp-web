@@ -18,7 +18,7 @@ PROJECT_ROOT = Path(__file__).ancestor(3)
 
 MEDIA_ROOT = PROJECT_ROOT.child('media')
 STATIC_ROOT = PROJECT_ROOT.child('static')
-STATICFILES_DIRS = (PROJECT_ROOT.child('static'),)
+STATICFILES_DIRS = (PROJECT_ROOT.child('assets'),)
 TEMPLATE_DIRS = (PROJECT_ROOT.child('templates'),)
 
 ADMINS = ('Jesse Latham', 'jesse.latham.dev@gmail.com')
