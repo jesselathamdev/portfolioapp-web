@@ -21,8 +21,8 @@ var Dajaxice = {
     
         admin: {
     
-    pagination: function(callback_function, argv, custom_settings){
-        return Dajaxice.call('portfolioapp.apps.admin.paged_stock', 'POST', callback_function, argv, custom_settings);
+    paged_stocks: function(callback_function, argv, custom_settings){
+        return Dajaxice.call('portfolioapp.apps.admin.paged_stocks', 'POST', callback_function, argv, custom_settings);
     }
 
 

@@ -18,7 +18,7 @@ PROJECT_ROOT = Path(__file__).ancestor(3)
 
 MEDIA_ROOT = PROJECT_ROOT.child('media')
 STATIC_ROOT = PROJECT_ROOT.child('static')
-STATICFILES_DIRS = (PROJECT_ROOT.child('assets'),)
+STATICFILES_DIRS = (PROJECT_ROOT.child('static'),)
 TEMPLATE_DIRS = (PROJECT_ROOT.child('templates'),)
 
 ADMINS = ('Jesse Latham', 'jesse.latham.dev@gmail.com')
@@ -43,7 +43,7 @@ MEDIA_URL = ''
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
-STATIC_URL = '/assets/'
+STATIC_URL = '/static/'
 
 # List of finder classes that know how to find static files in
 # various locations.
