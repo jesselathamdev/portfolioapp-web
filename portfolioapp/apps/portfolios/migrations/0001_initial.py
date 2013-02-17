@@ -11,34 +11,35 @@ class Migration(SchemaMigration):
         # Adding model 'Portfolio'
         db.create_table(u'portfolios_portfolio', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['profiles.User'])),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=200)),
             ('date_updated', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
             ('date_created', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
+            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['profiles.User'])),
+            ('name', self.gf('django.db.models.fields.CharField')(max_length=200)),
         ))
         db.send_create_signal(u'portfolios', ['Portfolio'])
 
         # Adding model 'Holding'
         db.create_table(u'portfolios_holding', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('portfolio', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['portfolios.Portfolio'])),
-            ('market', self.gf('django.db.models.fields.CharField')(max_length=10)),
-            ('symbol', self.gf('django.db.models.fields.CharField')(max_length=10)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=250)),
             ('date_updated', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
             ('date_created', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
+            ('portfolio', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['portfolios.Portfolio'])),
+            ('stock', self.gf('django.db.models.fields.related.ForeignKey')(default=1, to=orm['markets.Stock'])),
         ))
         db.send_create_signal(u'portfolios', ['Holding'])
 
         # Adding model 'Transaction'
         db.create_table(u'portfolios_transaction', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('holding', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['portfolios.Holding'])),
-            ('quantity', self.gf('django.db.models.fields.DecimalField')(default=0.0, max_digits=7, decimal_places=5)),
-            ('price', self.gf('django.db.models.fields.DecimalField')(default=0.0, max_digits=7, decimal_places=2)),
-            ('category', self.gf('django.db.models.fields.PositiveSmallIntegerField')()),
             ('date_updated', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
             ('date_created', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
+            ('holding', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['portfolios.Holding'])),
+            ('quantity', self.gf('django.db.models.fields.DecimalField')(default=0.0, max_digits=10, decimal_places=5)),
+            ('value', self.gf('django.db.models.fields.DecimalField')(default=0.0, max_digits=7, decimal_places=2)),
+            ('type', self.gf('django.db.models.fields.PositiveSmallIntegerField')(default=5)),
+            ('comment', self.gf('django.db.models.fields.CharField')(default='', max_length=250, null=True, blank=True)),
+            ('commission', self.gf('django.db.models.fields.DecimalField')(default=0.0, max_digits=6, decimal_places=2)),
+            ('date_transacted', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
         ))
         db.send_create_signal(u'portfolios', ['Transaction'])
 
@@ -75,15 +76,38 @@ class Migration(SchemaMigration):
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
+        u'markets.market': {
+            'Meta': {'object_name': 'Market'},
+            'acr': ('django.db.models.fields.CharField', [], {'max_length': '20', 'blank': 'True'}),
+            'active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
+            'city': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
+            'country': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
+            'country_code': ('django.db.models.fields.CharField', [], {'max_length': '2'}),
+            'date_created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'date_updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'mic': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '5'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '250'}),
+            'website': ('django.db.models.fields.CharField', [], {'max_length': '250', 'blank': 'True'})
+        },
+        u'markets.stock': {
+            'Meta': {'object_name': 'Stock'},
+            'date_created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'date_last_price_updated': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2013, 2, 17, 0, 0)'}),
+            'date_updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'last_price': ('django.db.models.fields.DecimalField', [], {'default': '0.0', 'max_digits': '6', 'decimal_places': '2'}),
+            'market': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['markets.Market']"}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '250'}),
+            'symbol': ('django.db.models.fields.CharField', [], {'max_length': '8'})
+        },
         u'portfolios.holding': {
             'Meta': {'object_name': 'Holding'},
             'date_created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'date_updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'market': ('django.db.models.fields.CharField', [], {'max_length': '10'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '250'}),
             'portfolio': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['portfolios.Portfolio']"}),
-            'symbol': ('django.db.models.fields.CharField', [], {'max_length': '10'})
+            'stock': ('django.db.models.fields.related.ForeignKey', [], {'default': '1', 'to': u"orm['markets.Stock']"})
         },
         u'portfolios.portfolio': {
             'Meta': {'object_name': 'Portfolio'},
@@ -95,13 +119,16 @@ class Migration(SchemaMigration):
         },
         u'portfolios.transaction': {
             'Meta': {'object_name': 'Transaction'},
-            'category': ('django.db.models.fields.PositiveSmallIntegerField', [], {}),
+            'comment': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '250', 'null': 'True', 'blank': 'True'}),
+            'commission': ('django.db.models.fields.DecimalField', [], {'default': '0.0', 'max_digits': '6', 'decimal_places': '2'}),
             'date_created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'date_transacted': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
             'date_updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'holding': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['portfolios.Holding']"}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'price': ('django.db.models.fields.DecimalField', [], {'default': '0.0', 'max_digits': '7', 'decimal_places': '2'}),
-            'quantity': ('django.db.models.fields.DecimalField', [], {'default': '0.0', 'max_digits': '7', 'decimal_places': '5'})
+            'quantity': ('django.db.models.fields.DecimalField', [], {'default': '0.0', 'max_digits': '10', 'decimal_places': '5'}),
+            'type': ('django.db.models.fields.PositiveSmallIntegerField', [], {'default': '5'}),
+            'value': ('django.db.models.fields.DecimalField', [], {'default': '0.0', 'max_digits': '7', 'decimal_places': '2'})
         },
         u'profiles.user': {
             'Meta': {'object_name': 'User'},
