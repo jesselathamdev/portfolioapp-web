@@ -1,0 +1,4 @@
+# requirements.txt required to be in root of project for heroku deployments
+-r setup/requirements/_base.txt
+
+dj-database-url==0.2.1

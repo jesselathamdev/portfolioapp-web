@@ -1,0 +1,24 @@
+-e git://github.com/django/django.git@stable/1.5.x#egg=Django
+Jinja2==2.6
+Pygments==1.6rc1
+South==0.7.6
+Unipath==0.2.1
+Werkzeug==0.8.3
+bpython==0.12
+distribute==0.6.34
+django-debug-toolbar==0.9.4
+django-extensions==1.0.2
+django-statsd-mozilla==0.3.8.4
+fake-factory==0.2
+ipython==0.13.1
+psycopg2==2.4.6
+python-statsd==1.5.7
+statsd==1.0.0
+wadofstuff-django-serializers==1.1.0
+wsgiref==0.1.2
+yolk==0.4.3
+gunicorn==0.17.2
+dj-database-url==0.2.1  
+-e git://github.com/frankban/django-endless-pagination.git#egg=django-endless-pagination
+-e git://github.com/jorgebastida/django-dajaxice.git#egg=django-dajaxice
+-e git://github.com/jorgebastida/django-dajax.git#egg=django-dajax
