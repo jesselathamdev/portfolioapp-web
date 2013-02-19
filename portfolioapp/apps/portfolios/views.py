@@ -21,7 +21,8 @@ def portfolio_index(request):
 def holding_index(request, portfolio_id):
     portfolio = Portfolio.objects.get(pk=portfolio_id)
     holdings = Holding.objects.detailed_view(portfolio_id)
-    return render(request, 'portfolios/holdings/index.html', {'portfolio': portfolio, 'holdings': holdings})
+    holding_summary = Holding.objects.summary_view(portfolio_id)
+    return render(request, 'portfolios/holdings/index.html', {'portfolio': portfolio, 'holdings': holdings, 'holding_summary': holding_summary})
 
 
 @login_required

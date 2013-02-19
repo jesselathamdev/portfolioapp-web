@@ -6,7 +6,7 @@
   <li><a href="/">Dashboard</a></li>
   {% endif %}
 
-  {% if "portfolios.views.portfolio_index" or "portfolios.views.holding_index" or "portfolios.views.transaction_index" in request.view_name %}
+  {% if "portfolios.views.portfolio_index" in request.view_name or "portfolios.views.holding_index" in request.view_name or "portfolios.views.transaction_index" in request.view_name %}
   <li class="active"><a href="/portfolios">Portfolios</a></li>
   {% else %}
   <li><a href="/portfolios">Portfolios</a></li>

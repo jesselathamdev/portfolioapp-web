@@ -152,9 +152,10 @@ class HoldingManager(models.Manager, mixins.ORMMixin):
                 GROUP BY ph.id, ms.last_price, ms.date_last_price_updated
             ) as holdings''', [portfolio_id])
 
-        total = {}
+        summary = {}
         for row in cursor.fetchall():
-            total['total_book_value'] = row[0]
+            summary['total_book_value'] = row[0]
+            summary['total_market_value'] = row[1]
+            summary['total_net_gain_dollar'] = row[2]
 
-
-        return total
+        return summary
