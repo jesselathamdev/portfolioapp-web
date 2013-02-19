@@ -1,13 +1,14 @@
 # admin/view.py
 from django.shortcuts import render, render_to_response, RequestContext
 from django.contrib.auth.decorators import user_passes_test
+from django.db.models import Count
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger, InvalidPage
 
 from endless_pagination.decorators import page_template
 
 from portfolioapp.apps.core import settings
 from portfolioapp.apps.core.decorators import is_admin
-from portfolioapp.apps.markets.models import Stock
+from portfolioapp.apps.markets.models import Stock, Market
 
 @user_passes_test(is_admin)
 def home_index(request):
@@ -70,3 +71,10 @@ def dajax_paged_stocks(page=1):
         items = paginator.page(paginator.num_pages)
 
     return items
+
+
+@user_passes_test(is_admin)
+def market_index(request):
+    markets = Market.objects.annotate(stock_count=Count('stock'))
+
+    return render(request, 'admin/markets/markets/index.html', {'markets': markets})

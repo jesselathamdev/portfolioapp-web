@@ -6,7 +6,7 @@
   <li><a href="/">Dashboard</a></li>
   {% endif %}
 
-  {% if "portfolios.views.portfolio_index" in request.view_name %}
+  {% if "portfolios.views.portfolio_index" or "portfolios.views.holding_index" or "portfolios.views.transaction_index" in request.view_name %}
   <li class="active"><a href="/portfolios">Portfolios</a></li>
   {% else %}
   <li><a href="/portfolios">Portfolios</a></li>
@@ -37,7 +37,8 @@
       <li class="divider"></li>
       <li><a href="{% url 'portfolioapp.apps.admin.views.stock_index' %}">Stocks (standard)</a></li>
       <li><a href="{% url 'portfolioapp.apps.admin.views.ep_stock_index' %}">Stocks (django-endless-pagination)</a></li>
-      <li><a tabindex="-1" href="{% url 'portfolioapp.apps.admin.views.dajax_stock_index' %}">Stocks (django-dajax)</a></li>
+      <li><a href="{% url 'portfolioapp.apps.admin.views.dajax_stock_index' %}">Stocks (django-dajax)</a></li>
+      <li><a href="{% url 'portfolioapp.apps.admin.views.market_index' %}">Markets</a></li>
     </ul>
   </li>
 </ul>

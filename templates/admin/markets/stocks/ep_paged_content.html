@@ -1,10 +1,10 @@
 {% load endless %}
 
-<table class="table table-striped table-hover table-condensed">
+<table class="table table-striped table-striped-white table-hover table-bordered table-condensed">
   <thead>
     <tr>
-      <th style="width: 65%">Name</th>
-      <th style="width: 15%">Symbol</th>
+      <th style="width: 70%">Name</th>
+      <th style="width: 10%">Symbol</th>
       <th style="width: 10%">Market</th>
       <th style="width: 10%" class="align-right">Last Price</th>
     </tr>
@@ -21,10 +21,10 @@
     {% endfor %}
   </tbody>
   <tfoot>
-    <tr>
-      <td colspan="4">
+    <tr class="footer">
+      <th colspan="4">
         {% include "common/list_pagination.html" %}
-      </td>
+      </th>
     </tr>
   </tfoot>
 </table>

@@ -4,6 +4,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
+from django.contrib import messages
 
 from .forms import CreateUserProfileForm, EditUserProfileForm
 
@@ -38,6 +39,7 @@ def profile_edit(request):
 
         if form.is_valid():
             form.save()
+            messages.success(request, 'Profile saved successfully.')
             return HttpResponseRedirect(reverse('profile_edit'))
     else:
         form = EditUserProfileForm(instance=request.user)

@@ -1,0 +1,29 @@
+{% extends "base_two_columns.html" %}
+{% load humanize %}
+
+{% block browser_title %}Markets - Admin{% endblock browser_title %}
+
+{% block page_title %}Markets{% endblock page_title %}
+
+{% block content %}
+
+{% if markets %}
+<table class="table table-striped table-striped-white table-hover table-bordered table-condensed">
+  <thead>
+    <tr>
+      <th style="width: 85%;">Name</th>
+      <th style="width: 15%;" class="align-right">Stocks</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for market in markets %}
+    <tr>
+      <td>{{ market.name }}</td>
+      <td class="align-right">{{ market.stock_count|intcomma }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+
+{% endblock content %}

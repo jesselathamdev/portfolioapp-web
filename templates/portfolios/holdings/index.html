@@ -9,12 +9,8 @@
 
 {% block content %}
 
-<h1>Holdings <span class="link-add">( <a href="{% url 'holding_create' portfolio.id %}">add</a> )</span></h1>
-
-<div class="widget widget-simple">
-
 {% if holdings %}
-<table class="table table-striped table-striped-white table-hover table-bordered table-condensed">
+<table class="table table-striped table-striped-white table-hover table-bordered">
   <thead>
     <tr>
       <th>Name</th>
@@ -23,19 +19,31 @@
       <th class="align-right">Book Value<br /><span class="small">Avg Cost</span></th>
       <th class="align-right">Market Value</th>
       <th class="align-right">Net Gain</th>
-      <th class="align-right">Portfolio Makeup</th>
+      <th class="align-right">Portfolio<br />Makeup</th>
     </tr>
   </thead>
   <tbody>
   {% for holding in holdings %}
     <tr>
-      <td><a href="{% url 'transaction_index' portfolio.id holding.id %}">{{ holding.stock_name }} ({{ holding.stock_symbol }}:{{ holding.market_code }})</a></td>
-      <td class="align-right">${{ holding.last_price|floatformat:2|intcomma }}<br /><span class="small">{{ holding.date_last_price_updated }}</span></td>
-      <td class="align-right">{{ holding.total_quantity|default_if_none:"0.00"|floatformat:5|intcomma }}</td>
-      <td class="align-right">${{ holding.book_value|floatformat:2|intcomma }}<br /><span class="small">${{ holding.avg_cost|default_if_none:"0.00"|floatformat:2|intcomma }}</span></td>
-      <td class="align-right">${{ holding.market_value|floatformat:2|intcomma }}</td>
-      <td {% if holding.market_value > holding.book_value %}class="align-right indicator-gain"{% elif holding.market_value < holding.book_value %}class="align-right indicator-loss"{% else %}class="align-right"{% endif %}>${{ holding.net_gain_dollar|floatformat:2|intcomma }}<br /><span class="small">{{ holding.net_gain_percent|floatformat:2|intcomma }}%</span></td>
-      <td class="align-right">{{ holding.portfolio_makeup_percent|floatformat:2 }}%</td>
+      <td>
+        <a class="large" href="{% url 'transaction_index' portfolio.id holding.id %}">{{ holding.stock_symbol }}:{{ holding.market_code }}</a><br />
+        <a href="{% url 'transaction_index' portfolio.id holding.id %}">{{ holding.stock_name }}</a>
+      </td>
+      <td class="align-right"><span class="medium">
+        ${{ holding.last_price|floatformat:2|intcomma }}</span><br />
+        <span class="small">{{ holding.date_last_price_updated }}</span>
+      </td>
+      <td class="align-right"><span class="medium">{{ holding.total_quantity|default_if_none:"0.00"|floatformat:5|intcomma }}</span></td>
+      <td class="align-right"><span class="medium">
+        ${{ holding.book_value|floatformat:2|intcomma }}</span><br />
+        <span class="small">${{ holding.avg_cost|default_if_none:"0.00"|floatformat:2|intcomma }}</span>
+      </td>
+      <td class="align-right"><span class="medium">${{ holding.market_value|floatformat:2|intcomma }}</span></td>
+      <td {% if holding.market_value > holding.book_value %}class="align-right indicator-gain"{% elif holding.market_value < holding.book_value %}class="align-right indicator-loss"{% else %}class="align-right"{% endif %}>
+        <span class="medium">${{ holding.net_gain_dollar|floatformat:2|intcomma }}</span><br />
+        <span class="small">{{ holding.net_gain_percent|floatformat:2|intcomma }}%</span>
+      </td>
+      <td class="align-right"><span class="medium">{{ holding.portfolio_makeup_percent|floatformat:2 }}%</span></td>
     </tr>
   {% endfor %}
   </tbody>
@@ -58,7 +66,6 @@
 {% else %}
 <p>You currently have no holdings in this portfolio - <a href="{% url 'holding_create' portfolio.id %}">go ahead and add some now!</a></p>
 {% endif %}
-</div>
 {% endblock content %}
 
 {% block sidebar %}

@@ -3,6 +3,7 @@ from django.shortcuts import render, render_to_response, get_object_or_404, Requ
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from django.contrib import messages
 
 from endless_pagination.decorators import page_template
 
@@ -31,6 +32,7 @@ def holding_create(request, portfolio_id):
         form = CreateHolding(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Your form was saved.')
             return HttpResponseRedirect(reverse('holding_index', args=(portfolio_id,)))
         else:
             return render(request, 'portfolios/holdings/create.html', {'form': form})
