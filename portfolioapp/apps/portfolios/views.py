@@ -43,10 +43,16 @@ def holding_create(request, portfolio_id):
 
 
 @login_required
-def transaction_index(request, portfolio_id, holding_id):
+@page_template('portfolios/transactions/index_paged_content.html')
+def transaction_index(request, portfolio_id, holding_id, template='portfolios/transactions/index.html', extra_context=None):
     holding = Holding.objects.select_related('portfolio').get(pk=holding_id)
     transactions = Transaction.objects.select_related('portfolio', 'portfolio__holding').filter(holding__id=holding_id).order_by('-date_transacted')
-    return render(request, 'portfolios/transactions/index.html', {'holding': holding, 'transactions': transactions})
+    context = {'holding': holding, 'transactions': transactions, 'results_per_page': settings.RESULTS_PER_PAGE}
+
+    if extra_context is not None:
+        context.update(extra_context)
+
+    return render_to_response(template, context, context_instance=RequestContext(request))
 
 
 @login_required

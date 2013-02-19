@@ -7,9 +7,10 @@
     <tr>
       <th style="width: 15%">Date</th>
       <th style="width: 15%">Type</th>
-      <th style="width: 40%">Holding</th>
       <th style="width: 15%" class="align-right">Quantity</th>
       <th style="width: 15%" class="align-right">Price</th>
+      <th style="width: 15%" class="align-right">Commission</th>
+      <th style="width: 25%">Comment</th>
     </tr>
   </thead>
   {% if transactions %}
@@ -21,13 +22,15 @@
     <td>{{ transaction.get_type_display }}</td>
     <td>{{ transaction.holding.stock.name }} ({{ transaction.holding.stock.symbol }}:{{ transaction.holding.stock.market.acr }})</td>
     <td class="align-right">{{ transaction.quantity }}</td>
-    <td class="align-right">${{ transaction.value|floatformat:2|intcomma }}</td>
+    <td class="align-right">${{ transaction.value|floatformat:2 }}</td>
+    <td class="align-right">${{ transaction.commission|floatformat:2 }}</td>
+    <td>{{ transaction.comment|default_if_none:"" }}</td>
   </tr>
   {% endfor %}
   </tbody>
   <tfoot>
     <tr>
-      <td colspan="5">
+      <td colspan="7">
         {% include "common/list_pagination.html" %}
       </td>
     </tr>
