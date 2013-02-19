@@ -1,3 +1,4 @@
 -r _base.txt
 
 dj-database-url==0.2.1
+gunicorn==0.17.2
