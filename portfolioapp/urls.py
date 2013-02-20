@@ -27,16 +27,17 @@ urlpatterns = patterns('',
     # apis
     url(r'^api/markets/stocks/?', 'portfolioapp.apps.markets.views_api.stock_index', name='api_stock_index'),
 
-    # dev helpers
-    url(r'^dummy/?', 'portfolioapp.apps.core.views.dummy', name='dummy'),
-    url(r'^dev/', include('portfolioapp.apps.dev.urls')),
-
     # dajaxice
     url(dajaxice_config.dajaxice_url, include('dajaxice.urls')),
 )
 
-if settings.DEBUG is False:   #if DEBUG is True it will be served automatically
-    # urlpatterns += staticfiles_urlpatterns()
+if settings.DEBUG:
+    urlpatterns += patterns('',
+        url(r'^dummy/?', 'portfolioapp.apps.core.views.dummy', name='dummy'),
+        url(r'^dev/', include('portfolioapp.apps.dev.urls')),
+    )
+
+if not settings.DEBUG:
     urlpatterns += patterns('',
             url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
     )

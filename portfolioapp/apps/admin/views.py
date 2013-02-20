@@ -1,14 +1,17 @@
 # admin/view.py
-from django.shortcuts import render, render_to_response, RequestContext
+from django.shortcuts import render, render_to_response, RequestContext, HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import user_passes_test
+from django.core.urlresolvers import reverse
 from django.db.models import Count
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger, InvalidPage
+from django.contrib import messages
 
 from endless_pagination.decorators import page_template
 
 from portfolioapp.apps.core import settings
 from portfolioapp.apps.core.decorators import is_admin
 from portfolioapp.apps.markets.models import Stock, Market
+from .forms import EditStockForm
 
 @user_passes_test(is_admin)
 def home_index(request):
@@ -45,6 +48,24 @@ def ep_stock_index(request, template='admin/markets/stocks/ep_index.html', extra
         context.update(extra_context)
 
     return render_to_response(template, context, context_instance=RequestContext(request))
+
+
+@user_passes_test(is_admin)
+def stock_edit(request, stock_id):
+    stock = Stock.objects.get(pk=stock_id)
+
+    if request.method == 'POST':
+        form = EditStockForm(request.POST, instance=stock)
+        if form.is_valid():
+            # return HttpResponse(form)
+            form.save()
+            messages.success(request, 'Your form was saved.')
+            return HttpResponseRedirect(reverse('admin_stock_index'))
+        else:
+            return render(request, 'admin/markets/stocks/edit.html', {'stock': stock, 'form': form})
+    else:
+        form = EditStockForm(instance=stock)
+        return render(request, 'admin/markets/stocks/edit.html', {'stock': stock, 'form': form})
 
 
 # the following is an implementation of django-dajax and django-dajaxice; spent a lot of time figuring it out but as a

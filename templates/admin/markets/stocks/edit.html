@@ -1,0 +1,47 @@
+{% extends "base_two_columns.html" %}
+{% load endless %}
+
+{% block browser_title %}Edit Stock - Admin{% endblock browser_title %}
+
+{% block breadcrumbs %}<a href="/">Home</a> &rarr; <a href="{% url "admin_home_index" %}">Admin</a> &rarr; <a href="{% url "admin_stock_index" %}">Stocks</a> &rarr; {{ stock.name }}{% endblock breadcrumbs %}
+
+{% block page_title %}Edit Stock{% endblock page_title %}
+
+{% block content %}
+
+<div class="widget widget-simple">
+  <div class="widget-header">
+    Header
+  </div>
+  <div class="widget-body">
+    <form method="post" action="" class="form-horizontal">
+      {% csrf_token %}
+      <div class="control-group">
+        <label class="control-label" for="{{ form.name.auto_id }}">Name</label>
+        <div class="controls">
+          <input type="text" id="{{ form.name.auto_id }}" name="{{ form.name.html_name }}" value="{{ form.name.value }}" placeholder="name" class="input-xlarge">
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="{{ form.symbol.auto_id }}">Symbol</label>
+        <div class="controls">
+          <input type="text" id="{{ form.symbol.auto_id }}" name="{{ form.symbol.html_name }}" value="{{ form.symbol.value }}" placeholder="symbol" class="input-medium">
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="{{ form.last_price.auto_id }}">Last Price</label>
+        <div class="controls">
+          <input type="text" id="{{ form.last_price.auto_id }}" name="{{ form.last_price.html_name }}" value="{{ form.last_price.value }}" placeholder="last price" class="input-small">
+        </div>
+      </div>
+      <div class="control-group">
+        <div class="controls">
+          <button type="submit" class="btn btn-success">Save stock</button>
+          <button type="submit" class="btn" name="cancel">Cancel</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock content %}

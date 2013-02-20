@@ -57,7 +57,7 @@ TEMPLATE_CONTEXT_PROCESSORS += (
     'django.core.context_processors.request',
     'django.contrib.messages.context_processors.messages',
     'portfolioapp.apps.core.context_processors.global_login_form',
-    'portfolioapp.apps.core.context_processors.view_name_context_processor',
+    'portfolioapp.apps.core.context_processors.view_name',
 )
 
 # Make this unique, and don't share it with anybody.

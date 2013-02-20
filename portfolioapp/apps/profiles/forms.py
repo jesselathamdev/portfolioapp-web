@@ -10,16 +10,6 @@ class EditUserProfileForm(ModelForm):
         model = get_user_model()
         fields = ('email', 'first_name', 'last_name',)
 
-    def __init__(self, *args, **kwargs):
-        super(EditUserProfileForm, self).__init__(*args, **kwargs)
-        User = get_user_model()
-        try:
-            self.fields['email'].initial = self.instance.email
-            self.fields['first_name'].initial = self.instance.first_name
-            self.fields['last_name'].initial = self.instance.last_name
-        except User.DoesNotExist:
-            pass
-
 
 class CreateUserProfileForm(ModelForm):
     """A form for creating new users. Includes all the

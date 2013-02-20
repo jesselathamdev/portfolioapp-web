@@ -13,7 +13,7 @@
     {% paginate results_per_page stocks %}
     {% for stock in stocks %}
     <tr>
-      <td>{{ stock.name }}</td>
+      <td><a href="{% url "admin_stock_edit" stock.id %}">{{ stock.name }}</a></td>
       <td>{{ stock.symbol }}</td>
       <td>{{ stock.market.acr }}</td>
       <td class="align-right">${{ stock.last_price|floatformat:2 }}</td>

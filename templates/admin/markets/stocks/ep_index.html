@@ -1,7 +1,7 @@
 {% extends "base_two_columns.html" %}
 {% load endless %}
 
-{% block title %}Stocks - Admin{% endblock title %}
+{% block browser_title %}Stocks - Admin{% endblock browser_title %}
 
 {% block breadcrumbs %}<a href="/">Home</a> &rarr; <a href="{% url "admin_home_index" %}">Admin</a> &rarr; Stocks{% endblock breadcrumbs %}
 
@@ -12,11 +12,6 @@
 <div id="paginate" class="endless_page_template">
   {% include page_template %}
 </div>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
 
 {% endblock content %}
 
