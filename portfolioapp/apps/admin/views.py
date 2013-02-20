@@ -11,7 +11,7 @@ from endless_pagination.decorators import page_template
 from portfolioapp.apps.core import settings
 from portfolioapp.apps.core.decorators import is_admin
 from portfolioapp.apps.markets.models import Stock, Market
-from .forms import EditStockForm
+from .forms import StockEditForm
 
 @user_passes_test(is_admin)
 def home_index(request):
@@ -37,7 +37,7 @@ def stock_edit(request, stock_id):
     stock = Stock.objects.get(pk=stock_id)
 
     if request.method == 'POST':
-        form = EditStockForm(request.POST, instance=stock)
+        form = StockEditForm(request.POST, instance=stock)
         if form.is_valid():
             # return HttpResponse(form)
             form.save()
@@ -46,7 +46,7 @@ def stock_edit(request, stock_id):
         else:
             return render(request, 'admin/markets/stocks/edit.html', {'stock': stock, 'form': form})
     else:
-        form = EditStockForm(instance=stock)
+        form = StockEditForm(instance=stock)
         return render(request, 'admin/markets/stocks/edit.html', {'stock': stock, 'form': form})
 
 
