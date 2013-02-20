@@ -2,12 +2,14 @@
 # borrowed from http://djangosnippets.org/snippets/1579/
 
 import cProfile
+import sys
 import os
 import pstats
 import tempfile
 from cStringIO import StringIO
 
 from django.conf import settings
+from django.views.debug import technical_500_response
 
 # the following is for profile
 class ProfilerMiddleware(object):
@@ -31,7 +33,10 @@ class ProfilerMiddleware(object):
             response.content = '<pre>%s</pre>' % out.getvalue()
         return response
 
-
-class ViewNameMiddleware(object):
-    def process_view(self, request, view_func, view_args, view_kwargs):
-        request.session['view_name'] = ".".join((view_func.__module__, view_func.__name__))
+class UserBasedExceptionMiddleware(object):
+    """
+    Borrowed from http://ericholscher.com/blog/2008/nov/15/debugging-django-production-environments/
+    """
+    def process_exception(self, request, exception):
+        if request.user.is_superuser or request.META.get('REMOTE_ADDR') in settings.INTERNAL_IPS:
+            return technical_500_response(request, *sys.exc_info())

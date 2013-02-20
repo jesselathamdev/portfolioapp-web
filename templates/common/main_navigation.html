@@ -1,36 +1,17 @@
+{% load base_extras %}
+
 <ul class="nav">
   {% if user.is_authenticated %}
-  {% if "home.views.index" in view_name %}
-  <li class="active"><a href="/">Dashboard</a></li>
+  <li class="{% navactive request "home_index" %}"><a href="{% url "home_index" %}">Dashboard</a></li>
+  <li class="{% navactive request "portfolio_index holding_index transaction_index" %}"><a href="/portfolios">Portfolios</a></li>
+  <li class="{% navactive request "transaction_global_index" %}"><a href="/transactions">Transactions</a></li>
   {% else %}
-  <li><a href="/">Dashboard</a></li>
-  {% endif %}
-
-  {% if "portfolios.views.portfolio_index" in view_name or "portfolios.views.holding_index" in view_name or "portfolios.views.transaction_index" in view_name %}
-  <li class="active"><a href="/portfolios">Portfolios</a></li>
-  {% else %}
-  <li><a href="/portfolios">Portfolios</a></li>
-  {% endif %}
-
-  {% if "portfolios.views.transaction_global_index" in view_name %}
-  <li class="active"><a href="/transactions">Transactions</a></li>
-  {% else %}
-  <li><a href="/transactions">Transactions</a></li>
-  {% endif %}
-
-  {% else %}
-  <li class="active"><a href="/">Home</a></li>
+  <li class=""><a href="/">Home</a></li>
   {% endif %}
 </ul>
 {% if user.is_admin %}
 <ul class="nav pull-right">
-
-  {% if "admin.views" in view_name %}
-  <li class="active" class="dropdown">
-  {% else %}
   <li class="dropdown">
-  {% endif %}
-
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <b class="caret"></b></a>
     <ul class="dropdown-menu pull-right">
       <li><a role="menuitem" tabindex="-1" href="{% url 'portfolioapp.apps.admin.views.home_index' %}">Dashboard</a></li>

@@ -2,9 +2,6 @@ from django.conf.urls import patterns, include, url
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf import settings
 
-from dajaxice.core import dajaxice_autodiscover, dajaxice_config
-dajaxice_autodiscover()
-
 urlpatterns = patterns('',
     # profiles (sign in, profile, etc)
     url(r'^sign-up/$', 'portfolioapp.apps.profiles.views.profile_create', name='profile_create'),
@@ -26,17 +23,16 @@ urlpatterns = patterns('',
 
     # apis
     url(r'^api/markets/stocks/?', 'portfolioapp.apps.markets.views_api.stock_index', name='api_stock_index'),
-
-    # dajaxice
-    url(dajaxice_config.dajaxice_url, include('dajaxice.urls')),
 )
 
+# only available in debug mode
 if settings.DEBUG:
     urlpatterns += patterns('',
         url(r'^dummy/?', 'portfolioapp.apps.core.views.dummy', name='dummy'),
         url(r'^dev/', include('portfolioapp.apps.dev.urls')),
     )
 
+# only available in non-debug mode (i.e. production)
 if not settings.DEBUG:
     urlpatterns += patterns('',
             url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
