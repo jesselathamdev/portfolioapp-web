@@ -50,7 +50,6 @@ STATIC_URL = '/static/'
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'dajaxice.finders.DajaxiceFinder',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS += (
@@ -102,8 +101,6 @@ INSTALLED_APPS = (
 
     # 3rd party addons
     'endless_pagination',
-    'dajaxice',
-    'dajax',
     'south',
 )
 

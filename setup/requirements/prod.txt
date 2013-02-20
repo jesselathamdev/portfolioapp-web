@@ -20,5 +20,3 @@ yolk==0.4.3
 gunicorn==0.17.2
 dj-database-url==0.2.1  
 -e git://github.com/frankban/django-endless-pagination.git#egg=django-endless-pagination
--e git://github.com/jorgebastida/django-dajaxice.git#egg=django-dajaxice
--e git://github.com/jorgebastida/django-dajax.git#egg=django-dajax
