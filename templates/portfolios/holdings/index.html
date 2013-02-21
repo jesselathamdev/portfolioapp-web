@@ -74,7 +74,73 @@
     <h3>Header</h3>
   </div>
   <div class="widget-body">
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris nisl nulla, mollis a fermentum non, posuere et neque. Praesent porttitor tellus in ligula dictum molestie. Nulla facilisi. Ut in odio urna, sit amet porttitor odio. In interdum odio id lacus semper volutpat. Maecenas dapibus nunc eget eros eleifend non faucibus enim placerat. Nam semper nisi ut dui auctor sit amet elementum elit mattis. Phasellus quis lectus eros, quis pharetra felis. Donec quis libero feugiat dui vehicula egestas. Sed velit libero, fringilla ut imperdiet eu, vehicula ac massa.</p>
+    <div id="holdings-chart" style="width: 275px; height: 275px;"></div>
   </div>
 </div>
 {% endblock sidebar %}
+
+{% block script %}
+<script type="text/javascript" src="{{ STATIC_URL }}js/flot/jquery.flot.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/flot/jquery.flot.pie.js"></script>
+<script type="text/javascript">
+{#    var data = [],#}
+{#			series = Math.floor(Math.random() * 6) + 3;#}
+{##}
+{#		for (var i = 0; i < series; i++) {#}
+{#			data[i] = {#}
+{#				label: "Series" + (i + 1),#}
+{#				data: Math.floor(Math.random() * 100) + 1#}
+{#			}#}
+{#		}#}
+
+		var data = [
+			{ label: "BNS:TSX",  data: 3.08},
+			{ label: "BB:TSX",  data: 12.34},
+			{ label: "RY:TSX",  data: 80.67},
+			{ label: "YHOO:NASDAQ",  data: 3.91}
+		];
+
+    $.plot('#holdings-chart', data, {
+        series: {
+            pie: {
+                show: true,
+                innerRadius: 0.4,
+                radius: 1,
+                stroke: {
+												color: '#fff',
+												width: 2
+                },
+                grow: {
+                    active: false
+                },
+                startAngle: 2,
+                combine: {
+												color: '#353535',
+												threshold: 0.04
+										},
+                label: {
+                    show: true,
+                    radius: 3/4,
+                    formatter: function (label, series) {
+										    return '<div class="label label-inverse" style="border-radius: 5px;">' + label + '&nbsp;' + Math.round(series.percent*10)/10 + '%</div>';
+                    },
+                    background: {
+                        opacity: 0.5,
+                        color: '#000'
+                    }
+                }
+            }
+        },
+        grid: {
+            hoverable: true,
+            clickable: true
+        },
+        colors: [ "#3A703A", "#4E954E", "#61ba61", "#81C881", "#A0D6A0", "#C0E3C0"],
+        legend: {
+            show: false
+        }
+    });
+
+{#   [ "#5f4e1a", "#8e7426", "#be9b33", "#edc240", "#f1ce66", "#f4da8c", "#f8e7b3"] , GREENS#}
+</script>
+{% endblock script %}
