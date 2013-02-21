@@ -4,7 +4,7 @@
 
 {% block breadcrumbs %}<a href="/">Home</a> &rarr; <a href="{% url 'portfolio_index' %}">Portfolios</a> &rarr; <a href="{% url 'holding_index' holding.portfolio.id %}">{{ holding.portfolio.name }}</a> &rarr; {{ holding.full_name }}{% endblock breadcrumbs %}
 
-{% block page_title %}Transactions{% endblock page_title %}
+{% block page_title %}<i class="icon-list"></i> Transactions{% endblock page_title %}
 
 {% block content %}
 

@@ -91,23 +91,16 @@ var chart =
 <script type="text/javascript" src="{{ STATIC_URL }}js/flot/jquery.flot.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}js/flot/jquery.flot.pie.js"></script>
 <script type="text/javascript">
-  $(document).ready(function() {
-      $('table.table-clickable tbody tr').click(function() {
-          var href = $(this).find("a").attr("href");
-          if(href) {
-              window.location = href;
-          }
-      });
-  });
+    $(document).ready(function() {
+        $('table.table-clickable tbody tr').click(function() {
+            var href = $(this).find("a").attr("href");
+            if(href) {
+                window.location = href;
+            }
+        });
+    });
 
     var data = {{ holding_chart|safe }};
-
-{#		var data = [#}
-{#			{'label': 'BNS:TSX',  'data': 3.08},#}
-{#			{'label': 'BB:TSX', 'data': 12.34},#}
-{#		  {'label': 'RY:TSX', 'data': 80.67},#}
-{#			{'label': 'YHOO:NASDAQ', 'data': 3.91}#}
-{#		];#}
 
     $.plot('#holdings-chart', data, {
         series: {
@@ -140,16 +133,10 @@ var chart =
                 }
             }
         },
-        grid: {
-            hoverable: true,
-            clickable: true
-        },
         colors: [ "#3A703A", "#4E954E", "#61ba61", "#81C881", "#A0D6A0", "#C0E3C0"],
         legend: {
             show: false
         }
     });
-
-{#   [ "#5f4e1a", "#8e7426", "#be9b33", "#edc240", "#f1ce66", "#f4da8c", "#f8e7b3"] , GREENS#}
 </script>
 {% endblock script %}

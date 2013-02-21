@@ -10,7 +10,7 @@
 {% block content %}
 
 {% if portfolios %}
-<table class="table table-striped table-striped-light-blue table-hover table-condensed table-bordered">
+<table class="table table-striped table-striped-white table-hover table-condensed table-bordered table-clickable">
   <caption>Current portfolios</caption>
   <thead>
     <tr>
@@ -23,10 +23,10 @@
   <tbody>
   {% for portfolio in portfolios %}
     <tr>
-      <td><a href="{% url 'holding_index' portfolio.id %}">{{ portfolio.name }}</a></td>
-      <td class="align-right">${{ portfolio.book_value|floatformat:2|intcomma }}</td>
-      <td class="align-right">${{ portfolio.market_value|floatformat:2|intcomma }}</td>
-      <td {% if portfolio.market_value > portfolio.book_value %}class="align-right indicator-gain"{% elif portfolio.market_value < portfolio.book_value %}class="align-right indicator-loss"{% else %}class="align-right"{% endif %}>${{ portfolio.net_gain_dollar|floatformat:2|intcomma }}<br /><span class="small">{{ portfolio.net_gain_percent|floatformat:2|intcomma }}%</span></td>
+      <td><a class="large" href="{% url 'holding_index' portfolio.id %}">{{ portfolio.name }}</a></td>
+      <td class="align-right"><span class="medium">${{ portfolio.book_value|floatformat:2|intcomma }}</span></td>
+      <td class="align-right"><span class="medium">${{ portfolio.market_value|floatformat:2|intcomma }}</span></td>
+      <td {% if portfolio.market_value > portfolio.book_value %}class="align-right indicator-gain"{% elif portfolio.market_value < portfolio.book_value %}class="align-right indicator-loss"{% else %}class="align-right"{% endif %}><span class="medium">${{ portfolio.net_gain_dollar|floatformat:2|intcomma }}</span><br /><span class="small">{{ portfolio.net_gain_percent|floatformat:2|intcomma }}%</span></td>
     </tr>
   {% endfor %}
   </tbody>
@@ -46,3 +46,16 @@
 {% block sidebar %}
 Sidebar
 {% endblock sidebar %}
+
+{% block script %}
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('table.table-clickable tbody tr').click(function() {
+            var href = $(this).find("a").attr("href");
+            if(href) {
+                window.location = href;
+            }
+        });
+    });
+</script>
+{% endblock script %}
