@@ -9,5 +9,5 @@ class StockEditForm(forms.ModelForm):
         fields = ('name', 'symbol', 'last_price',)
 
 
-class StockSearchForm(forms.ModelForm):
-    search = forms.CharField(max_length=50)
+class StockSearchForm(forms.Form):
+    search_term = forms.CharField(max_length=50)

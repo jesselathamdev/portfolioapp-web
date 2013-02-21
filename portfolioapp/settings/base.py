@@ -1,4 +1,4 @@
-# Django settings for portfolioapp project.
+# settings/base.py
 
 import os
 from unipath import Path

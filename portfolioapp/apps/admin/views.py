@@ -5,13 +5,14 @@ from django.core.urlresolvers import reverse
 from django.db.models import Count
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger, InvalidPage
 from django.contrib import messages
+from django.db.models import Q
 
 from endless_pagination.decorators import page_template
 
 from portfolioapp.apps.core import settings
 from portfolioapp.apps.core.decorators import is_admin
 from portfolioapp.apps.markets.models import Stock, Market
-from .forms import StockEditForm
+from .forms import StockEditForm, StockSearchForm
 
 @user_passes_test(is_admin)
 def home_index(request):
@@ -24,7 +25,24 @@ def home_index(request):
 @page_template('admin/markets/stocks/index_paged_content.html')
 def stock_index(request, template='admin/markets/stocks/index.html', extra_context=None):
     stocks = Stock.objects.select_related('stock__name', 'stock__symbol', 'market__acr').order_by('name')
-    context = {'stocks': stocks, 'results_per_page': settings.RESULTS_PER_PAGE,}
+
+    # if request.is_ajax():
+    #
+    #     context = {'stocks': stocks, 'results_per_page': settings.RESULTS_PER_PAGE, 'search_form': search_form,}
+    #
+    #     if extra_context is not None:
+    #         context.update(extra_context)
+    #
+    #     return render_to_response(template, context, context_instance=RequestContext(request))
+    # elif request.method == 'POST':
+    #     search_form = StockSearchForm(request.POST)
+    #     if search_form.is_valid():
+    #         term = search_form.cleaned_data['search_term']
+    #         stocks = Stock.objects.get(Q(stock__name=term)).select_related('stock__name', 'stock__symbol', 'market__acr').order_by('name')
+    #
+    # else:
+    #     search_form = StockSearchForm()
+    context = {'stocks': stocks, 'results_per_page': settings.RESULTS_PER_PAGE, }
 
     if extra_context is not None:
         context.update(extra_context)
