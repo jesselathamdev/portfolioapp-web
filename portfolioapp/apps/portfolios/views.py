@@ -1,4 +1,5 @@
 # portfolios/views.py
+
 from django.shortcuts import render, render_to_response, get_object_or_404, RequestContext
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
@@ -22,7 +23,15 @@ def holding_index(request, portfolio_id):
     portfolio = Portfolio.objects.get(pk=portfolio_id)
     holdings = Holding.objects.detailed_view(portfolio_id)
     holding_summary = Holding.objects.summary_view(portfolio_id)
-    return render(request, 'portfolios/holdings/index.html', {'portfolio': portfolio, 'holdings': holdings, 'holding_summary': holding_summary})
+
+    holding_chart = []
+    for holding in holdings:
+        holding_json = {}
+        holding_json['label'] = str(holding.stock_symbol)
+        holding_json['data'] = str(round(holding.portfolio_makeup_percent, 2))
+        holding_chart.append(holding_json)
+
+    return render(request, 'portfolios/holdings/index.html', {'portfolio': portfolio, 'holdings': holdings, 'holding_summary': holding_summary, 'holding_chart': holding_chart})
 
 
 @login_required
@@ -71,19 +80,3 @@ def transaction_global_index(request, template='portfolios/transactions/index_gl
 def portfolio_detail(request, portfolio_id):
     portfolio = get_object_or_404(Portfolio, pk=portfolio_id)
     return render(request, 'portfolios/portfolios/detail.html', {'portfolio': portfolio})
-
-
-#@login_required
-#def holding_create(request, portfolio_id):
-#    portfolio = Portfolio.objects.get(pk=portfolio_id)
-#
-#    if request.method == "POST":
-#        form = CreateHolding(request.POST)
-#        if form.is_valid():
-#            form.save()
-#            return HttpResponseRedirect(reverse('holding_index'))
-#    else:
-#        form = CreateHolding()
-#        return render(request, 'portfolios/holdings/detail.html', {'portfolio': portfolio, 'form': form})
-
-
