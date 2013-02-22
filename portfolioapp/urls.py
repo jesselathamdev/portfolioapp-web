@@ -10,7 +10,7 @@ urlpatterns = patterns('',
     url(r'^profile/$', 'portfolioapp.apps.profiles.views.profile_edit', name='profile_edit'),
 
     # home page
-    url(r'^$', 'portfolioapp.apps.home.views.index', name='home_index'),
+    url(r'^$', 'portfolioapp.apps.home.views.index', name='dashboard_index'),
 
     # portfolios
     url(r'^portfolios/', include('portfolioapp.apps.portfolios.urls')),

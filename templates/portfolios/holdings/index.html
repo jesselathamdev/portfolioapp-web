@@ -67,35 +67,20 @@
 <p>You currently have no holdings in this portfolio - <a href="{% url 'holding_create' portfolio.id %}">go ahead and add some now!</a></p>
 {% endif %}
 
-<pre>
-{{ holding_chart_hc }}
-</pre>
-
 {% endblock content %}
 
 {% block sidebar %}
 <div class="widget widget-simple">
   <div class="widget-header">
-    <h3>Holdings <small>(Highcharts)</small></h3>
+    <h3>Portfolio</h3>
   </div>
   <div class="widget-body">
-    <div id="holdings-chart-hc" style="width: 270px; height: 275px;"></div>
-  </div>
-</div>
-
-<div class="widget widget-simple">
-  <div class="widget-header">
-    <h3>Holdings <small>(Flot)</small></h3>
-  </div>
-  <div class="widget-body">
-    <div id="holdings-chart" style="width: 275px; height: 275px;"></div>
+    <div id="holdings-chart" style="height: 260px;"></div>
   </div>
 </div>
 {% endblock sidebar %}
 
 {% block script %}
-<script type="text/javascript" src="{{ STATIC_URL }}js/flot/jquery.flot.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}js/flot/jquery.flot.pie.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
         $('table.table-clickable tbody tr').click(function() {
@@ -105,59 +90,13 @@
             }
         });
     });
-
-    var data = {{ holding_chart|safe }};
-
-    $.plot('#holdings-chart', data, {
-        series: {
-            pie: {
-                show: true,
-                innerRadius: 0.4,
-                radius: 1,
-                stroke: {
-								    color: '#fff',
-										width: 2
-                },
-                grow: {
-                    active: false
-                },
-                startAngle: 2,
-                combine: {
-										color: '#353535',
-										threshold: 0.04
-								},
-                label: {
-                    show: true,
-                    radius: 3/4,
-                    formatter: function (label, series) {
-										    return '<div class="label label-inverse" style="border-radius: 5px;">' + label + '&nbsp;' + Math.round(series.percent*10)/10 + '%</div>';
-                    },
-                    background: {
-                        opacity: 0.5,
-                       color: '#000'
-                    }
-                }
-            }
-        },
-        colors: [ "#3A703A", "#4E954E", "#61ba61", "#81C881", "#A0D6A0", "#C0E3C0"],
-        legend: {
-            show: false
-        }
-    });
 </script>
 <script type="text/javascript" src="{{ STATIC_URL }}js/highcharts/highcharts.js"></script>
-{#<script type="text/javascript" src="http://github.highcharts.com/v3.0Beta/highcharts.js"></script>#}
 <script type="text/javascript">
 $(function () {
     var chart;
     $(document).ready(function() {
-        /**
-         * Grid theme for Highcharts JS
-         * @author Torstein Hønsi
-         */
-
         Highcharts.theme = {
-{#           colors: ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'],#}
             colors: [ "#3A703A", "#4E954E", "#61ba61", "#81C881", "#A0D6A0", "#C0E3C0"],
             chart: {
                 backgroundColor: 'rgba(255, 255, 255, 0.1)',
@@ -182,7 +121,7 @@ $(function () {
 
         chart = new Highcharts.Chart({
             chart: {
-                renderTo: 'holdings-chart-hc',
+                renderTo: 'holdings-chart',
                 plotBackgroundColor: null,
                 plotBorderWidth: null,
                 plotShadow: false,
@@ -200,16 +139,16 @@ $(function () {
             },
             tooltip: {
                 formatter: function() {
-                  return '<b>'+ this.point.name +'</b>: '+ Math.round(this.percentage*10)/10 +'%';
+                  return '<b>'+ this.point.name +':</b> '+ Math.round(this.percentage*10)/10 +'%';
                 }
             },
             plotOptions: {
                 pie: {
-                    size:'85%',
+                    size:'95%',
                     allowPointSelect: true,
                     cursor: 'pointer',
                     borderWidth: 2,
-                    innerSize: '30%',
+                    innerSize: '35%',
                     dataLabels: {
                         align: 'right',
                         x: 0,
@@ -221,7 +160,7 @@ $(function () {
                         borderRadius: 3,
                         connectorColor: '#000000',
                         formatter: function() {
-                            return '<b>'+ this.point.name +'</b>: '+ Math.round(this.percentage*10)/10 +'%';
+                            return '<b>'+ this.point.name +':</b> '+ Math.round(this.percentage*10)/10 +'%';
                         }
                     }
                 }
@@ -229,7 +168,7 @@ $(function () {
             series: [{
                 type: 'pie',
                 name: 'Holding share',
-                data: {{ holding_chart_hc|safe }},
+                data: {{ holding_chart|safe }},
                 startAngle: 90
             }]
         });

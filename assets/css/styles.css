@@ -6,7 +6,8 @@ body {
   color: #222222;
 }
 
-a { color: #0198e1; }
+a,
+a:hover { color: #0198e1; }
 
 /********************************/
 /* HEADER
@@ -67,16 +68,17 @@ header .menu-container .navbar-inner li > a {
 
 header .menu-container .navbar-inner li.active > a,
 header .menu-container .navbar-inner li > a:hover,
+header .menu-container .navbar-inner li.active > a:hover,
 header .menu-container .navbar-inner li.dropdown.open > .dropdown-toggle {
-  color: #ffffff;
-  background-color: #222222;
+  color: #ffffff !important;
+  background-color: #222222 !important;
 }
 
 header .menu-container .navbar-inner li > a:hover {
-  -moz-transition: background 200ms; /* FireFox */
-  -webkit-transition: background 200ms; /* Safari / Chrome */
-  -o-transition: background 200ms; /* Opera */
-  transition: background 200ms; /* W3C */
+  -moz-transition: all 200ms; /* FireFox */
+  -webkit-transition: all 200ms; /* Safari / Chrome */
+  -o-transition: all 200ms; /* Opera */
+  transition: all 200ms; /* W3C */
 }
 
 header .menu-container .navbar-inner li > a b { vertical-align: text-top; }
