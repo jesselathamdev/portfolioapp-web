@@ -67,19 +67,25 @@
 <p>You currently have no holdings in this portfolio - <a href="{% url 'holding_create' portfolio.id %}">go ahead and add some now!</a></p>
 {% endif %}
 
-<p>&nbsp;</p>
-
-{% if holdings %}
 <pre>
-var chart =
+{{ holding_chart_hc }}
 </pre>
-{% endif %}
+
 {% endblock content %}
 
 {% block sidebar %}
 <div class="widget widget-simple">
   <div class="widget-header">
-    <h3>Header</h3>
+    <h3>Holdings <small>(Highcharts)</small></h3>
+  </div>
+  <div class="widget-body">
+    <div id="holdings-chart-hc" style="width: 270px; height: 275px;"></div>
+  </div>
+</div>
+
+<div class="widget widget-simple">
+  <div class="widget-header">
+    <h3>Holdings <small>(Flot)</small></h3>
   </div>
   <div class="widget-body">
     <div id="holdings-chart" style="width: 275px; height: 275px;"></div>
@@ -138,5 +144,98 @@ var chart =
             show: false
         }
     });
+</script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/highcharts/highcharts.js"></script>
+{#<script type="text/javascript" src="http://github.highcharts.com/v3.0Beta/highcharts.js"></script>#}
+<script type="text/javascript">
+$(function () {
+    var chart;
+    $(document).ready(function() {
+        /**
+         * Grid theme for Highcharts JS
+         * @author Torstein Hønsi
+         */
+
+        Highcharts.theme = {
+{#           colors: ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'],#}
+            colors: [ "#3A703A", "#4E954E", "#61ba61", "#81C881", "#A0D6A0", "#C0E3C0"],
+            chart: {
+                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                borderWidth: 0,
+                plotBackgroundColor: 'rgba(255, 255, 255, .9)',
+                plotShadow: true,
+                plotBorderWidth: 1
+            }
+        };
+
+        var highchartsOptions = Highcharts.setOptions(Highcharts.theme);
+
+        Highcharts.getOptions().colors = Highcharts.map(Highcharts.getOptions().colors, function(color) {
+            return {
+                radialGradient: { cx: 0.5, cy: 0.3, r: 0.7 },
+                stops: [
+                    [0, color],
+                    [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
+                ]
+            };
+        });
+
+        chart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'holdings-chart-hc',
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                margin: [0, 0, 0, 0],
+                spacingTop: 0,
+                spacingBottom: 0,
+                spacingLeft: 0,
+                spacingRight: 0
+            },
+            credits: {
+                enabled: false
+            },
+            title: {
+                text: ''
+            },
+            tooltip: {
+                formatter: function() {
+                  return '<b>'+ this.point.name +'</b>: '+ Math.round(this.percentage*10)/10 +'%';
+                }
+            },
+            plotOptions: {
+                pie: {
+                    size:'85%',
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    borderWidth: 2,
+                    innerSize: '30%',
+                    dataLabels: {
+                        align: 'right',
+                        x: 0,
+                        y: 0,
+                        enabled: true,
+                        distance: -30,
+                        color: '#ffffff',
+                        backgroundColor: 'rgba(30, 30, 30, .9)',
+                        borderRadius: 3,
+                        connectorColor: '#000000',
+                        formatter: function() {
+                            return '<b>'+ this.point.name +'</b>: '+ Math.round(this.percentage*10)/10 +'%';
+                        }
+                    }
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: 'Holding share',
+                data: {{ holding_chart_hc|safe }},
+                startAngle: 90
+            }]
+        });
+    });
+
+});
+
 </script>
 {% endblock script %}

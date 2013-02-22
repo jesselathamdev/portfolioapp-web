@@ -31,7 +31,22 @@ def holding_index(request, portfolio_id):
         holding_json['data'] = str(round(holding.portfolio_makeup_percent, 2))
         holding_chart.append(holding_json)
 
-    return render(request, 'portfolios/holdings/index.html', {'portfolio': portfolio, 'holdings': holdings, 'holding_summary': holding_summary, 'holding_chart': holding_chart})
+    import logging
+    holding_chart_hc = []
+    other_value = 0
+    for holding in holdings:
+        if holding.portfolio_makeup_percent >= 4:
+            holding_list = [str(holding.stock_symbol), float(round(holding.portfolio_makeup_percent, 1))]
+            holding_chart_hc.append(holding_list)
+        else:
+            other_value += holding.portfolio_makeup_percent
+
+    if other_value > 0:
+        holding_chart_hc.append(['Other', float(round(other_value, 1))])
+
+    logging.debug(other_value)
+
+    return render(request, 'portfolios/holdings/index.html', {'portfolio': portfolio, 'holdings': holdings, 'holding_summary': holding_summary, 'holding_chart': holding_chart, 'holding_chart_hc': holding_chart_hc})
 
 
 @login_required
