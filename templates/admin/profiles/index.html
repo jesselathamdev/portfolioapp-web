@@ -1,0 +1,44 @@
+{% extends "base_two_columns.html" %}
+{% load humanize %}
+
+{% block browser_title %}Users - Admin{% endblock browser_title %}
+
+{% block breadcrumbs %}<a href="/">Home</a> &rarr; <a href="{% url "admin_home_index" %}">Admin</a> &rarr; Users{% endblock breadcrumbs %}
+
+{% block page_title %}<i class="icon-group"></i> Users{% endblock page_title %}
+
+{% block content %}
+
+{% if users %}
+<table class="table table-striped table-striped-white table-hover table-bordered table-condensed table-clickable">
+  <thead>
+    <tr>
+      <th style="width: 50%;">Email</th>
+      <th style="width: 50%;">Name</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for user in users %}
+    <tr>
+      <td><a href="{% url "admin_profile_edit" user.id %}">{{ user.email }}</a></td>
+      <td>{{ user.full_name }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+
+{% endblock content %}
+
+{% block script %}
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('table.table-clickable tbody tr').click(function() {
+            var href = $(this).find("a").attr("href");
+            if(href) {
+                window.location = href;
+            }
+        });
+    });
+</script>
+{% endblock script %}

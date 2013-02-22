@@ -12,7 +12,10 @@ from endless_pagination.decorators import page_template
 from portfolioapp.apps.core import settings
 from portfolioapp.apps.core.decorators import is_admin
 from portfolioapp.apps.markets.models import Stock, Market
+from portfolioapp.apps.profiles.models import User
+from portfolioapp.apps.profiles.forms import EditUserProfileForm
 from .forms import StockEditForm, StockSearchForm
+
 
 @user_passes_test(is_admin)
 def home_index(request):
@@ -22,7 +25,6 @@ def home_index(request):
 @user_passes_test(is_admin)
 @page_template('admin/markets/stocks/index_paged_content.html')
 def stock_index(request, template='admin/markets/stocks/index.html', extra_context=None):
-
     if request.method == 'POST':
         search_form = StockSearchForm(request.POST)
         if search_form.is_valid():
@@ -51,19 +53,6 @@ def stock_index(request, template='admin/markets/stocks/index.html', extra_conte
         return render_to_response(template, context, context_instance=RequestContext(request))
 
 
-# @user_passes_test(is_admin)
-# @page_template('admin/markets/stocks/index_paged_content.html')
-# def stock_index(request, template='admin/markets/stocks/index.html', extra_context=None):
-#     stocks = Stock.objects.select_related('stock__name', 'stock__symbol', 'market__acr').order_by('name')
-#
-#     context = {'stocks': stocks, 'results_per_page': settings.RESULTS_PER_PAGE, }
-#
-#     if extra_context is not None:
-#         context.update(extra_context)
-#
-#     return render_to_response(template, context, context_instance=RequestContext(request))
-
-
 @user_passes_test(is_admin)
 def stock_edit(request, stock_id):
     stock = Stock.objects.get(pk=stock_id)
@@ -88,5 +77,29 @@ def stock_edit(request, stock_id):
 @user_passes_test(is_admin)
 def market_index(request):
     markets = Market.objects.annotate(stock_count=Count('stock'))
-
     return render(request, 'admin/markets/markets/index.html', {'markets': markets})
+
+
+@user_passes_test(is_admin)
+def profile_index(request):
+    users = User.objects.all().order_by('email')
+    return render(request, 'admin/profiles/index.html', {'users': users})
+
+
+@user_passes_test(is_admin)
+def profile_edit(request, user_id):
+    user = User.objects.get(pk=user_id)
+
+    if request.method == 'POST':
+        if 'cancel' in request.POST:
+            return HttpResponseRedirect(reverse('admin_profile_index'))
+
+        form = EditUserProfileForm(request.POST, instance=user)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Profile saved successfully.')
+            return HttpResponseRedirect(reverse('admin_profile_edit', args=user_id))
+    else:
+        form = EditUserProfileForm(instance=user)
+        return render(request, 'admin/profiles/edit.html', {'form': form})

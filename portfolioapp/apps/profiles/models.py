@@ -55,6 +55,9 @@ class User(AbstractBaseUser, PermissionsMixin, TimeStampMixin):
     def get_short_name(self):
         return self.email
 
+    def full_name(self):
+        return self.get_full_name()
+
     def __unicode__(self):
         return self.email
 

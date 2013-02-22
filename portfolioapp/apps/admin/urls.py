@@ -8,4 +8,7 @@ urlpatterns = patterns('',
     url(r'^stocks/(?P<stock_id>\d+)/$', 'portfolioapp.apps.admin.views.stock_edit', name='admin_stock_edit'),
 
     url(r'^markets/$', 'portfolioapp.apps.admin.views.market_index', name='admin_market_index'),
+
+    url(r'^users/$', 'portfolioapp.apps.admin.views.profile_index', name='admin_profile_index'),
+    url(r'^users/(?P<user_id>\d+)/$', 'portfolioapp.apps.admin.views.profile_edit', name='admin_profile_edit'),
 )
