@@ -173,10 +173,6 @@ section.body .main h2 {
   border-bottom: 1px solid #bbbbbb;
 }
 
-.widget.widget-stats .widget-header {
-  border-bottom: none;
-}
-
 .widget .widget-header h3,
 .widget .widget-header h4 {
   margin: 0px;
@@ -194,7 +190,7 @@ section.body .main h2 {
   padding: 0px;
 }
 
-.widget div:last-child {
+.widget .widget-body {
   padding-bottom: 0px;
 }
 
@@ -240,13 +236,35 @@ section.body .main h2 {
 .widget-stats .widget-body:after,
 .widget-stats .stats-row:after { clear:both; }
 
+.widget-stats .stats-row {
+  padding: 7px 10px;
+  border-top: 1px solid #ffffff;
+  border-bottom: 1px solid #bbbbbb;
+}
+
+.widget-stats .stats-row:first-child {
+  border-top: none;
+}
+
+
+.widget-stats .stats-row:last-child {
+  border-bottom: none;
+}
+
 .widget-stats .stats-label {
   float: left;
-  padding: 
+  font-size: 15px;
+  line-height: 25px;
+  font-weight: bold;
+  text-shadow: 0px 1px 1px rgba(255, 255, 255, 1.0);
 }
 
 .widget-stats .stats-value {
   float: right;
+  font-size: 18px;
+  line-height: 25px;
+  font-weight: bold;
+  text-shadow: 0px 1px 1px rgba(255, 255, 255, 1.0);
 }
 
 .widget .widget-footer {

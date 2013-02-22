@@ -61,49 +61,24 @@
 
 {% block sidebar %}
 <div class="widget widget-stats">
-  <div class="widget-body">
-    <div class="stats-label">
-      Portfolios
-    </div>
-    <div class="stats-value">
-      21
-    </div>
-  </div>
-</div>
-
-<div class="widget widget-stats">
   <div class="widget-header">
-    <h4>Header</h4>
-  </div>
-  <div class="widget-body">
-    <div class="stats-label">
-      Portfolios
-    </div>
-    <div class="stats-value">
-      21
-    </div>
-  </div>
-</div>
-
-<div class="widget widget-stats">
-  <div class="widget-header">
-    <h4>Header</h4>
+    <h4><i class="icon-bar-chart"></i> Activity</h4>
   </div>
   <div class="widget-body">
     <div class="stats-row">
       <div class="stats-label">
-        Portfolios
+        Sign up
       </div>
       <div class="stats-value">
-        21
+        {{ user.date_created|date:"n/j/Y g:i a" }}
       </div>
     </div>
     <div class="stats-row">
       <div class="stats-label">
-        Portfolios
+        Last sign in
       </div>
       <div class="stats-value">
-        21
+        {{ user.last_login|date:"n/j/Y g:i a" }}
       </div>
     </div>
   </div>
@@ -112,8 +87,8 @@
 
 {% block script %}
 <script type="text/javascript">
-  $(document).ready(function(){
-    $('#id_email').focus();
-  });
+    $(document).ready(function(){
+        $('#id_email').focus();
+    });
 </script>
 {% endblock script %}
