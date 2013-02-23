@@ -13,7 +13,7 @@ from portfolioapp.apps.core import settings
 from portfolioapp.apps.core.decorators import is_admin
 from portfolioapp.apps.markets.models import Stock, Market
 from portfolioapp.apps.profiles.models import User
-from portfolioapp.apps.profiles.forms import EditUserProfileForm
+from portfolioapp.apps.profiles.forms import AdminEditUserProfileForm
 from .forms import StockEditForm, StockSearchForm
 
 
@@ -94,12 +94,12 @@ def profile_edit(request, user_id):
         if 'cancel' in request.POST:
             return HttpResponseRedirect(reverse('admin_profile_index'))
 
-        form = EditUserProfileForm(request.POST, instance=user)
+        form = AdminEditUserProfileForm(request.POST, instance=user)
 
         if form.is_valid():
             form.save()
             messages.success(request, 'Profile saved successfully.')
             return HttpResponseRedirect(reverse('admin_profile_index'))
     else:
-        form = EditUserProfileForm(instance=user)
+        form = AdminEditUserProfileForm(instance=user)
         return render(request, 'admin/profiles/edit.html', {'form': form, 'user': user})

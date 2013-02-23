@@ -46,6 +46,18 @@
             </div>
           </li>
           <li class="control-group">
+            <label class="control-label" for="{{ form.is_active.auto_id }}">Active</label>
+            <div class="controls">
+              {{ form.is_active }}
+            </div>
+          </li>
+          <li class="control-group">
+            <label class="control-label" for="{{ form.is_active.auto_id }}">Admin</label>
+            <div class="controls">
+              {{ form.is_admin }}
+            </div>
+          </li>
+          <li class="control-group">
             <div class="controls">
               <button type="submit" class="btn btn-success">Save profile</button>
               <button type="submit" class="btn" name="cancel">Cancel</button>
@@ -67,7 +79,7 @@
   <div class="widget-body">
     <div class="stats-row">
       <div class="stats-label">
-        Sign up
+        <i class="icon-plus-sign"></i> Sign up
       </div>
       <div class="stats-value">
         {{ user.date_created|date:"n/j/Y g:i a" }}
@@ -75,10 +87,23 @@
     </div>
     <div class="stats-row">
       <div class="stats-label">
-        Last sign in
+        <i class="icon-signin"></i> Last sign in
       </div>
       <div class="stats-value">
         {{ user.last_login|date:"n/j/Y g:i a" }}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="widget widget-stats">
+  <div class="widget-header">
+    <h4><i class="icon-wrench"></i> Tools</h4>
+  </div>
+  <div class="widget-body">
+    <div class="stats-row">
+      <div class="stats-label">
+        <a href="#">Send forgot password</a>
       </div>
     </div>
   </div>

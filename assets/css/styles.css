@@ -253,7 +253,7 @@ section.body .main h2 {
 
 .widget-stats .stats-label {
   float: left;
-  font-size: 15px;
+  font-size: 14px;
   line-height: 25px;
   font-weight: bold;
   text-shadow: 0px 1px 1px rgba(255, 255, 255, 1.0);
@@ -261,7 +261,7 @@ section.body .main h2 {
 
 .widget-stats .stats-value {
   float: right;
-  font-size: 18px;
+  font-size: 17px;
   line-height: 25px;
   font-weight: bold;
   text-shadow: 0px 1px 1px rgba(255, 255, 255, 1.0);

@@ -8,7 +8,12 @@ from .models import User
 class EditUserProfileForm(ModelForm):
     class Meta:
         model = get_user_model()
-        fields = ('email', 'first_name', 'last_name',)
+        fields = ('email', 'first_name', 'last_name')
+
+class AdminEditUserProfileForm(ModelForm):
+    class Meta:
+        model = get_user_model()
+        fields = ('email', 'first_name', 'last_name', 'is_active', 'is_admin')
 
 
 class CreateUserProfileForm(ModelForm):

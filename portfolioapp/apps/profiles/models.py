@@ -63,3 +63,9 @@ class User(AbstractBaseUser, PermissionsMixin, TimeStampMixin):
 
     def natural_key(self):
         return self.email
+
+    def status(self):
+        return 'Active' if self.is_active else 'Inactive'
+
+    def role(self):
+        return 'Admin' if self.is_admin else 'User'
