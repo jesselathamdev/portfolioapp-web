@@ -2,7 +2,7 @@
 
 from django.shortcuts import render, render_to_response, get_object_or_404, RequestContext
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib import messages
 
@@ -10,12 +10,32 @@ from endless_pagination.decorators import page_template
 
 from portfolioapp.apps.core import settings
 from .models import Portfolio, Holding, Transaction
-from .forms import CreateHolding
+from .forms import CreatePortfolioForm, CreateHoldingForm
 
 @login_required
 def portfolio_index(request):
     portfolios = Portfolio.objects.detailed_view(request.user.id)
     return render(request, 'portfolios/portfolios/index.html', {'portfolios': portfolios})
+
+
+@login_required
+def portfolio_create(request):
+    if request.method == 'POST':
+        if 'cancel' in request.POST:
+            return HttpResponseRedirect(reverse('portfolio_index'))
+
+        form = CreatePortfolioForm(request.POST)
+        form.cleaned_data['user'] = request.user.id
+        if form.is_valid():
+
+            form.save()
+            messages.success(request, 'Your form was saved.')
+            return HttpResponseRedirect(reverse('portfolio_index'))
+        else:
+            return render(request, 'portfolios/portfolios/create.html', {'form': form})
+    else:
+        form = CreatePortfolioForm()
+        return render(request, 'portfolios/portfolios/create.html', {'form': form })
 
 
 @login_required
@@ -45,7 +65,7 @@ def holding_create(request, portfolio_id):
     portfolio = Portfolio.objects.get(pk=portfolio_id)
 
     if request.method == 'POST':
-        form = CreateHolding(request.POST)
+        form = CreateHoldingForm(request.POST)
         if form.is_valid():
             form.save()
             messages.success(request, 'Your form was saved.')
@@ -53,7 +73,7 @@ def holding_create(request, portfolio_id):
         else:
             return render(request, 'portfolios/holdings/create.html', {'form': form})
     else:
-        form = CreateHolding()
+        form = CreateHoldingForm()
         return render(request, 'portfolios/holdings/create.html', {'portfolio': portfolio, 'form': form })
 
 

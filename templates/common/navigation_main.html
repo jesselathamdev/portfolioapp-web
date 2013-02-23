@@ -3,7 +3,7 @@
 <ul class="nav">
   {% if user.is_authenticated %}
   <li class="{% navactive request "dashboard_index" %}"><a href="{% url "dashboard_index" %}">Dashboard</a></li>
-  <li class="{% navactive request "portfolio_index holding_index transaction_index" %}"><a href="/portfolios">Portfolios</a></li>
+  <li class="{% navactive request "portfolio_index portfolio_create holding_index transaction_index" %}"><a href="/portfolios">Portfolios</a></li>
   <li class="{% navactive request "transaction_global_index" %}"><a href="/transactions">Transactions</a></li>
   {% else %}
   <li class=""><a href="/">Home</a></li>
