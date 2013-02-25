@@ -42,6 +42,8 @@ DEVSERVER_MODULES = (
     'devserver.modules.profile.ProfileSummaryModule',
     'devserver.modules.ajax.AjaxDumpModule',
     'devserver.modules.cache.CacheSummaryModule',
+    'devserver.modules.request.RequestDumpModule',
+    'devserver.modules.request.ResponseDumpModule',
     # 'devserver.modules.request.SessionInfoModule', <- doesn't support django 1.5 custom user models yet, error on 'username'
 )
 

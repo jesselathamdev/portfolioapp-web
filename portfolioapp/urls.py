@@ -22,6 +22,7 @@ urlpatterns = patterns('',
     url(r'^admin/', include('portfolioapp.apps.admin.urls')),
 
     # apis
+    url(r'^api/markets/stocks2/?', 'portfolioapp.apps.markets.views_api.stock_index2', name='api_stock_index2'),
     url(r'^api/markets/stocks/?', 'portfolioapp.apps.markets.views_api.stock_index', name='api_stock_index'),
 )
 

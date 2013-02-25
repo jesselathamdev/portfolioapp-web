@@ -99,6 +99,28 @@ def holding_create(request, portfolio_id):
 
 
 @login_required
+def holding_create2(request, portfolio_id):
+    portfolio = Portfolio.objects.get(pk=portfolio_id)
+
+    data = request.POST.copy()
+    data['portfolio'] = portfolio_id
+
+    if request.method == 'POST':
+        form = CreateHoldingForm(data)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your form was saved.')
+            return HttpResponseRedirect(reverse('holding_index', args=(portfolio_id,)))
+        else:
+            messages.info(request, form.errors)
+            return render(request, 'portfolios/holdings/create2.html', {'portfolio': portfolio, 'form': form})
+    else:
+        form = CreateHoldingForm()
+        return render(request, 'portfolios/holdings/create2.html', {'portfolio': portfolio, 'form': form })
+
+
+@login_required
 @page_template('portfolios/transactions/index_paged_content.html')
 def transaction_index(request, portfolio_id, holding_id, template='portfolios/transactions/index.html', extra_context=None):
     holding = Holding.objects.select_related('portfolio').get(pk=holding_id)

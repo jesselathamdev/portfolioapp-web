@@ -21,7 +21,7 @@
       <input type="submit" class="btn btn-primary" value="Add holding" />
     </div>
   </div>
-  <input type="hidden" id="{{ form.stock.auto_id }}" name="{{ form.stock.html_name }}" value="">
+  <input type="hidden" id="{{ form.stock.auto_id }}" name="{{ form.stock.html_name }}" value="" />
 </form>
 
 {% endblock content %}
@@ -31,5 +31,21 @@ Sidebar
 {% endblock sidebar %}
 
 {% block script %}
-<script type="text/javascript" src="{{ STATIC_URL }}js/holdings.js"></script>
+<link href="{{ STATIC_URL }}css/twitter/typeahead.css" rel="stylesheet" type="text/css" media="screen">
+<link href="{{ STATIC_URL }}css/twitter/typeahead.js-bootstrap.css" rel="stylesheet" type="text/css" media="screen">
+<script type="text/javascript" src="http://twitter.github.com/hogan.js/builds/2.0.0/hogan-2.0.0.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/twitter/typeahead.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#stock_display').typeahead([
+            {
+                name: 'stocks',
+                remote: '/api/markets/stocks2?q=%QUERY',
+                limit: 10
+            }
+        ]);
+
+        $('#stock_display').focus();
+    });
+</script>
 {% endblock script %}
