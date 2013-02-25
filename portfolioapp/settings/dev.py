@@ -21,18 +21,10 @@ MIDDLEWARE_CLASSES += (
   'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
-STATSD_PATCHES = [
-    'django_statsd.patches.db',
-    'django_statsd.patches.cache',
-]
-
-STATSD_CLIENT = 'django_statsd.clients.toolbar'
-
 INSTALLED_APPS += (
     # development tools
     'django_extensions',
     'debug_toolbar',
-    'django_statsd',
     'devserver',
 )
 
@@ -63,7 +55,6 @@ DEBUG_TOOLBAR_PANELS = (
     'debug_toolbar.panels.sql.SQLDebugPanel',
     'debug_toolbar.panels.signals.SignalDebugPanel',
     'debug_toolbar.panels.logger.LoggingPanel',
-    'django_statsd.panel.StatsdPanel',
 )
 
 DEBUG_TOOLBAR_CONFIG = {

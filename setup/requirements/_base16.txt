@@ -1,0 +1,8 @@
+-e git://github.com/django/django.git#egg=Django
+South==0.7.6
+Unipath==0.2.1
+distribute==0.6.34
+psycopg2==2.4.6
+wadofstuff-django-serializers==1.1.0
+wsgiref==0.1.2
+-e git://github.com/frankban/django-endless-pagination.git#egg=django-endless-pagination
