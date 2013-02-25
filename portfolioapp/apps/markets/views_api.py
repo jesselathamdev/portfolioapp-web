@@ -12,13 +12,12 @@ from .models import Stock
 @login_required
 def stock_index(request):
     if request.is_ajax():
-        q = request.GET.get('term', '')
+        q = request.GET.get('q', '')
         stocks = Stock.objects.select_related().filter(Q(name__icontains = q) | Q(symbol__icontains = q))[:10]
         results = []
         for stock in stocks:
             stock_json = {}
             stock_json['id'] = stock.id
-#            stock_json['label'] = '%s (%s:%s)' % (stock.name, stock.symbol, stock.market.acr)
             stock_json['value'] = '%s (%s:%s)' % (stock.name, stock.symbol, stock.market.acr)
             results.append(stock_json)
         data = json.dumps(results)
@@ -27,5 +26,3 @@ def stock_index(request):
 
     mimetype = 'application/json'
     return HttpResponse(data, mimetype)
-
-

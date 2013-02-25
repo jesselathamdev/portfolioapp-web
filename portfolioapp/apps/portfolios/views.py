@@ -61,7 +61,6 @@ def holding_index(request, portfolio_id):
     holdings = Holding.objects.detailed_view(portfolio_id)
     holding_summary = Holding.objects.summary_view(portfolio_id)
 
-    import logging
     holding_chart = []
     other_value = 0
     for holding in holdings:
@@ -81,14 +80,19 @@ def holding_index(request, portfolio_id):
 def holding_create(request, portfolio_id):
     portfolio = Portfolio.objects.get(pk=portfolio_id)
 
+    data = request.POST.copy()
+    data['portfolio'] = portfolio_id
+
     if request.method == 'POST':
-        form = CreateHoldingForm(request.POST)
+        form = CreateHoldingForm(data)
+
         if form.is_valid():
             form.save()
             messages.success(request, 'Your form was saved.')
             return HttpResponseRedirect(reverse('holding_index', args=(portfolio_id,)))
         else:
-            return render(request, 'portfolios/holdings/create.html', {'form': form})
+            messages.info(request, form.errors)
+            return render(request, 'portfolios/holdings/create.html', {'portfolio': portfolio, 'form': form})
     else:
         form = CreateHoldingForm()
         return render(request, 'portfolios/holdings/create.html', {'portfolio': portfolio, 'form': form })
