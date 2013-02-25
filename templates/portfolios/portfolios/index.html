@@ -5,7 +5,7 @@
 
 {% block breadcrumbs %}<a href="/">Home</a> &rarr; Portfolios{% endblock breadcrumbs %}
 
-{% block page_title %}<i class="icon-folder-open-alt"></i> Portfolios{% endblock page_title %}
+{% block page_title %}<i class="icon-folder-open-alt"></i> Portfolios <small><a href="#myModal" role="button" data-toggle="modal" id="add">add</a> </small>{% endblock page_title %}
 
 {% block content %}
 
@@ -39,6 +39,24 @@
 {% else %}
 <p>No portfolios have been created yet</p>
 {% endif %}
+
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <form method="post" action="">
+    {% csrf_token %}
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3 id="myModalLabel">Add a Portfolio</h3>
+    </div>
+    <div class="modal-body">
+      <label for="{{ form.name.auto_id }}">Name</label>
+      <input id="{{ form.name.auto_id }}" name="{{ form.name.html_name }}" type="text" class="input-xlarge" placeholder="" />
+    </div>
+    <div class="modal-footer">
+      <input type="submit" class="btn btn-primary" value="Add portfolio" />
+      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    </div>
+  </form>
+</div>
 
 {% endblock content %}
 

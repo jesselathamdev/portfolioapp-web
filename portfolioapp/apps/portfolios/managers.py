@@ -36,7 +36,7 @@ class PortfolioManager(models.Manager, mixins.ORMMixin):
                 GROUP BY pp.id, pp.name, ms.last_price
             ) as portfolios
             GROUP BY id, name
-            ORDER BY name''', [user_id])
+            ORDER BY LOWER(name)''', [user_id])
 
         # the following maps the arbitrary values back to the original model and then some extra attributes such as total_quantity, total_cost etc
         # mentioned that there may be a potential performance hit somewhere
@@ -102,7 +102,7 @@ class HoldingManager(models.Manager, mixins.ORMMixin):
                 WHERE pp.id = %s
                 GROUP BY ph.id, ms.name, ms.symbol, mm.acr, ms.last_price, ms.date_last_price_updated
             ) as holdings
-            ORDER BY name''', [portfolio_id])
+            ORDER BY LOWER(name)''', [portfolio_id])
 
         holdings = []
         for row in cursor.fetchall():

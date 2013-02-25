@@ -14,8 +14,23 @@ from .forms import CreatePortfolioForm, CreateHoldingForm
 
 @login_required
 def portfolio_index(request):
-    portfolios = Portfolio.objects.detailed_view(request.user.id)
-    return render(request, 'portfolios/portfolios/index.html', {'portfolios': portfolios})
+    if request.method == 'POST':
+        data = request.POST.copy()
+        data['user'] = request.user.id
+
+        form = CreatePortfolioForm(data)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your form was saved.')
+            return HttpResponseRedirect(reverse('portfolio_index'))
+        else:
+            return render(request, 'portfolios/portfolios/create.html', {'form': form})
+    else:
+        portfolios = Portfolio.objects.detailed_view(request.user.id)
+
+        form = CreatePortfolioForm()
+        return render(request, 'portfolios/portfolios/index.html', {'portfolios': portfolios, 'form': form})
 
 
 @login_required
@@ -24,10 +39,12 @@ def portfolio_create(request):
         if 'cancel' in request.POST:
             return HttpResponseRedirect(reverse('portfolio_index'))
 
-        form = CreatePortfolioForm(request.POST)
-        form.cleaned_data['user'] = request.user.id
-        if form.is_valid():
+        data = request.POST.copy()
+        data['user'] = request.user.id
 
+        form = CreatePortfolioForm(data)
+
+        if form.is_valid():
             form.save()
             messages.success(request, 'Your form was saved.')
             return HttpResponseRedirect(reverse('portfolio_index'))
