@@ -407,6 +407,7 @@ form.form-horizontal input { box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) inset; }
 .table-clickable tbody tr { cursor: pointer; }
 
 .table-options tbody td.row-options {
+  position: relative;
   font-size: 24px;
   text-align: center;
   vertical-align: middle;
@@ -414,6 +415,45 @@ form.form-horizontal input { box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) inset; }
 
 .table-options tbody td.row-options a:hover {
   text-decoration: none;
+}
+
+.table-options .table-context-menu {
+  display: none;
+  position: absolute;
+  margin: 0px;
+  padding: 0px;
+  bottom: -20px;
+  right: 0px;
+  background-color: #ffffff;
+  z-index: 1000;
+}
+
+.table-options .table-context-menu ul {
+  margin: 0px;
+  padding: 0px;
+  list-style-type: none;
+
+}
+
+.table-options .table-context-menu ul li {
+  margin: 0px;
+  padding: 0px;
+
+  text-align: left;
+}
+
+.table-options .table-context-menu ul li a {
+  display: block;
+  width: 200px;
+  font-size: 14px;
+  text-shadow: none;
+  line-height: 25px;
+}
+
+.table-options .table-context-menu ul li a:hover {
+  color: #222222;
+  background-color: #dce7f2;
+
 }
 
 .table tfoot .total th {

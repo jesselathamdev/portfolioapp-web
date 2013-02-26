@@ -57,6 +57,11 @@ def portfolio_create(request):
 
 
 @login_required
+def portfolio_delete(request, portfolio_id):
+    return HttpResponse('Delete portfolio %s' % portfolio_id)
+
+
+@login_required
 def holding_index(request, portfolio_id):
     portfolio = Portfolio.objects.get(pk=portfolio_id)
     holdings = Holding.objects.detailed_view(portfolio_id)

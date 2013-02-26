@@ -5,18 +5,19 @@
 
 {% block breadcrumbs %}<a href="/">Home</a> &rarr; Portfolios{% endblock breadcrumbs %}
 
-{% block page_title %}<i class="icon-folder-open-alt"></i> Portfolios <small><a href="#myModal" role="button" data-toggle="modal" id="add">add</a> </small>{% endblock page_title %}
+{% block page_title %}<i class="icon-folder-open-alt"></i> Portfolios <small><a href="#myModal" role="button" data-toggle="modal">add</a> </small>{% endblock page_title %}
 
 {% block content %}
 
 {% if portfolios %}
-<table class="table table-striped table-striped-white table-hover table-condensed table-bordered table-clickable">
+<table class="table table-striped table-striped-white table-hover table-condensed table-bordered table-clickable table-options">
   <thead>
     <tr>
-      <th style="width: 50%;">Name</th>
-      <th class="align-right" style="width: 13%;">Book Value</th>
-      <th class="align-right" style="width: 13%;">Market Value</th>
-      <th class="align-right" style="width: 14%;">Net Gain</th>
+      <th style="width: 59%;">Name</th>
+      <th class="align-right" style="width: 12%;">Book Value</th>
+      <th class="align-right" style="width: 12%;">Market Value</th>
+      <th class="align-right" style="width: 12%;">Net Gain</th>
+      <th style="width: 5%">&nbsp;</th>
     </tr>
   </thead>
   <tbody>
@@ -26,6 +27,14 @@
       <td class="align-right"><span class="medium">${{ portfolio.book_value|floatformat:2|intcomma }}</span></td>
       <td class="align-right"><span class="medium">${{ portfolio.market_value|floatformat:2|intcomma }}</span></td>
       <td {% if portfolio.market_value > portfolio.book_value %}class="align-right indicator-gain"{% elif portfolio.market_value < portfolio.book_value %}class="align-right indicator-loss"{% else %}class="align-right"{% endif %}><span class="medium">${{ portfolio.net_gain_dollar|floatformat:2|intcomma }}</span><br /><span class="small">{{ portfolio.net_gain_percent|floatformat:2|intcomma }}%</span></td>
+      <td class="row-options">
+        <a href="#"><i class="icon-cog"></i></a>
+        <div class="table-context-menu">
+          <ul>
+            <li><a href="#" class="deleteModal" data-id="{{ portfolio.id }}">Delete modal</a></li>
+          </ul>
+        </div>
+      </td>
     </tr>
   {% endfor %}
   </tbody>
@@ -33,12 +42,15 @@
     <tr class="total">
       <th colspan="3">Total</th>
       <th class="align-right">$6,110.27</th>
+      <th>&nbsp;</th>
     </tr>
   </tfoot>
 </table>
 {% else %}
 <p>No portfolios have been created yet</p>
 {% endif %}
+
+<a href="#deleteModal" role="button" data-toggle="modal">Delete modal</a>
 
 <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <form method="post" action="">
@@ -53,9 +65,24 @@
     </div>
     <div class="modal-footer">
       <input type="submit" class="btn btn-primary" value="Add portfolio" />
-      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+      <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
     </div>
   </form>
+</div>
+
+<div id="deleteModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="deleteModalLabel">Delete Portfolio</h3>
+  </div>
+  <div class="modal-body">
+    <p>Are you sure you want to delete this portfolio?  This action cannot be undone.</p>
+    <input type="hidden" id="portfolio_id" name="portfolio_id">
+  </div>
+  <div class="modal-footer">
+    <a href="/portfolios/44/delete" class="btn btn-primary">Delete portfolio</a>
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+  </div>
 </div>
 
 {% endblock content %}
@@ -81,12 +108,43 @@
 {% block script %}
 <script type="text/javascript">
     $(document).ready(function() {
-        $('table.table-clickable tbody tr').click(function() {
-            var href = $(this).find("a").attr("href");
-            if(href) {
-                window.location = href;
-            }
-        });
+        $('table.table-clickable tbody tr')
+            .click(function() {
+                var href = $(this).find("a").attr("href");
+                if(href) {
+                    window.location = href;
+                }
+            });
+
+        $('table.table-clickable .table-context-menu a')
+                .click(function(e) {
+                    e.preventDefault();
+
+                    var portfolio_id = $(this).data('id');
+                    $('.modal-body #portfolio_id').val(portfolio_id);
+                    $('#deleteModal').modal('show');
+                });
+
+        $('table.table-clickable .row-options')
+            .click(
+                function(e) {
+                    e.stopPropagation();
+                })
+            .hover(
+                function(e) {
+                    $(this).find('.table-context-menu').css('display', 'block');
+                },
+                function() {
+                    $(this).find('.table-context-menu').css('display', 'none');
+                }
+            );
+
+{#        $('table.table-clickable tbody tr .row-options').click(function(e){#}
+{#            e.stopPropagation();#}
+{#            $(this).find('.table-context-menu').toggle();#}
+{#            $(this).find('.table-context-menu').addClass('table-context-menu-show');#}
+{#        });#}
+
     });
 </script>
 {% endblock script %}
