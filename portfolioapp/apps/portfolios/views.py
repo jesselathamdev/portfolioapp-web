@@ -15,6 +15,7 @@ from .forms import CreatePortfolioForm, CreateHoldingForm
 @login_required
 def portfolio_index(request):
     if request.method == 'POST':
+
         data = request.POST.copy()
         data['user'] = request.user.id
 
@@ -73,7 +74,23 @@ def holding_index(request, portfolio_id):
     if other_value > 0:
         holding_chart.append(['Other', float(round(other_value, 1))])
 
-    return render(request, 'portfolios/holdings/index.html', {'portfolio': portfolio, 'holdings': holdings, 'holding_summary': holding_summary, 'holding_chart': holding_chart, 'holding_chart': holding_chart})
+    if request.method == 'POST':
+
+        data = request.POST.copy()
+        data['portfolio'] = portfolio_id
+
+        form = CreateHoldingForm(data)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your form was saved.')
+            return HttpResponseRedirect(reverse('holding_index', args=(portfolio_id,)))
+        else:
+            messages.info(request, form.errors)
+            return render(request, 'portfolios/holdings/index.html', {'portfolio': portfolio, 'holdings': holdings, 'holding_summary': holding_summary, 'holding_chart': holding_chart, 'holding_chart': holding_chart})
+    else:
+        form = CreateHoldingForm()
+        return render(request, 'portfolios/holdings/index.html', {'portfolio': portfolio, 'holdings': holdings, 'holding_summary': holding_summary, 'holding_chart': holding_chart, 'holding_chart': holding_chart, 'form': form})
 
 
 @login_required

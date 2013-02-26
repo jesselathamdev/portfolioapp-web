@@ -406,6 +406,16 @@ form.form-horizontal input { box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) inset; }
 
 .table-clickable tbody tr { cursor: pointer; }
 
+.table-options tbody td.row-options {
+  font-size: 24px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.table-options tbody td.row-options a:hover {
+  text-decoration: none;
+}
+
 .table tfoot .total th {
   padding-top: 4px;
   padding-bottom: 4px;
