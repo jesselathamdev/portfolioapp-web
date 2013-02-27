@@ -1,8 +1,8 @@
 -r _base16.txt
 
-Pygments==1.6rc1
+Pygments==1.6
 Werkzeug==0.8.3
-django-extensions==1.0.2
+django-extensions==1.0.3
 fake-factory==0.2
 ipython==0.13.1
 yolk==0.4.3
