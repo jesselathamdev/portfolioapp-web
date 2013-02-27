@@ -14,17 +14,6 @@ from .forms import CreatePortfolioForm, CreateHoldingForm
 
 @login_required
 def portfolio_index(request):
-    # if request.method == 'POST':
-    #     data = request.POST.copy()
-    #     data['user'] = request.user.id
-    #
-    #     form = CreatePortfolioForm(data)
-    #
-    #     if form.is_valid():
-    #         form.save()
-    #         messages.success(request, 'Your form was saved.')
-    #         return HttpResponseRedirect(reverse('portfolio_index'))
-    # else:
     portfolios = Portfolio.objects.detailed_view(request.user.id)
     form = CreatePortfolioForm()
     return render(request, 'portfolios/portfolios/index.html', {'portfolios': portfolios, 'form': form})
@@ -138,6 +127,13 @@ def holding_create2(request, portfolio_id):
     else:
         form = CreateHoldingForm()
         return render(request, 'portfolios/holdings/create2.html', {'portfolio': portfolio, 'form': form })
+
+
+@login_required
+def holding_delete(request, portfolio_id, holding_id):
+    h = Holding.objects.get(pk=holding_id)
+    h.delete()
+    return HttpResponseRedirect(reverse('holding_index', args=portfolio_id))
 
 
 @login_required

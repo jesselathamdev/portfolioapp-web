@@ -44,7 +44,14 @@
         <span class="small">{{ holding.net_gain_percent|floatformat:2|intcomma }}%</span>
       </td>
       <td class="align-right"><span class="medium">{{ holding.portfolio_makeup_percent|floatformat:2 }}%</span></td>
-      <td class="row-options"><a href="#"><i class="icon-cog"></i></a></td>
+      <td class="row-options">
+        <a href="#"><i class="icon-cog"></i></a>
+        <div class="table-context-menu">
+          <ul>
+            <li><a href="#" class="modalDelete" data-holding-id="{{ holding.id }}" data-portfolio-id="{{ portfolio.id }}" data-name="{{ holding.stock_name }}">Delete holding</a></li>
+          </ul>
+        </div>
+      </td>
     </tr>
   {% endfor %}
   </tbody>
@@ -91,6 +98,21 @@
   </form>
 </div>
 
+<div id="modalDelete" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="deleteModalLabel">Delete Holding</h3>
+  </div>
+  <div class="modal-body">
+    <p>Are you sure you want to delete the selected holding named <b><span id="holding_name"></span></b>?  This action cannot be undone.</p>
+    <input type="hidden" id="holding_id" name="holding_id" value="">
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn btn-primary" id="modalDeleteButton">Delete holding</a>
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+  </div>
+</div>
+
 {% endblock content %}
 
 {% block sidebar %}
@@ -105,104 +127,90 @@
 {% endblock sidebar %}
 
 {% block script %}
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('table.table-clickable tbody tr').click(function() {
-            var href = $(this).find("a").attr("href");
-            if(href) {
-                window.location = href;
-            }
-        });
-        $('table.table-clickable tbody tr .row-options').click(function(e){
-            e.stopPropagation();
-            alert("clicked");
-        });
-    });
-</script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/holdings.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}js/highcharts/highcharts.js"></script>
 <script type="text/javascript">
-$(function () {
-    var chart;
-    $(document).ready(function() {
-        Highcharts.theme = {
-            colors: [ "#3A703A", "#4E954E", "#61ba61", "#81C881", "#A0D6A0", "#C0E3C0"],
-            chart: {
-                backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                borderWidth: 0,
-                plotBackgroundColor: 'rgba(255, 255, 255, .9)',
-                plotShadow: true,
-                plotBorderWidth: 1
-            }
-        };
-
-        var highchartsOptions = Highcharts.setOptions(Highcharts.theme);
-
-        Highcharts.getOptions().colors = Highcharts.map(Highcharts.getOptions().colors, function(color) {
-            return {
-                radialGradient: { cx: 0.5, cy: 0.3, r: 0.7 },
-                stops: [
-                    [0, color],
-                    [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
-                ]
-            };
-        });
-
-        chart = new Highcharts.Chart({
-            chart: {
-                renderTo: 'holdings-chart',
-                plotBackgroundColor: null,
-                plotBorderWidth: null,
-                plotShadow: false,
-                margin: [0, 0, 0, 0],
-                spacingTop: 0,
-                spacingBottom: 0,
-                spacingLeft: 0,
-                spacingRight: 0
-            },
-            credits: {
-                enabled: false
-            },
-            title: {
-                text: ''
-            },
-            tooltip: {
-                formatter: function() {
-                  return '<b>'+ this.point.name +':</b> '+ Math.round(this.percentage*10)/10 +'%';
+    $(function () {
+        var chart;
+        $(document).ready(function() {
+            Highcharts.theme = {
+                colors: [ "#3A703A", "#4E954E", "#61ba61", "#81C881", "#A0D6A0", "#C0E3C0"],
+                chart: {
+                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                    borderWidth: 0,
+                    plotBackgroundColor: 'rgba(255, 255, 255, .9)',
+                    plotShadow: true,
+                    plotBorderWidth: 1
                 }
-            },
-            plotOptions: {
-                pie: {
-                    size:'95%',
-                    allowPointSelect: true,
-                    cursor: 'pointer',
-                    borderWidth: 2,
-                    innerSize: '35%',
-                    dataLabels: {
-                        align: 'right',
-                        x: 0,
-                        y: 0,
-                        enabled: true,
-                        distance: -30,
-                        color: '#ffffff',
-                        backgroundColor: 'rgba(30, 30, 30, .9)',
-                        borderRadius: 3,
-                        connectorColor: '#000000',
-                        formatter: function() {
-                            return '<b>'+ this.point.name +':</b> '+ Math.round(this.percentage*10)/10 +'%';
+            };
+
+            var highchartsOptions = Highcharts.setOptions(Highcharts.theme);
+
+            Highcharts.getOptions().colors = Highcharts.map(Highcharts.getOptions().colors, function(color) {
+                return {
+                    radialGradient: { cx: 0.5, cy: 0.3, r: 0.7 },
+                    stops: [
+                        [0, color],
+                        [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
+                    ]
+                };
+            });
+
+            chart = new Highcharts.Chart({
+                chart: {
+                    renderTo: 'holdings-chart',
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false,
+                    margin: [0, 0, 0, 0],
+                    spacingTop: 0,
+                    spacingBottom: 0,
+                    spacingLeft: 0,
+                    spacingRight: 0
+                },
+                credits: {
+                    enabled: false
+                },
+                title: {
+                    text: ''
+                },
+                tooltip: {
+                    formatter: function() {
+                      return '<b>'+ this.point.name +':</b> '+ Math.round(this.percentage*10)/10 +'%';
+                    }
+                },
+                plotOptions: {
+                    pie: {
+                        size:'95%',
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        borderWidth: 2,
+                        innerSize: '35%',
+                        dataLabels: {
+                            align: 'right',
+                            x: 0,
+                            y: 0,
+                            enabled: true,
+                            distance: -30,
+                            color: '#ffffff',
+                            backgroundColor: 'rgba(30, 30, 30, .9)',
+                            borderRadius: 3,
+                            connectorColor: '#000000',
+                            formatter: function() {
+                                return '<b>'+ this.point.name +':</b> '+ Math.round(this.percentage*10)/10 +'%';
+                            }
                         }
                     }
-                }
-            },
-            series: [{
-                type: 'pie',
-                name: 'Holding share',
-                data: {{ holding_chart|safe }},
-                startAngle: 90
-            }]
+                },
+                series: [{
+                    type: 'pie',
+                    name: 'Holding share',
+                    data: {{ holding_chart|safe }},
+                    startAngle: 90
+                }]
+            });
         });
-    });
 
-});
+    });
 </script>
-<script type="text/javascript" src="{{ STATIC_URL }}js/holdings.js"></script>
 {% endblock script %}
