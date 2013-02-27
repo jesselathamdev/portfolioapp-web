@@ -87,10 +87,17 @@
 {% if messages %}
 <section class="messages container">
   {% for message in messages %}
+  {% if message.tags == 'success' %}
   <div class="alert alert-success">
     <button type="button" class="close" data-dismiss="alert">&times;</button>
-    This is a message {{ message }}
+    {{ message }}
   </div>
+  {% elif message.tags == 'error' %}
+  <div class="alert alert-error">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    {{ message }}
+  </div>
+  {% endif %}
   {% endfor %}
 </section>
 {% endif %}

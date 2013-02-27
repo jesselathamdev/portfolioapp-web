@@ -14,27 +14,28 @@ from .forms import CreatePortfolioForm, CreateHoldingForm
 
 @login_required
 def portfolio_index(request):
-    if request.method == 'POST':
-        data = request.POST.copy()
-        data['user'] = request.user.id
-
-        form = CreatePortfolioForm(data)
-
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Your form was saved.')
-    else:
-        portfolios = Portfolio.objects.detailed_view(request.user.id)
-        form = CreatePortfolioForm()
+    # if request.method == 'POST':
+    #     data = request.POST.copy()
+    #     data['user'] = request.user.id
+    #
+    #     form = CreatePortfolioForm(data)
+    #
+    #     if form.is_valid():
+    #         form.save()
+    #         messages.success(request, 'Your form was saved.')
+    #         return HttpResponseRedirect(reverse('portfolio_index'))
+    # else:
+    portfolios = Portfolio.objects.detailed_view(request.user.id)
+    form = CreatePortfolioForm()
     return render(request, 'portfolios/portfolios/index.html', {'portfolios': portfolios, 'form': form})
 
 
 @login_required
 def portfolio_create(request):
-    if request.method == 'POST':
-        if 'cancel' in request.POST:
-            return HttpResponseRedirect(reverse('portfolio_index'))
+    # if request.is_ajax():
+    #     return HttpResponse('hello')
 
+    if request.method == 'POST':
         data = request.POST.copy()
         data['user'] = request.user.id
 
@@ -42,13 +43,13 @@ def portfolio_create(request):
 
         if form.is_valid():
             form.save()
-            messages.success(request, 'Your form was saved.')
+            messages.success(request, 'Your portfolio %s was created.' % form.cleaned_data['name'])
             return HttpResponseRedirect(reverse('portfolio_index'))
         else:
-            return render(request, 'portfolios/portfolios/create.html', {'form': form})
+            messages.error(request, 'There was an error creating your portfolio.')
+            return HttpResponseRedirect(reverse('portfolio_index'))
     else:
-        form = CreatePortfolioForm()
-        return render(request, 'portfolios/portfolios/create.html', {'form': form })
+        return HttpResponse(reverse('portfolio_index'))
 
 
 @login_required

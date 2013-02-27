@@ -51,7 +51,7 @@
 {% endif %}
 
 <div id="modalCreate" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <form method="post" action="">
+  <form method="post" action="{% url 'portfolio_create' %}">
     {% csrf_token %}
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
