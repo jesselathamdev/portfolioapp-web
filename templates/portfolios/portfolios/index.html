@@ -40,8 +40,10 @@
   </tbody>
   <tfoot>
     <tr class="total">
-      <th colspan="3">Total</th>
-      <th class="align-right">$6,110.27</th>
+      <th>Total</th>
+      <th class="align-right"><strong>${{ portfolio_summary.total_book_value|floatformat:2|intcomma }}</strong></th>
+      <th class="align-right"><strong>${{ portfolio_summary.total_market_value|floatformat:2|intcomma }}</strong></th>
+      <th {% if portfolio_summary.total_net_gain_dollar > 0 %}class="align-right indicator-gain"{% elif portfolio_summary.total_net_gain_dollar < 0 %}class="align-right indicator-loss"{% else %}class="align-right"{% endif %}><strong>${{ portfolio_summary.total_net_gain_dollar|floatformat:2|intcomma }}</strong></th>
       <th>&nbsp;</th>
     </tr>
   </tfoot>
