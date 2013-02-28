@@ -5,7 +5,7 @@
 
 {% block breadcrumbs %}<a href="/">Home</a> &rarr; <a href="{% url 'portfolio_index' %}">Portfolios</a> &rarr; {{ portfolio.name }}{% endblock breadcrumbs %}
 
-{% block page_title %}<i class="icon-book"></i> Holdings <small><a href="{% url "holding_create" portfolio.id %}">add</a> <a href="#add_holding_modal" role="button" data-toggle="modal" id="add">add2</a></small>{% endblock page_title %}
+{% block page_title %}<i class="icon-book"></i> Holdings <small><a href="#createModal" role="button" data-toggle="modal">add</a></small>{% endblock page_title %}
 
 {% block content %}
 {% if holdings %}
@@ -77,17 +77,17 @@
 <p>You currently have no holdings in this portfolio - <a href="{% url 'holding_create' portfolio.id %}">go ahead and add some now!</a></p>
 {% endif %}
 
-<div id="add_holding_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <form method="post" action="">
+<div id="createModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="createHoldingModalLabel" aria-hidden="true">
+  <form method="post" action="{% url "holding_create" portfolio.id %}">
     {% csrf_token %}
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-      <h3 id="myModalLabel">Add a Holding</h3>
+      <h3 id="createHoldingModalLabel">Add Holding</h3>
     </div>
     <div class="modal-body">
-      <label class="control-label" for="stock_display">Stock: </label>
+      <label class="control-label" for="stock_display">Name (or symbol): </label>
       <div class="controls">
-        <input id="stock_display" type="text" class="input-xxlarge" placeholder="" />
+        <input id="stock_display" name="stock_name" type="text" class="span6" placeholder="start typing..." />
       </div>
     </div>
     <div class="modal-footer">

@@ -21,9 +21,6 @@ def portfolio_index(request):
 
 @login_required
 def portfolio_create(request):
-    # if request.is_ajax():
-    #     return HttpResponse('hello')
-
     if request.method == 'POST':
         data = request.POST.copy()
         data['user'] = request.user.id
@@ -33,12 +30,10 @@ def portfolio_create(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Your portfolio %s was created.' % form.cleaned_data['name'])
-            return HttpResponseRedirect(reverse('portfolio_index'))
         else:
             messages.error(request, 'There was an error creating your portfolio.')
-            return HttpResponseRedirect(reverse('portfolio_index'))
-    else:
-        return HttpResponse(reverse('portfolio_index'))
+
+    return HttpResponseRedirect(reverse('portfolio_index'))
 
 
 @login_required
@@ -66,8 +61,13 @@ def holding_index(request, portfolio_id):
     if other_value > 0:
         holding_chart.append(['Other', float(round(other_value, 1))])
 
-    if request.method == 'POST':
+    form = CreateHoldingForm()
+    return render(request, 'portfolios/holdings/index.html', {'portfolio': portfolio, 'holdings': holdings, 'holding_summary': holding_summary, 'holding_chart': holding_chart, 'holding_chart': holding_chart, 'form': form})
 
+
+@login_required
+def holding_create(request, portfolio_id):
+    if request.method == 'POST':
         data = request.POST.copy()
         data['portfolio'] = portfolio_id
 
@@ -75,36 +75,12 @@ def holding_index(request, portfolio_id):
 
         if form.is_valid():
             form.save()
-            messages.success(request, 'Your form was saved.')
-            return HttpResponseRedirect(reverse('holding_index', args=(portfolio_id,)))
+            messages.success(request, 'Your holding %s was created.' % form.cleaned_data['stock_name'])
+
         else:
             messages.info(request, form.errors)
-            return render(request, 'portfolios/holdings/index.html', {'portfolio': portfolio, 'holdings': holdings, 'holding_summary': holding_summary, 'holding_chart': holding_chart, 'holding_chart': holding_chart})
-    else:
-        form = CreateHoldingForm()
-        return render(request, 'portfolios/holdings/index.html', {'portfolio': portfolio, 'holdings': holdings, 'holding_summary': holding_summary, 'holding_chart': holding_chart, 'holding_chart': holding_chart, 'form': form})
 
-
-@login_required
-def holding_create(request, portfolio_id):
-    portfolio = Portfolio.objects.get(pk=portfolio_id)
-
-    data = request.POST.copy()
-    data['portfolio'] = portfolio_id
-
-    if request.method == 'POST':
-        form = CreateHoldingForm(data)
-
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Your form was saved.')
-            return HttpResponseRedirect(reverse('holding_index', args=(portfolio_id,)))
-        else:
-            messages.info(request, form.errors)
-            return render(request, 'portfolios/holdings/create.html', {'portfolio': portfolio, 'form': form})
-    else:
-        form = CreateHoldingForm()
-        return render(request, 'portfolios/holdings/create.html', {'portfolio': portfolio, 'form': form })
+    return HttpResponseRedirect(reverse('holding_index', args=portfolio_id))
 
 
 @login_required

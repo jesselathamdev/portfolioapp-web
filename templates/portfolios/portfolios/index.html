@@ -50,16 +50,18 @@
 <p>No portfolios have been created yet</p>
 {% endif %}
 
-<div id="modalCreate" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="modalCreate" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="createPortfolioModalLabel" aria-hidden="true">
   <form method="post" action="{% url 'portfolio_create' %}">
     {% csrf_token %}
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-      <h3 id="myModalLabel">Add a Portfolio</h3>
+      <h3 id="createPortfolioModalLabel">Add Portfolio</h3>
     </div>
     <div class="modal-body">
-      <label for="{{ form.name.auto_id }}">Name</label>
-      <input id="{{ form.name.auto_id }}" name="{{ form.name.html_name }}" type="text" class="input-xlarge" placeholder="" />
+      <label class="control-label" for="{{ form.name.auto_id }}">Name: </label>
+      <div class="controls">
+        <input id="{{ form.name.auto_id }}" name="{{ form.name.html_name }}" type="text" class="input-xlarge" placeholder="" />
+      </div>
     </div>
     <div class="modal-footer">
       <input type="submit" class="btn btn-primary" value="Add portfolio" />
