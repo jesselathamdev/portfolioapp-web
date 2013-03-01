@@ -16,7 +16,7 @@ urlpatterns = patterns('',
     url(r'^portfolios/', include('portfolioapp.apps.portfolios.urls')),
 
     # transactions through portfolios
-    url(r'^transactions/', 'portfolioapp.apps.portfolios.views.transaction_global_index', name='transaction_global_index'),
+    url(r'^activity/', 'portfolioapp.apps.portfolios.views.transaction_global_index', name='transaction_global_index'),
 
     # custom admin
     url(r'^admin/', include('portfolioapp.apps.admin.urls')),
