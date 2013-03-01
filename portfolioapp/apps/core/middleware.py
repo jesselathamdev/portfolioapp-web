@@ -33,6 +33,7 @@ class ProfilerMiddleware(object):
             response.content = '<pre>%s</pre>' % out.getvalue()
         return response
 
+
 class UserBasedExceptionMiddleware(object):
     """
     Borrowed from http://ericholscher.com/blog/2008/nov/15/debugging-django-production-environments/

@@ -1,22 +1,30 @@
 # profiles/forms.py
 from django import forms
-from django.forms import ModelForm
 from django.contrib.auth import get_user_model
+
 
 from .models import User
 
-class EditUserProfileForm(ModelForm):
+
+class LoginForm(forms.Form):
+    email = forms.EmailField(max_length=75, required=True)
+    password = forms.CharField(max_length=75, required=True, widget=forms.PasswordInput)
+    remember_me = forms.BooleanField(required=False)
+
+
+class EditUserProfileForm(forms.ModelForm):
     class Meta:
         model = get_user_model()
         fields = ('email', 'first_name', 'last_name')
 
-class AdminEditUserProfileForm(ModelForm):
+
+class AdminEditUserProfileForm(forms.ModelForm):
     class Meta:
         model = get_user_model()
         fields = ('email', 'first_name', 'last_name', 'is_active', 'is_admin')
 
 
-class CreateUserProfileForm(ModelForm):
+class CreateUserProfileForm(forms.ModelForm):
     """A form for creating new users. Includes all the
        required fields, plus a repeated password.
     """
@@ -51,11 +59,3 @@ class CreateUserProfileForm(ModelForm):
         self.fields['password2'].initial = ''
         self.fields['first_name'].initial = ''
         self.fields['last_name'].initial = ''
-
-
-class LoginForm(ModelForm):
-    username = forms.CharField(max_length=75)
-
-    class Meta:
-        model = get_user_model()
-        fields = ('username', 'password')

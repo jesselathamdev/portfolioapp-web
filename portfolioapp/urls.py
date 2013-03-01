@@ -5,7 +5,7 @@ from django.conf import settings
 urlpatterns = patterns('',
     # profiles (sign in, profile, etc)
     url(r'^sign-up/$', 'portfolioapp.apps.profiles.views.profile_create', name='profile_create'),
-    url(r'^sign-in/$', 'django.contrib.auth.views.login', {'template_name': 'profiles/signin.html'}, name='profile_signin'),
+    url(r'^sign-in/$', 'portfolioapp.apps.profiles.views.login', name='profile_signin'),
     url(r'^sign-out/$', 'django.contrib.auth.views.logout', {'template_name': 'profiles/signout.html'}, name='profile_signout'),
     url(r'^profile/$', 'portfolioapp.apps.profiles.views.profile_edit', name='profile_edit'),
 

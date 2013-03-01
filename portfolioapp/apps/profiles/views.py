@@ -1,12 +1,39 @@
 # profiles/views.py
-from django.shortcuts import render
+from django.shortcuts import render, render_to_response
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login as django_login, logout
 from django.contrib import messages
 
-from .forms import CreateUserProfileForm, EditUserProfileForm
+from .forms import LoginForm, CreateUserProfileForm, EditUserProfileForm
+
+def login(request):
+    if request.method == 'POST':
+
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password']
+            user = authenticate(username=email, password=password)
+            if user is not None:
+                if user.is_active:
+                    if not request.POST.get('remember_me', False):
+                        request.session.set_expiry(0)
+                    django_login(request, user)
+                    return HttpResponseRedirect(reverse('portfolio_index')) # success
+            else:
+                form.errors['login'] = 'The email and/or password provided was invalid.'
+                return render(request, 'profiles/signin.html', {'form': form})
+        else:
+            form.errors['login'] = 'The email and/or password provided was invalid.'
+            return render(request, 'profiles/signin.html', {'form': form})
+
+    else:
+        logout(request)
+        form = LoginForm()
+        return render(request, 'profiles/signin.html', {'form': form})
+
 
 def profile_create(request):
     if request.method == 'POST':
@@ -19,7 +46,7 @@ def profile_create(request):
             user = authenticate(username=form.cleaned_data.get('email'), password=form.cleaned_data.get('password1'))
             if user is not None:
                 if user.is_active:
-                    login(request, user)
+                    django_login(request, user)
                     return HttpResponseRedirect(reverse('portfolio_index'))
         else:
             return render(request, 'profiles/signup.html', {'form': form})
