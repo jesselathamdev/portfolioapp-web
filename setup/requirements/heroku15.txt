@@ -1,0 +1,3 @@
+-r _base15.txt
+
+dj-database-url==0.2.1

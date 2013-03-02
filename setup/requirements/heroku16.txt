@@ -1,4 +1,4 @@
--r _base.txt
+-r _base16.txt
 
 dj-database-url==0.2.1
 gunicorn==0.17.2
