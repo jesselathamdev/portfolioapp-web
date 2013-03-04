@@ -1,4 +1,5 @@
 # portfolios/models.py
+
 import datetime
 
 from django.conf import settings
@@ -54,7 +55,6 @@ class Transaction(TimeStampMixin, models.Model):
 
     def __unicode__(self):
         return '%s %s on %s' % (self.get_type_display(), self.quantity, self.date_created.strftime("%M/%d/%y"))
-        # return u"%s (%s)" % (self.holding.name, self.quantity) #risky, queries for each name of parent
 
     def save(self, *args, **kwargs):
         # change the sign of the quantity being saved depending on the type of transaction

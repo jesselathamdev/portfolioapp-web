@@ -5,12 +5,15 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib import messages
+from django.db.models import Sum
 
 from endless_pagination.decorators import page_template
 
 from portfolioapp.apps.core import settings
+from portfolioapp.apps.cash.models import Cash
 from .models import Portfolio, Holding, Transaction
 from .forms import CreatePortfolioForm, CreateHoldingForm
+
 
 @login_required
 def portfolio_index(request):
@@ -47,8 +50,9 @@ def portfolio_delete(request, portfolio_id):
 @login_required
 def holding_index(request, portfolio_id):
     portfolio = Portfolio.objects.get(pk=portfolio_id)
-    holdings = Holding.objects.detailed_view(portfolio_id)
-    holding_summary = Holding.objects.summary_view(portfolio_id)
+    holdings = Holding.objects.detailed_view(request.user.id, portfolio_id)
+    holding_summary = Holding.objects.summary_view(request.user.id, portfolio_id)
+    cash = Cash.objects.filter(user_id=request.user.id, portfolio_id=portfolio_id).aggregate(total_amount=Sum('amount'))
 
     holding_chart = []
     other_value = 0
@@ -63,7 +67,7 @@ def holding_index(request, portfolio_id):
         holding_chart.append(['Other', float(round(other_value, 1))])
 
     form = CreateHoldingForm()
-    return render(request, 'portfolios/holdings/index.html', {'portfolio': portfolio, 'holdings': holdings, 'holding_summary': holding_summary, 'holding_chart': holding_chart, 'holding_chart': holding_chart, 'form': form})
+    return render(request, 'portfolios/holdings/index.html', {'portfolio': portfolio, 'holdings': holdings, 'holding_summary': holding_summary, 'holding_chart': holding_chart, 'cash': cash, 'holding_chart': holding_chart, 'form': form})
 
 
 @login_required

@@ -85,7 +85,7 @@ class PortfolioManager(models.Manager, mixins.ORMMixin):
 
 
 class HoldingManager(models.Manager, mixins.ORMMixin):
-    def detailed_view(self, portfolio_id):
+    def detailed_view(self, user_id, portfolio_id):
         """
         Returns a query that is used for the detailed list view with custom logic at the database
         """
@@ -107,7 +107,7 @@ class HoldingManager(models.Manager, mixins.ORMMixin):
                 market_value,
                 net_gain_dollar,
                 net_gain_percent,
-                COALESCE(market_value / NULLIF(SUM(market_value) OVER (), 0), 0.00) * 100 AS portfolio_makeup_percent
+                COALESCE(market_value / NULLIF(SUM(market_value) OVER () + (SELECT SUM(c.amount) as cash_total FROM cash_cash c WHERE c.user_id = %(user_id)s AND c.portfolio_id = %(portfolio_id)s), 0), 0.00) * 100 AS portfolio_makeup_percent
             FROM (
                 SELECT
                     ph.id,
@@ -131,10 +131,12 @@ class HoldingManager(models.Manager, mixins.ORMMixin):
                     INNER JOIN portfolios_portfolio pp ON pp.id = ph.portfolio_id
                     INNER JOIN markets_stock ms on ph.stock_id = ms.id
                     INNER JOIN markets_market mm on ms.market_id = mm.id
-                WHERE pp.id = %s
+                WHERE
+                    pp.id = %(portfolio_id)s AND
+                    pp.user_id = %(user_id)s
                 GROUP BY ph.id, ms.name, ms.symbol, mm.acr, ms.last_price, ms.date_last_price_updated
             ) as holdings
-            ORDER BY LOWER(name)''', [portfolio_id])
+            ORDER BY LOWER(name)''', {'user_id': user_id, 'portfolio_id': portfolio_id})
 
         holdings = []
         for row in cursor.fetchall():
@@ -157,7 +159,7 @@ class HoldingManager(models.Manager, mixins.ORMMixin):
 
         return holdings
 
-    def summary_view(self, portfolio_id):
+    def summary_view(self, user_id, portfolio_id):
         """
         Returns a query that is used for the summary list view with custom logic at the database
         """
@@ -180,9 +182,21 @@ class HoldingManager(models.Manager, mixins.ORMMixin):
                     INNER JOIN portfolios_portfolio pp ON pp.id = ph.portfolio_id
                     INNER JOIN markets_stock ms on ph.stock_id = ms.id
                     INNER JOIN markets_market mm on ms.market_id = mm.id
-                WHERE pp.id = %s
-                GROUP BY ph.id, ms.last_price, ms.date_last_price_updated
-            ) as holdings''', [portfolio_id])
+                WHERE
+                    pp.id = %(portfolio_id)s
+                AND pp.user_id = %(user_id)s
+                    GROUP BY ph.id, ms.last_price, ms.date_last_price_updated
+                UNION ALL
+                SELECT
+                    SUM(amount) as book_value,
+                    SUM(amount) as market_value,
+                    0 as net_gain_dollar
+                FROM
+                    cash_cash c
+                WHERE
+                    c.user_id = %(user_id)s AND
+                    c.portfolio_id = %(portfolio_id)s
+            ) as holdings''', {'portfolio_id': portfolio_id, 'user_id': user_id})
 
         summary = {}
         for row in cursor.fetchall():

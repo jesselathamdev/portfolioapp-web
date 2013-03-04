@@ -1,0 +1,28 @@
+[
+    {
+        "pk": 1, 
+        "model": "cash.cash", 
+        "fields": {
+            "comment": "Initial deposit into account", 
+            "date_updated": "2013-03-04T18:47:32.878Z", 
+            "amount": "100.00", 
+            "user": 2, 
+            "portfolio": 1, 
+            "date_created": "2013-03-04T18:47:32.878Z", 
+            "type": 0
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "cash.cash", 
+        "fields": {
+            "comment": "Withdrawl from account", 
+            "date_updated": "2013-03-04T18:48:23.692Z", 
+            "amount": "-20.00", 
+            "user": 2, 
+            "portfolio": 1, 
+            "date_created": "2013-03-04T18:48:23.692Z", 
+            "type": 1
+        }
+    }
+]

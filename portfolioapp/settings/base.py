@@ -94,6 +94,7 @@ INSTALLED_APPS = (
     'portfolioapp.apps.profiles',
     'portfolioapp.apps.portfolios',
     'portfolioapp.apps.markets',
+    'portfolioapp.apps.cash',
     'portfolioapp.apps.core',
     'portfolioapp.apps.admin',
 

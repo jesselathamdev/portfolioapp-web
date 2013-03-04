@@ -56,13 +56,18 @@
   {% endfor %}
   </tbody>
   <tfoot>
-{#    <tr>#}
-{#      <td colspan="3">Cash</td>#}
-{#      <td class="align-right">$100.32</td>#}
-{#      <td>&nbsp;</td>#}
-{#      <td class="align-right">$100.32</td>#}
-{#      <td class="align-right">3.00%</td>#}
-{#    </tr>#}
+    {% if cash %}
+    <tr class="cash">
+      <td>Cash</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td class="align-right">${{ cash.total_amount|floatformat:2|intcomma }}</td>
+      <td class="align-right">${{ cash.total_amount|floatformat:2|intcomma }}</td>
+      <td>&nbsp;</td>
+      <td class="align-right">&nbsp;</td>
+      <td class="align-right">&nbsp;</td>
+    </tr>
+    {% endif %}
     <tr class="total">
       <th><strong>Total</strong></th>
       <th>&nbsp;</th>
