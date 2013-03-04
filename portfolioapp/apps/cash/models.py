@@ -14,7 +14,7 @@ class Cash(TimeStampMixin, models.Model):
     WITHDRAWL = 1
     TYPE_CHOICES = (
         (DEPOSIT, 'Deposit'),
-        (WITHDRAWL, 'Withdrawl')
+        (WITHDRAWL, 'Withdrawal')
     )
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL)

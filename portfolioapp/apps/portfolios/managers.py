@@ -196,7 +196,7 @@ class HoldingManager(models.Manager, mixins.ORMMixin):
                 WHERE
                     c.user_id = %(user_id)s AND
                     c.portfolio_id = %(portfolio_id)s
-            ) as holdings''', {'portfolio_id': portfolio_id, 'user_id': user_id})
+            ) as holdings''', {'user_id': user_id, 'portfolio_id': portfolio_id})
 
         summary = {}
         for row in cursor.fetchall():
@@ -205,3 +205,58 @@ class HoldingManager(models.Manager, mixins.ORMMixin):
             summary['total_net_gain_dollar'] = row[2]
 
         return summary
+
+class TransactionManager(models.Model):
+    def combined_activity_view(self, user_id, portfolio_id):
+        """
+        Returns a resultset that combines stock holding transactions (shares in, shares out) and cash activity (deposit, withdrawl)
+        """
+        from django.db import connection
+
+        cursor = connection.cursor()
+        cursor.execute('''
+            (SELECT
+                'stock' AS type,
+                pt.date_created,
+                CASE pt.type
+                    WHEN 0 THEN 'Shares in'
+                    WHEN 1 THEN 'Shares out'
+                    WHEN 5 THEN 'Buy'
+                    WHEN 6 THEN 'Sell'
+                END AS activity_type,
+                ms.name || ' (' || ms.symbol || ':' || mm.acr || ')' AS name,
+                pt.quantity,
+                pt.value,
+                pt.commission,
+                pt.comment
+            FROM
+                portfolios_transaction pt
+                INNER JOIN portfolios_holding ph ON pt.holding_id = ph.id
+                INNER JOIN markets_stock ms ON ph.stock_id = ms.id
+                INNER JOIN markets_market mm ON ms.market_id = mm.id
+                INNER JOIN portfolios_portfolio pp ON ph.portfolio_id = pp.id
+            WHERE
+                pp.user_id = 2 AND
+                pp.id = 1
+            UNION ALL
+            SELECT
+                'cash' AS type,
+                date_created,
+                CASE type
+                    WHEN 0 THEN 'Deposit'
+                    WHEN 1 THEN 'Withdrawal'
+                END AS activity_type,
+                'Cash' AS name,
+                0.00 quantity,
+                amount AS value,
+                0.00 as commission,
+                comment
+            FROM
+                cash_cash
+            WHERE
+                user_id = 2 AND
+                portfolio_id = 1)
+            ORDER BY date_created DESC''', {'user_id': user_id, 'portfolio_id': portfolio_id})
+
+            activity = {}
+            for row in cursor
