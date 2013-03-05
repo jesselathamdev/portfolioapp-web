@@ -65,3 +65,22 @@ class Transaction(TimeStampMixin, models.Model):
         elif (self.type == self.SHARES_IN or self.type == self.BUY) and self.quantity <= 0:
             self.quantity *= -1
         super(Transaction, self).save(*args, **kwargs)
+
+
+class Activity(models.Model):
+    type = models.CharField(max_length=15)
+    date_created = models.DateTimeField()
+    activity_type = models.CharField(max_length=15)
+    name = models.CharField(max_length=250)
+    quantity = models.DecimalField(decimal_places=2, max_digits=6)
+    value = models.DecimalField(decimal_places=2, max_digits=7)
+    commission = models.DecimalField(decimal_places=2, max_digits=6)
+    comment = models.CharField(max_length=250)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    portfolio = models.ForeignKey(Portfolio)
+
+    class Meta:
+        managed = False
+
+    def __unicode__(self):
+        return '%s %s on %s' % (self.activity_type, self.quantity, self.date_created.strftime("%M/%d/%y"))

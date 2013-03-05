@@ -257,6 +257,3 @@ class TransactionManager(models.Model):
                 user_id = 2 AND
                 portfolio_id = 1)
             ORDER BY date_created DESC''', {'user_id': user_id, 'portfolio_id': portfolio_id})
-
-            activity = {}
-            for row in cursor
