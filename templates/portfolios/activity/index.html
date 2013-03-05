@@ -1,11 +1,14 @@
 {% extends "base_two_columns.html" %}
 {% load endless %}
+{% load humanize %}
 
 {% block browser_title %}Activity{% endblock browser_title %}
 
 {% block breadcrumbs %}<a href="/">Dashboard</a> &rarr; Activity</a>{% endblock breadcrumbs %}
 
 {% block page_title %}<i class="icon-list"></i> Activity{% endblock page_title %}
+
+{% block helper_message %}{% endblock helper_message %}
 
 {% block content %}
 

@@ -3,14 +3,8 @@
 CREATE VIEW portfolios_activity AS
 WITH activity AS 
 	(SELECT		
-		'stock' AS type,
-		pt.date_created,
-		CASE pt.type
-		    WHEN 0 THEN 'Shares in'
-		    WHEN 1 THEN 'Shares out'
-		    WHEN 5 THEN 'Buy'
-		    WHEN 6 THEN 'Sell'
-		END AS activity_type,
+		pt.date_transacted,
+		pt.type,
 		ms.name || ' (' || ms.symbol || ':' || mm.acr || ')' AS name,
 		pt.quantity,
 		pt.value,
@@ -26,12 +20,11 @@ WITH activity AS
 		INNER JOIN portfolios_portfolio pp ON ph.portfolio_id = pp.id
 	UNION ALL
 	SELECT
-		'cash' AS type,
 		date_created,
 		CASE type
-		    WHEN 0 THEN 'Deposit'
-		    WHEN 1 THEN 'Withdrawal'
-		END AS activity_type,
+		    WHEN 0 THEN 10
+		    WHEN 1 THEN 11
+		END AS type,
 		'Cash' AS name,
 		0.00 quantity,
 		amount AS value,
@@ -41,5 +34,7 @@ WITH activity AS
 		portfolio_id
 	FROM
 		cash_cash)
-SELECT row_number() OVER (ORDER BY date_created) AS id, * 
-	FROM activity
+SELECT row_number() OVER (ORDER BY date_transacted) AS id, * 
+	FROM activity;
+
+GRANT SELECT ON portfolios_activity TO portfolioapp;

@@ -56,7 +56,7 @@ class Transaction(TimeStampMixin, models.Model):
     objects = TransactionManager()
 
     def __unicode__(self):
-        return '%s %s on %s' % (self.get_type_display(), self.quantity, self.date_created.strftime("%M/%d/%y"))
+        return '%s %s on %s' % (self.get_type_display(), self.quantity, self.date_created.strftime("%m/%d/%Y"))
 
     def save(self, *args, **kwargs):
         # change the sign of the quantity being saved depending on the type of transaction
@@ -68,9 +68,24 @@ class Transaction(TimeStampMixin, models.Model):
 
 
 class Activity(models.Model):
-    type = models.CharField(max_length=15)
-    date_created = models.DateTimeField()
-    activity_type = models.CharField(max_length=15)
+    SHARES_IN = 0
+    SHARES_OUT = 1
+    BUY = 5
+    SELL = 6
+    DEPOSIT = 10
+    WITHDRAWL = 11
+
+    TYPE_CHOICES = (
+        (BUY, "Buy"),
+        (SELL, "Sell"),
+        (SHARES_IN, "Shares in"),
+        (SHARES_OUT, "Shares out"),
+        (DEPOSIT, 'Deposit'),
+        (WITHDRAWL, 'Withdrawal')
+    )
+
+    type = models.PositiveSmallIntegerField(choices=TYPE_CHOICES)
+    date_transacted = models.DateTimeField()
     name = models.CharField(max_length=250)
     quantity = models.DecimalField(decimal_places=2, max_digits=6)
     value = models.DecimalField(decimal_places=2, max_digits=7)
@@ -83,4 +98,4 @@ class Activity(models.Model):
         managed = False
 
     def __unicode__(self):
-        return '%s %s on %s' % (self.activity_type, self.quantity, self.date_created.strftime("%M/%d/%y"))
+        return '%s %s on %s' % (self.get_type_display(), self.quantity, self.date_transacted.strftime("%m/%d/%Y"))

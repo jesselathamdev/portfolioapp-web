@@ -5,7 +5,8 @@
         "fields": {
             "comment": "Initial deposit into account", 
             "date_updated": "2013-03-04T18:47:32.878Z", 
-            "amount": "100.00", 
+            "date_transacted": "2013-03-05T21:50:50.793Z", 
+            "amount": "1000.00", 
             "user": 2, 
             "portfolio": 1, 
             "date_created": "2013-03-04T18:47:32.878Z", 
@@ -18,7 +19,8 @@
         "fields": {
             "comment": "Withdrawl from account", 
             "date_updated": "2013-03-04T18:48:23.692Z", 
-            "amount": "-20.00", 
+            "date_transacted": "2013-03-05T21:50:50.793Z", 
+            "amount": "-200.00", 
             "user": 2, 
             "portfolio": 1, 
             "date_created": "2013-03-04T18:48:23.692Z", 

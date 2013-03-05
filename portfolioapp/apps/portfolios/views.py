@@ -11,7 +11,7 @@ from endless_pagination.decorators import page_template
 
 from portfolioapp.apps.core import settings
 from portfolioapp.apps.cash.models import Cash
-from .models import Portfolio, Holding, Transaction
+from .models import Portfolio, Holding, Transaction, Activity
 from .forms import CreatePortfolioForm, CreateHoldingForm
 
 
@@ -109,10 +109,10 @@ def transaction_index(request, portfolio_id, holding_id, template='portfolios/tr
 
 
 @login_required
-@page_template('portfolios/transactions/index_global_paged_content.html')
-def transaction_global_index(request, template='portfolios/transactions/index_global.html', extra_context=None):
-    transactions = Transaction.objects.select_related('holding__stock__name', 'holding__stock__symbol', 'holding__stock__market__acr', 'type', 'date_transacted', 'quantity', 'value').filter(holding__portfolio__user_id=request.user).order_by('-date_transacted')
-    context = {'transactions': transactions, 'results_per_page': settings.RESULTS_PER_PAGE}
+@page_template('portfolios/activity/index_paged_content.html')
+def activity_index(request, template='portfolios/activity/index.html', extra_context=None):
+    activity = Activity.objects.filter(user_id=request.user.id).order_by('-date_transacted')
+    context = {'activity': activity, 'results_per_page': settings.RESULTS_PER_PAGE}
 
     if extra_context is not None:
         context.update(extra_context)

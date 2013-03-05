@@ -12,6 +12,7 @@ from portfolioapp.apps.portfolios.models import Portfolio
 class Cash(TimeStampMixin, models.Model):
     DEPOSIT = 0
     WITHDRAWL = 1
+
     TYPE_CHOICES = (
         (DEPOSIT, 'Deposit'),
         (WITHDRAWL, 'Withdrawal')
@@ -22,6 +23,7 @@ class Cash(TimeStampMixin, models.Model):
     type = models.PositiveSmallIntegerField(choices=TYPE_CHOICES, null=True)
     amount = models.DecimalField(default=0.0, decimal_places=2, max_digits=9)
     comment = models.CharField(max_length=250, default='', blank=True, null=True)
+    date_transacted = models.DateTimeField(default=datetime.datetime.now)
 
     def __unicode__(self):
-        return '%s of %s on %s' % (self.get_type_display(), abs(self.amount), self.date_created.strftime("%m/%d/%Y"))
+        return '%s of %s on %s' % (self.get_type_display(), abs(self.amount), self.date_transacted.strftime("%m/%d/%Y"))
