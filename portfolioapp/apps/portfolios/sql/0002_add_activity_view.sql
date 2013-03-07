@@ -41,4 +41,4 @@ WITH activity AS
 SELECT row_number() OVER (ORDER BY date_transacted) AS id, *
 	FROM activity;
 
-GRANT SELECT ON portfolios_activity TO portfolioapp;
+-- GRANT SELECT ON portfolios_activity TO portfolioapp;
