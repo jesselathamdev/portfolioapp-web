@@ -25,11 +25,6 @@ ADMINS = ('Jesse Latham', 'jesse.latham.dev@gmail.com')
 
 MANAGERS = ADMINS
 
-# taken from: http://code.google.com/p/wadofstuff/wiki/DjangoFullSerializers; extends the existing json serializer with some extra goodness
-SERIALIZATION_MODULES = {
-    'json': 'wadofstuff.django.serializers.json'
-}
-
 TIME_ZONE = 'America/Vancouver'
 LANGUAGE_CODE = 'en-us'
 USE_I18N = True
