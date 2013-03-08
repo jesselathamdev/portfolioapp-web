@@ -85,14 +85,14 @@ def holding_create(request, portfolio_id):
         else:
             messages.info(request, form.errors)
 
-    return HttpResponseRedirect(reverse('holding_index', args=portfolio_id))
+    return HttpResponseRedirect(reverse('holding_index', args=(int(portfolio_id),)))
 
 
 @login_required
 def holding_delete(request, portfolio_id, holding_id):
     h = Holding.objects.get(pk=holding_id)
     h.delete()
-    return HttpResponseRedirect(reverse('holding_index', args=portfolio_id))
+    return HttpResponseRedirect(reverse('holding_index', args=(int(portfolio_id),)))
 
 
 @login_required

@@ -5,7 +5,7 @@ import datetime
 from django.conf import settings
 from django.db import models
 
-from .managers import PortfolioManager, HoldingManager, TransactionManager
+from .managers import PortfolioManager, HoldingManager
 from portfolioapp.apps.markets.models import Stock
 from portfolioapp.apps.core.mixins import TimeStampMixin
 
@@ -52,8 +52,6 @@ class Transaction(TimeStampMixin, models.Model):
     comment = models.CharField(max_length=250, default='', blank=True, null=True)
     commission = models.DecimalField(default=0.0, decimal_places=2, max_digits=6)
     date_transacted = models.DateTimeField(default=datetime.datetime.now)
-
-    objects = TransactionManager()
 
     def __unicode__(self):
         return '%s %s on %s' % (self.get_type_display(), self.quantity, self.date_created.strftime("%m/%d/%Y"))

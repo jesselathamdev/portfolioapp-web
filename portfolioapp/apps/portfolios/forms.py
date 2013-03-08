@@ -10,6 +10,8 @@ class CreatePortfolioForm(forms.ModelForm):
 
 
 class CreateHoldingForm(forms.ModelForm):
+    stock_name = forms.CharField(max_length=250)
+
     class Meta:
         model = Holding
         fields = ('stock', 'portfolio',)
