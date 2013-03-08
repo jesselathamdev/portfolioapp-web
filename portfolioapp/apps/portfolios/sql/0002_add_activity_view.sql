@@ -5,6 +5,7 @@ WITH activity AS
 	(SELECT
 		pt.date_transacted,
 		pt.type,
+		ms.id AS stock_id,
 		ms.name,
 		ms.symbol,
 		mm.acr,
@@ -27,6 +28,7 @@ WITH activity AS
 		    WHEN 0 THEN 10
 		    WHEN 1 THEN 11
 		END AS type,
+		-1 AS stock_id,
 		'Cash' AS name,
 		'' AS symbol,
 		'' AS acr,

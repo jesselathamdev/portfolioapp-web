@@ -21,7 +21,7 @@
   <tr>
     <td>{{ a.date_transacted|date:"m/d/Y" }}</td>
     <td>{{ a.get_type_display }}</td>
-    <td>{{ a.name }}</td>
+    <td>{{ a.full_name }}</td>
     <td class="align-right">{{ a.quantity }}</td>
     <td class="align-right">${{ a.value|floatformat:2|intcomma }}</td>
     <td class="align-right">${{ a.commission|floatformat:2|intcomma }}</td>

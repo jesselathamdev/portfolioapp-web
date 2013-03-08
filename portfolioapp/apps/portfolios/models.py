@@ -87,6 +87,8 @@ class Activity(models.Model):
     type = models.PositiveSmallIntegerField(choices=TYPE_CHOICES)
     date_transacted = models.DateTimeField()
     name = models.CharField(max_length=250)
+    symbol = models.CharField(max_length=10)
+    acr = models.CharField(max_length=10)
     quantity = models.DecimalField(decimal_places=2, max_digits=6)
     value = models.DecimalField(decimal_places=2, max_digits=7)
     commission = models.DecimalField(decimal_places=2, max_digits=6)
@@ -99,3 +101,9 @@ class Activity(models.Model):
 
     def __unicode__(self):
         return '%s %s on %s' % (self.get_type_display(), self.quantity, self.date_transacted.strftime("%m/%d/%Y"))
+
+    def full_name(self):
+        if self.symbol == '' and self.acr == '':
+            return self.name
+        else:
+            return '%s (%s:%s)' % (self.name, self.symbol, self.acr)
