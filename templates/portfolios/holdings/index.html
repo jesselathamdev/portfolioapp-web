@@ -5,7 +5,7 @@
 
 {% block breadcrumbs %}<a href="/">Home</a> &rarr; <a href="{% url 'portfolio_index' %}">Portfolios</a> &rarr; {{ portfolio.name }}{% endblock breadcrumbs %}
 
-{% block page_title %}<i class="icon-book"></i> Holdings <small><a href="#createModal" role="button" data-toggle="modal">add</a></small>{% endblock page_title %}
+{% block page_title %}<i class="icon-book"></i> Holdings <small><a href="#modalCreate" role="button" data-toggle="modal">add</a></small>{% endblock page_title %}
 
 {% block content %}
 {% if holdings %}
@@ -84,7 +84,7 @@
 <p>You currently have no holdings in this portfolio - <a href="{% url 'holding_create' portfolio.id %}">go ahead and add some now!</a></p>
 {% endif %}
 
-<div id="createModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="createHoldingModalLabel" aria-hidden="true">
+<div id="modalCreate" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="createHoldingModalLabel" aria-hidden="true">
   <form method="post" action="{% url "holding_create" portfolio.id %}">
     {% csrf_token %}
     <div class="modal-header">
