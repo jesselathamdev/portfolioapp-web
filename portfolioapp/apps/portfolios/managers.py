@@ -4,7 +4,7 @@ from django.db import models
 from portfolioapp.apps.core import mixins
 
 class PortfolioManager(models.Manager, mixins.ORMMixin):
-    def detailed_view(self, user_id):
+    def summary_view(self, user_id):
         """
         Returns a query that is used for the detailed list view with custom logic at the database
         """
@@ -60,38 +60,37 @@ class PortfolioManager(models.Manager, mixins.ORMMixin):
         return portfolios
 
 
-    def summary_view(self, user_id):
-        from django.db import connection
-
-        cursor = connection.cursor()
-        cursor.execute('''
-            SELECT
-                COALESCE(SUM(book_value), 0.00) as book_value,
-                COALESCE(SUM(market_value), 0.00) as market_value,
-                COALESCE(SUM(market_value) - SUM(book_value), 0.00) as net_gain_dollar
-            FROM (
-                SELECT
-                    pp.id,
-                    pp.name,
-                    COALESCE(SUM(pt.quantity*pt.value), 0.00) as book_value,
-                    (COALESCE(SUM(pt.quantity), 0.00) * ms.last_price) as market_value
-                FROM
-                    portfolios_portfolio pp
-                    LEFT JOIN portfolios_holding ph ON pp.id = ph.portfolio_id
-                    LEFT JOIN portfolios_transaction pt ON ph.id = pt.holding_id
-                    LEFT JOIN markets_stock ms ON ph.stock_id = ms.id
-                WHERE pp.user_id = %s
-                GROUP BY pp.id, pp.name, ms.last_price
-            ) as portfolios''', [user_id])
-
-        summary = {}
-        for row in cursor.fetchall():
-            summary['total_book_value'] = row[0]
-            summary['total_market_value'] = row[1]
-            summary['total_net_gain_dollar'] = row[2]
-
-        return summary
-
+    # def summary_view(self, user_id):
+    #     from django.db import connection
+    #
+    #     cursor = connection.cursor()
+    #     cursor.execute('''
+    #         SELECT
+    #             COALESCE(SUM(book_value), 0.00) as book_value,
+    #             COALESCE(SUM(market_value), 0.00) as market_value,
+    #             COALESCE(SUM(market_value) - SUM(book_value), 0.00) as net_gain_dollar
+    #         FROM (
+    #             SELECT
+    #                 pp.id,
+    #                 pp.name,
+    #                 COALESCE(SUM(pt.quantity*pt.value), 0.00) as book_value,
+    #                 (COALESCE(SUM(pt.quantity), 0.00) * ms.last_price) as market_value
+    #             FROM
+    #                 portfolios_portfolio pp
+    #                 LEFT JOIN portfolios_holding ph ON pp.id = ph.portfolio_id
+    #                 LEFT JOIN portfolios_transaction pt ON ph.id = pt.holding_id
+    #                 LEFT JOIN markets_stock ms ON ph.stock_id = ms.id
+    #             WHERE pp.user_id = %s
+    #             GROUP BY pp.id, pp.name, ms.last_price
+    #         ) as portfolios''', [user_id])
+    #
+    #     summary = {}
+    #     for row in cursor.fetchall():
+    #         summary['total_book_value'] = row[0]
+    #         summary['total_market_value'] = row[1]
+    #         summary['total_net_gain_dollar'] = row[2]
+    #
+    #     return summary
 
 
 class HoldingManager(models.Manager, mixins.ORMMixin):

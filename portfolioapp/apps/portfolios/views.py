@@ -17,10 +17,10 @@ from .forms import CreatePortfolioForm, CreateHoldingForm
 
 @login_required
 def portfolio_index(request):
-    portfolios = Portfolio.objects.detailed_view(request.user.id)
-    portfolio_summary = Portfolio.objects.summary_view(request.user.id)
+    portfolios = Portfolio.objects.summary_view(request.user.id)
+    # portfolio_summary = Portfolio.objects.summary_view(request.user.id)
     form = CreatePortfolioForm()
-    return render(request, 'portfolios/portfolios/index.html', {'portfolios': portfolios, 'portfolio_summary': portfolio_summary, 'form': form})
+    return render(request, 'portfolios/portfolios/index.html', {'portfolios': portfolios, 'form': form})
 
 
 @login_required
