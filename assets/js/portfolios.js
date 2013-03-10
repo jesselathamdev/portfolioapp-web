@@ -1,22 +1,42 @@
 $(document).ready(function() {
-    var total_holding_count = '$43.22';
-    var total_book_value = 0;
-    var total_market_value = 0;
-    var total_net_gain_dollar = 0;
-    var ref = '';
-    ref = $('#portfolios tbody tr td').html();
-//    var rows = $('#portfolios tbody tr');
-//    rows.children('td:nth-child(1) span').each(function() {
-//      alert(parseInt($(this).html()));
-//    });
+    var total_holding_count = 0;
+    var total_book_value = 0.00;
+    var total_market_value = 0.00;
+    var total_net_gain_dollar = 0.00;
 
-    //alert(total_holding_count);
+    $.fn.digits = function(){
+        return this.each(function(){
+            $(this).text( $(this).text().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") );
+        })
+    }
 
+    $('#portfolios tbody td:nth-child(2) span').each(function() {
+        total_holding_count += parseInt($(this).text());
+    });
+
+    $('#portfolios tbody td:nth-child(3) span').each(function() {
+        total_book_value += parseFloat($(this).text().replace('$', '').replace(',', ''));
+    });
+
+    $('#portfolios tbody td:nth-child(4) span').each(function() {
+        total_market_value += parseFloat($(this).text().replace('$', '').replace(',', ''));
+    });
+
+    $('#portfolios tbody td:nth-child(5) span#value').each(function() {
+        total_net_gain_dollar += parseFloat($(this).text().replace('$', '').replace(',', ''));
+    });
 
     $('#total_holding_count').html(total_holding_count);
-    $('#total_book_value').html(total_book_value);
-    $('#total_market_value').html(total_market_value);
-//    $('#total_net_gain_dollar').html(total_net_gain_dollar);
+    $('#total_book_value').html('$' + total_book_value.toFixed(2)).digits();
+    $('#total_market_value').html('$' + total_market_value.toFixed(2)).digits();
+    $('#total_net_gain_dollar').html('$' + total_net_gain_dollar.toFixed(2)).digits();
+
+    if (total_net_gain_dollar.toFixed(2) > 0) {
+        $('#total_net_gain_dollar').addClass('indicator-gain')
+    }
+    else if (total_net_gain_dollar.toFixed(2) < 0 ) {
+        $('#total_net_gain_dollar').addClass('indicator-loss')
+    }
 
     $('table.table-clickable tbody tr')
         .click(function() {

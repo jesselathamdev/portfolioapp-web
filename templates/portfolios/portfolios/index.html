@@ -28,7 +28,7 @@
       <td class="align-right"><span class="medium">{{ portfolio.holding_count }}</span></td>
       <td class="align-right"><span class="medium">${{ portfolio.book_value|floatformat:2|intcomma }}</span></td>
       <td class="align-right"><span class="medium">${{ portfolio.market_value|floatformat:2|intcomma }}</span></td>
-      <td {% if portfolio.market_value > portfolio.book_value %}class="align-right indicator-gain"{% elif portfolio.market_value < portfolio.book_value %}class="align-right indicator-loss"{% else %}class="align-right"{% endif %}><span class="medium">${{ portfolio.net_gain_dollar|floatformat:2|intcomma }}</span><br /><span class="small">{{ portfolio.net_gain_percent|floatformat:2|intcomma }}%</span></td>
+      <td {% if portfolio.market_value > portfolio.book_value %}class="align-right indicator-gain"{% elif portfolio.market_value < portfolio.book_value %}class="align-right indicator-loss"{% else %}class="align-right"{% endif %}><span id="value" class="medium">${{ portfolio.net_gain_dollar|floatformat:2|intcomma }}</span><br /><span class="small">{{ portfolio.net_gain_percent|floatformat:2|intcomma }}%</span></td>
       <td class="row-options">
         <a href="#"><i class="icon-cog"></i></a>
         <div class="table-context-menu">
@@ -43,10 +43,10 @@
   <tfoot>
     <tr class="total">
       <th>Total</th>
-      <th class="align-right"><strong id="total_holding_count"></strong></th>
-      <th class="align-right"><strong id="total_book_value"></strong></th>
-      <th class="align-right"><strong id="total_market_value"></strong></th>
-      <th class="align-right"><strong id="total_net_gain_dollar"></strong></th>
+      <th class="align-right"><span id="total_holding_count">0</span></th>
+      <th class="align-right"><span id="total_book_value">$0.00</span></th>
+      <th class="align-right"><span id="total_market_value">$0.00</span></th>
+      <th class="align-right"><span id="total_net_gain_dollar">$0.00</span></th>
       <th>&nbsp;</th>
     </tr>
   </tfoot>

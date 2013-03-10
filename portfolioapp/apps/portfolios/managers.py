@@ -26,7 +26,7 @@ class PortfolioManager(models.Manager, mixins.ORMMixin):
                 LEFT JOIN portfolios_transaction pt ON pt.holding_id = ph.id
                 LEFT JOIN markets_stock ms ON ms.id = ph.stock_id
             WHERE
-                pp.user_id = 2
+                pp.user_id = %(user_id)s
             GROUP BY
                 pp.user_id, pp.id, pp.name)
             SELECT
