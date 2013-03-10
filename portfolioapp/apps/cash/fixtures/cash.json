@@ -1,30 +1,100 @@
 [
-    {
-        "pk": 1, 
-        "model": "cash.cash", 
-        "fields": {
-            "comment": "Initial deposit into account", 
-            "date_updated": "2013-03-04T18:47:32.878Z", 
-            "date_transacted": "2013-03-05T21:50:50.793Z", 
-            "amount": "1000.00", 
-            "user": 2, 
-            "portfolio": 1, 
-            "date_created": "2013-03-04T18:47:32.878Z", 
-            "type": 0
-        }
-    }, 
-    {
-        "pk": 3, 
-        "model": "cash.cash", 
-        "fields": {
-            "comment": "Withdrawl from account", 
-            "date_updated": "2013-03-04T18:48:23.692Z", 
-            "date_transacted": "2013-03-05T21:50:50.793Z", 
-            "amount": "-200.00", 
-            "user": 2, 
-            "portfolio": 1, 
-            "date_created": "2013-03-04T18:48:23.692Z", 
-            "type": 1
-        }
+{
+    "pk": 1, 
+    "model": "cash.cash", 
+    "fields": {
+        "comment": "Initial deposit into account", 
+        "date_updated": "2013-03-04T18:47:32.878Z", 
+        "date_transacted": "2013-03-05T21:50:50.793Z", 
+        "amount": "1000.00", 
+        "user": 2, 
+        "portfolio": 1, 
+        "date_created": "2013-03-04T18:47:32.878Z", 
+        "type": 0
     }
+},
+{
+    "pk": 3, 
+    "model": "cash.cash", 
+    "fields": {
+        "comment": "Withdrawl from account", 
+        "date_updated": "2013-03-04T18:48:23.692Z", 
+        "date_transacted": "2013-03-05T21:50:50.793Z", 
+        "amount": "-200.00", 
+        "user": 2, 
+        "portfolio": 1, 
+        "date_created": "2013-03-04T18:48:23.692Z", 
+        "type": 1
+    }
+},
+{
+    "pk": 4, 
+    "model": "cash.cash", 
+    "fields": {
+        "comment": null, 
+        "date_updated": "2013-01-07T08:00:00Z", 
+        "date_transacted": "2013-01-07T08:00:00Z", 
+        "amount": "250.00", 
+        "user": 2, 
+        "portfolio": 3, 
+        "date_created": "2013-01-07T08:00:00Z", 
+        "type": 0
+    }
+},
+{
+    "pk": 5, 
+    "model": "cash.cash", 
+    "fields": {
+        "comment": null, 
+        "date_updated": "2013-03-10T19:06:19.693Z", 
+        "date_transacted": "2013-03-10T19:06:19.693Z", 
+        "amount": "244.34", 
+        "user": 2, 
+        "portfolio": 3, 
+        "date_created": "2013-03-10T19:06:19.693Z", 
+        "type": 0
+    }
+},
+{
+    "pk": 6, 
+    "model": "cash.cash", 
+    "fields": {
+        "comment": null, 
+        "date_updated": "2012-12-13T08:00:00Z", 
+        "date_transacted": "2012-12-13T08:00:00Z", 
+        "amount": "1538.87", 
+        "user": 2, 
+        "portfolio": 3, 
+        "date_created": "2012-12-13T08:00:00Z", 
+        "type": 0
+    }
+},
+{
+    "pk": 7, 
+    "model": "cash.cash", 
+    "fields": {
+        "comment": "Withdrawl for interest fees", 
+        "date_updated": "2012-12-05T08:00:00Z", 
+        "date_transacted": "2012-12-05T08:00:00Z", 
+        "amount": "-54.22", 
+        "user": 2, 
+        "portfolio": 3, 
+        "date_created": "2012-12-05T08:00:00Z", 
+        "type": 1
+    }
+},
+{
+    "pk": 8, 
+    "model": "cash.cash", 
+    "fields": {
+        "comment": "Deposit", 
+        "date_updated": "2012-11-28T08:00:00Z", 
+        "date_transacted": "2012-11-28T08:00:00Z", 
+        "amount": "577.10", 
+        "user": 2, 
+        "portfolio": 3, 
+        "date_created": "2012-11-28T08:00:00Z", 
+        "type": 0
+    }
+}
 ]
