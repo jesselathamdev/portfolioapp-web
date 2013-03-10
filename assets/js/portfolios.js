@@ -1,29 +1,20 @@
 $(document).ready(function() {
-    var total_holding_count = 0;
-    var total_book_value = 0.00;
-    var total_market_value = 0.00;
-    var total_net_gain_dollar = 0.00;
-
     $.fn.digits = function(){
         return this.each(function(){
             $(this).text( $(this).text().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") );
         })
     }
 
-    $('#portfolios tbody td:nth-child(2) span').each(function() {
-        total_holding_count += parseInt($(this).text());
-    });
+    var total_holding_count = 0;
+    var total_book_value = 0.00;
+    var total_market_value = 0.00;
+    var total_net_gain_dollar = 0.00;
 
-    $('#portfolios tbody td:nth-child(3) span').each(function() {
-        total_book_value += parseFloat($(this).text().replace('$', '').replace(',', ''));
-    });
-
-    $('#portfolios tbody td:nth-child(4) span').each(function() {
-        total_market_value += parseFloat($(this).text().replace('$', '').replace(',', ''));
-    });
-
-    $('#portfolios tbody td:nth-child(5) span#value').each(function() {
-        total_net_gain_dollar += parseFloat($(this).text().replace('$', '').replace(',', ''));
+    $('#portfolios tbody tr').each(function() {
+        total_holding_count += parseInt($(this).find('td:nth-child(2)').text());
+        total_book_value += parseFloat($(this).find('td:nth-child(3)').text().replace('$', '').replace(',', ''));
+        total_market_value += parseFloat($(this).find('td:nth-child(4)').text().replace('$', '').replace(',', ''));
+        total_net_gain_dollar += parseFloat($(this).find('td:nth-child(5)').text().replace('$', '').replace(',', ''));
     });
 
     $('#total_holding_count').html(total_holding_count);
