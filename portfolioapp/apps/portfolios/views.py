@@ -11,6 +11,7 @@ from endless_pagination.decorators import page_template
 
 from portfolioapp.apps.core import settings
 from portfolioapp.apps.cash.models import Cash
+from portfolioapp.apps.cash.managers import CashManager
 from .models import Portfolio, Holding, Transaction, Activity
 from .forms import CreatePortfolioForm, CreateHoldingForm
 
@@ -52,7 +53,7 @@ def holding_index(request, portfolio_id):
     portfolio = Portfolio.objects.get(pk=portfolio_id)
     holdings = Holding.objects.detailed_view(request.user.id, portfolio_id)
     holding_summary = Holding.objects.summary_view(request.user.id, portfolio_id)
-    cash = Cash.objects.filter(user_id=request.user.id, portfolio_id=portfolio_id).aggregate(total_amount=Sum('amount'))
+    cash_summary = Cash.objects.summary_view(request.user.id, portfolio_id)
 
     holding_chart = []
     other_value = 0
@@ -67,7 +68,7 @@ def holding_index(request, portfolio_id):
         holding_chart.append(['Other', float(round(other_value, 1))])
 
     form = CreateHoldingForm()
-    return render(request, 'portfolios/holdings/index.html', {'portfolio': portfolio, 'holdings': holdings, 'holding_summary': holding_summary, 'holding_chart': holding_chart, 'cash': cash, 'holding_chart': holding_chart, 'form': form})
+    return render(request, 'portfolios/holdings/index.html', {'portfolio': portfolio, 'holdings': holdings, 'holding_summary': holding_summary, 'holding_chart': holding_chart, 'cash_summary': cash_summary, 'holding_chart': holding_chart, 'form': form})
 
 
 @login_required

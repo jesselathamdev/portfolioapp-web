@@ -55,34 +55,33 @@
     </tr>
     {% endfor %}
   </tbody>
+  {% endif %}
   <tfoot>
-    {% if cash %}
     <tr class="cash">
       <td>Cash</td>
       <td>&nbsp;</td>
       <td>&nbsp;</td>
-      <td class="align-right">${{ cash.total_amount|default_if_none:"0.00"|floatformat:2|intcomma }}</td>
-      <td class="align-right">${{ cash.total_amount|default_if_none:"0.00"|floatformat:2|intcomma }}</td>
+      <td class="align-right">${{ cash_summary.total_amount|default_if_none:"0.00"|floatformat:2|intcomma }}</td>
+      <td class="align-right">${{ cash_summary.total_amount|default_if_none:"0.00"|floatformat:2|intcomma }}</td>
       <td>&nbsp;</td>
       <td class="align-right">&nbsp;</td>
       <td class="align-right">&nbsp;</td>
     </tr>
-    {% endif %}
     <tr class="total">
       <th><strong>Total</strong></th>
       <th>&nbsp;</th>
       <th>&nbsp;</th>
-      <th class="align-right"><strong>${{ holding_summary.total_book_value|floatformat:2|intcomma }}</strong></th>
-      <th class="align-right"><strong>${{ holding_summary.total_market_value|floatformat:2|intcomma }}</strong></th>
+      <th class="align-right">${{ holding_summary.total_book_value|default_if_none:"0.00"|floatformat:2|intcomma }}</th>
+      <th class="align-right">${{ holding_summary.total_market_value|default_if_none:"0.00"|floatformat:2|intcomma }}</th>
       <th {% if holding_summary.total_net_gain_dollar > 0 %}class="align-right indicator-gain"{% elif holding_summary.total_net_gain_dollar < 0 %}class="align-right indicator-loss"{% else %}class="align-right"{% endif %}><strong>${{ holding_summary.total_net_gain_dollar|floatformat:2|intcomma }}</strong></th>
       <th class="align-right">100%</th>
       <th class="align-right">&nbsp;</th>
     </tr>
   </tfoot>
 </table>
-{% else %}
-</table>
-<p>You currently have no holdings in this portfolio - <a href="{% url 'holding_create' portfolio.id %}">go ahead and add some now!</a></p>
+
+{% if not holdings %}
+<p>You currently have no holdings in this portfolio - <a href="#modalCreate" role="button" data-toggle="modal">go ahead and add some now!</a></p>
 {% endif %}
 
 <div id="modalCreate" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="createHoldingModalLabel" aria-hidden="true">
@@ -106,10 +105,10 @@
   </form>
 </div>
 
-<div id="modalDelete" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+<div id="modalDelete" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="deleteHoldingModalLabel" aria-hidden="true">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="deleteModalLabel">Delete Holding</h3>
+    <h3 id="deleteHoldingModalLabel">Delete Holding</h3>
   </div>
   <div class="modal-body">
     <p>Are you sure you want to delete the selected holding named <b><span id="holding_name"></span></b>?  This action cannot be undone.</p>
