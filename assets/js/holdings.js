@@ -1,4 +1,37 @@
 $(document).ready(function() {
+    $.fn.digits = function(){
+        return this.each(function(){
+            $(this).text( $(this).text().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") );
+        })
+    }
+
+    var total_book_value = 0.00;
+    var total_market_value = 0.00;
+    var total_net_gain_dollar = 0.00;
+
+    $('#holdings tbody tr').each(function() {
+        total_book_value += parseFloat($(this).find('td:nth-child(4)').text().replace('$', '').replace(',', ''));
+        total_market_value += parseFloat($(this).find('td:nth-child(5)').text().replace('$', '').replace(',', ''));
+        total_net_gain_dollar += parseFloat($(this).find('td:nth-child(6)').text().replace('$', '').replace(',', ''));
+    });
+
+    $('#holdings tfoot tr.cash').each(function() {
+        total_book_value += parseFloat($(this).find('td:nth-child(4)').text().replace('$', '').replace(',', ''));
+        total_market_value += parseFloat($(this).find('td:nth-child(5)').text().replace('$', '').replace(',', ''));
+    });
+
+    $('#total_book_value').html('$' + total_book_value.toFixed(2)).digits();
+    $('#total_market_value').html('$' + total_market_value.toFixed(2)).digits();
+    $('#total_net_gain_dollar').html('$' + total_net_gain_dollar.toFixed(2)).digits();
+
+    if (total_net_gain_dollar.toFixed(2) > 0) {
+        $('#total_net_gain_dollar').addClass('indicator-gain')
+    }
+    else if (total_net_gain_dollar.toFixed(2) < 0 ) {
+        $('#total_net_gain_dollar').addClass('indicator-loss')
+    }
+
+
     $('table.table-clickable tbody tr')
         .click(function() {
             var href = $(this).find("a").attr("href");

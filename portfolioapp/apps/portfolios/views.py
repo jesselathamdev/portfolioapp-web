@@ -52,7 +52,6 @@ def portfolio_delete(request, portfolio_id):
 def holding_index(request, portfolio_id):
     portfolio = Portfolio.objects.get(pk=portfolio_id)
     holdings = Holding.objects.detailed_view(request.user.id, portfolio_id)
-    holding_summary = Holding.objects.summary_view(request.user.id, portfolio_id)
     cash_summary = Cash.objects.summary_view(request.user.id, portfolio_id)
 
     holding_chart = []
@@ -68,7 +67,7 @@ def holding_index(request, portfolio_id):
         holding_chart.append(['Other', float(round(other_value, 1))])
 
     form = CreateHoldingForm()
-    return render(request, 'portfolios/holdings/index.html', {'portfolio': portfolio, 'holdings': holdings, 'holding_summary': holding_summary, 'holding_chart': holding_chart, 'cash_summary': cash_summary, 'holding_chart': holding_chart, 'form': form})
+    return render(request, 'portfolios/holdings/index.html', {'portfolio': portfolio, 'holdings': holdings, 'cash_summary': cash_summary, 'holding_chart': holding_chart, 'form': form})
 
 
 @login_required
