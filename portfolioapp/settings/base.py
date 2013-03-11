@@ -96,6 +96,7 @@ INSTALLED_APPS = (
     # 3rd party addons
     'endless_pagination',
     'south',
+    'tastypie',
 )
 
 AUTH_USER_MODEL = 'profiles.User'
