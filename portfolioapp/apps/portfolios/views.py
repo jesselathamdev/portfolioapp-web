@@ -19,7 +19,6 @@ from .forms import CreatePortfolioForm, CreateHoldingForm
 @login_required
 def portfolio_index(request):
     portfolios = Portfolio.objects.summary_view(request.user.id)
-    # portfolio_summary = Portfolio.objects.summary_view(request.user.id)
     form = CreatePortfolioForm()
     return render(request, 'portfolios/portfolios/index.html', {'portfolios': portfolios, 'form': form})
 
@@ -51,7 +50,7 @@ def portfolio_delete(request, portfolio_id):
 @login_required
 def holding_index(request, portfolio_id):
     portfolio = Portfolio.objects.get(pk=portfolio_id)
-    holdings = Holding.objects.detailed_view(request.user.id, portfolio_id)
+    holdings = Holding.objects.summary_view(request.user.id, portfolio_id)
     cash_summary = Cash.objects.summary_view(request.user.id, portfolio_id)
 
     holding_chart = []
@@ -67,7 +66,7 @@ def holding_index(request, portfolio_id):
         holding_chart.append(['Other', float(round(other_value, 1))])
 
     form = CreateHoldingForm()
-    return render(request, 'portfolios/holdings/index.html', {'portfolio': portfolio, 'holdings': holdings, 'cash_summary': cash_summary, 'holding_chart': holding_chart, 'form': form})
+    return render(request, 'portfolios/holdings/index.html', {'portfolio': portfolio, 'holdings': holdings, 'holding_chart': holding_chart, 'cash_summary': cash_summary, 'form': form})
 
 
 @login_required

@@ -61,7 +61,7 @@ class PortfolioManager(models.Manager, mixins.ORMMixin):
 
 
 class HoldingManager(models.Manager, mixins.ORMMixin):
-    def detailed_view(self, user_id, portfolio_id):
+    def summary_view(self, user_id, portfolio_id):
         """
         Returns a query that is used for the detailed list view with custom logic at the database
         """
@@ -134,50 +134,3 @@ class HoldingManager(models.Manager, mixins.ORMMixin):
             holdings.append(holding)
 
         return holdings
-
-    def summary_view(self, user_id, portfolio_id):
-        """
-        Returns a query that is used for the summary list view with custom logic at the database
-        """
-        from django.db import connection
-
-        cursor = connection.cursor()
-        cursor.execute('''
-            SELECT
-                SUM(book_value) as book_value,
-                SUM(market_value) as market_value,
-                SUM(net_gain_dollar) as net_gain_dollar
-            FROM (
-                SELECT
-                    COALESCE(SUM(pt.quantity * pt.value), 0.00) as book_value,
-                    (COALESCE(SUM(pt.quantity), 0.00) * ms.last_price) as market_value,
-                    COALESCE(SUM(pt.quantity) * ms.last_price - SUM(pt.quantity * pt.value), 0.00) as net_gain_dollar
-                FROM
-                    portfolios_holding ph
-                    LEFT JOIN portfolios_transaction pt ON ph.id = pt.holding_id
-                    INNER JOIN portfolios_portfolio pp ON pp.id = ph.portfolio_id
-                    INNER JOIN markets_stock ms on ph.stock_id = ms.id
-                    INNER JOIN markets_market mm on ms.market_id = mm.id
-                WHERE
-                    pp.id = %(portfolio_id)s
-                AND pp.user_id = %(user_id)s
-                    GROUP BY ph.id, ms.last_price, ms.date_last_price_updated
-                UNION ALL
-                SELECT
-                    SUM(amount) as book_value,
-                    SUM(amount) as market_value,
-                    0 as net_gain_dollar
-                FROM
-                    cash_cash c
-                WHERE
-                    c.user_id = %(user_id)s AND
-                    c.portfolio_id = %(portfolio_id)s
-            ) as holdings''', {'user_id': user_id, 'portfolio_id': portfolio_id})
-
-        summary = {}
-        for row in cursor.fetchall():
-            summary['total_book_value'] = row[0]
-            summary['total_market_value'] = row[1]
-            summary['total_net_gain_dollar'] = row[2]
-
-        return summary

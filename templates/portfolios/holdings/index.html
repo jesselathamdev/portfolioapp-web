@@ -43,7 +43,7 @@
         <span class="medium">${{ holding.net_gain_dollar|floatformat:2|intcomma }}</span><br />
         <span class="small">{{ holding.net_gain_percent|floatformat:2|intcomma }}%</span>
       </td>
-      <td class="align-right"><span class="medium">{{ holding.portfolio_makeup_percent|floatformat:2 }}%</span></td>
+      <td class="align-right"><span class="medium makeup">0.00%</span></td>
       <td class="row-options">
         <a href="#"><i class="icon-cog"></i></a>
         <div class="table-context-menu">
@@ -64,7 +64,7 @@
       <td class="align-right">${{ cash_summary.total_amount|default_if_none:"0.00"|floatformat:2|intcomma }}</td>
       <td class="align-right">${{ cash_summary.total_amount|default_if_none:"0.00"|floatformat:2|intcomma }}</td>
       <td>&nbsp;</td>
-      <td class="align-right">&nbsp;</td>
+      <td class="align-right"><span class="makeup">0.00%</span></td>
       <td class="align-right">&nbsp;</td>
     </tr>
     <tr class="total">

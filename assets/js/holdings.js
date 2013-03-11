@@ -31,6 +31,13 @@ $(document).ready(function() {
         $('#total_net_gain_dollar').addClass('indicator-loss')
     }
 
+    $('#holdings tbody tr').each(function() {
+        $(this).find('.makeup').text((parseFloat($(this).find('td:nth-child(5)').text().replace('$', '').replace(',', ''))/total_market_value * 100).toFixed(2) + '%');
+    });
+
+    $('#holdings tfoot tr.cash').each(function() {
+        $(this).find('.makeup').text((parseFloat($(this).find('td:nth-child(5)').text().replace('$', '').replace(',', ''))/total_market_value * 100).toFixed(2) + '%');
+    });
 
     $('table.table-clickable tbody tr')
         .click(function() {
