@@ -16,42 +16,15 @@ class CommonMeta:
 
 
 class PortfolioResource(ModelResource):
-    class Meta(CommonMeta):
+    class Meta:
         queryset = Portfolio.objects.all()
         resource_name = 'portfolios'
+        authentication = BasicAuthentication()
+        list_allowed_methods = ['get']
 
-    def apply_limits(self, request, object_list):
+    def apply_authorization_limits(self, request, object_list):
+        print("in apply_limits")
         return object_list.filter(user_id=request.user.id)
-
-    # def prepend_urls(self):
-    #     """
-    #     Returns a URL scheme based on the default scheme to specify
-    #     the response format as a file extension, e.g. /api/v1/users.json
-    #     """
-    #     return [
-    #         url(r"^(?P<resource_name>%s)\.(?P<format>\w+)$" % self._meta.resource_name, self.wrap_view('dispatch_list'), name="api_dispatch_list"),
-    #         url(r"^(?P<resource_name>%s)/schema\.(?P<format>\w+)$" % self._meta.resource_name, self.wrap_view('get_schema'), name="api_get_schema"),
-    #         url(r"^(?P<resource_name>%s)/set/(?P<pk_list>\w[\w/;-]*)\.(?P<format>\w+)$" % self._meta.resource_name, self.wrap_view('get_multiple'), name="api_get_multiple"),
-    #         url(r"^(?P<resource_name>%s)/(?P<pk>\w[\w/-]*)\.(?P<format>\w+)$" % self._meta.resource_name, self.wrap_view('dispatch_detail'), name="api_dispatch_detail"),
-    #     ]
-    #
-    # def determine_format(self, request):
-    #     """
-    #     Used to determine the desired format from the request.format
-    #     attribute.
-    #     """
-    #     if (hasattr(request, 'format') and
-    #             request.format in self._meta.serializer.formats):
-    #         return self._meta.serializer.get_mime_for_format(request.format)
-    #     return super(PortfolioResource, self).determine_format(request)
-    #
-    # def wrap_view(self, view):
-    #     @csrf_exempt
-    #     def wrapper(request, *args, **kwargs):
-    #         request.format = kwargs.pop('format', None)
-    #         wrapped_view = super(PortfolioResource, self).wrap_view(view)
-    #         return wrapped_view(request, *args, **kwargs)
-    #     return wrapper
 
 
 class MarketResource(ModelResource):
