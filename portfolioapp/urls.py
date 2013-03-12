@@ -1,9 +1,10 @@
 # urls.py
 from django.conf.urls import patterns, include, url
 from django.conf import settings
-from portfolioapp.apps.markets.api import MarketResource
+from portfolioapp.apps.core.api import PortfolioResource, MarketResource
 
 market_resource = MarketResource()
+portfolio_resource = PortfolioResource()
 
 urlpatterns = patterns('',
     # profiles (sign in, profile, etc)
@@ -27,6 +28,8 @@ urlpatterns = patterns('',
     # apis
     url(r'^api/markets/stocks2/?', 'portfolioapp.apps.markets.views_api.stock_index2', name='api_stock_index2'),
     url(r'^api/markets/stocks/?', 'portfolioapp.apps.markets.views_api.stock_index', name='api_stock_index'),
+
+    url(r'^api/', include(portfolio_resource.urls)),
     url(r'^api/', include(market_resource.urls)),
 )
 
