@@ -3,7 +3,6 @@ from django.conf.urls import patterns, include, url
 from django.conf import settings
 
 from portfolioapp.apps.api.v1_api import PortfolioResource, MarketResource
-from portfolioapp.apps.api
 
 from tastypie.api import Api
 
@@ -36,7 +35,7 @@ urlpatterns = patterns('',
 
     url(r'^api/', include(v1_api.urls)),
 
-    url(r'^api/v2/', include())
+    url(r'^api/v2/', include('portfolioapp.apps.api.v2_urls')),
 )
 
 # only available in debug mode
