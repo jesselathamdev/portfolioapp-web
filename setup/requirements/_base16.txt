@@ -6,4 +6,4 @@ psycopg2==2.4.6
 wsgiref==0.1.2
 -e git://github.com/frankban/django-endless-pagination.git#egg=django-endless-pagination
 fabric==1.6.0
--e git://github.com/jesselathamdev/django-tastypie.git#egg=django-tastypie
+-e git://github.com/jesselathamdev/django-tastypie.git#egg=tastypie
