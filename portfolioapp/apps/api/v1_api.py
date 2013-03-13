@@ -1,5 +1,4 @@
-# portfolios/api.py
-from django.conf.urls import url
+# api/v1_api.py
 
 from tastypie.resources import ModelResource
 from tastypie.authentication import BasicAuthentication
