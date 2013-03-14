@@ -9,7 +9,7 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
         # Adding model 'Market'
-        db.create_table(u'markets_market', (
+        db.create_table('markets', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('date_updated', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
             ('date_created', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
@@ -25,14 +25,14 @@ class Migration(SchemaMigration):
         db.send_create_signal(u'markets', ['Market'])
 
         # Adding model 'Stock'
-        db.create_table(u'markets_stock', (
+        db.create_table('stocks', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('date_updated', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
             ('date_created', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=250)),
             ('symbol', self.gf('django.db.models.fields.CharField')(max_length=8)),
             ('last_price', self.gf('django.db.models.fields.DecimalField')(default=0.0, max_digits=6, decimal_places=2)),
-            ('date_last_price_updated', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime(2013, 2, 17, 0, 0))),
+            ('date_last_price_updated', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime(2013, 3, 14, 0, 0))),
             ('market', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['markets.Market'])),
         ))
         db.send_create_signal(u'markets', ['Stock'])
@@ -40,15 +40,15 @@ class Migration(SchemaMigration):
 
     def backwards(self, orm):
         # Deleting model 'Market'
-        db.delete_table(u'markets_market')
+        db.delete_table('markets')
 
         # Deleting model 'Stock'
-        db.delete_table(u'markets_stock')
+        db.delete_table('stocks')
 
 
     models = {
         u'markets.market': {
-            'Meta': {'object_name': 'Market'},
+            'Meta': {'object_name': 'Market', 'db_table': "'markets'"},
             'acr': ('django.db.models.fields.CharField', [], {'max_length': '20', 'blank': 'True'}),
             'active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'city': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
@@ -62,9 +62,9 @@ class Migration(SchemaMigration):
             'website': ('django.db.models.fields.CharField', [], {'max_length': '250', 'blank': 'True'})
         },
         u'markets.stock': {
-            'Meta': {'object_name': 'Stock'},
+            'Meta': {'object_name': 'Stock', 'db_table': "'stocks'"},
             'date_created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'date_last_price_updated': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2013, 2, 17, 0, 0)'}),
+            'date_last_price_updated': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2013, 3, 14, 0, 0)'}),
             'date_updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'last_price': ('django.db.models.fields.DecimalField', [], {'default': '0.0', 'max_digits': '6', 'decimal_places': '2'}),

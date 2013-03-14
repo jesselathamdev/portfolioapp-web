@@ -26,6 +26,9 @@ class Cash(TimeStampMixin, models.Model):
     comment = models.CharField(max_length=250, default='', blank=True, null=True)
     date_transacted = models.DateTimeField(default=datetime.datetime.now)
 
+    class Meta:
+        db_table = 'cash'
+
     objects = CashManager()
 
     def __unicode__(self):

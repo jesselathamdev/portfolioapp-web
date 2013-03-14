@@ -16,6 +16,9 @@ class Market(TimeStampMixin, models.Model):
     website = models.CharField(max_length=250, blank=True)
     active = models.BooleanField(blank=False, default=True)
 
+    class Meta:
+        db_table = 'markets'
+
 
 class Stock(TimeStampMixin, models.Model):
     name = models.CharField(max_length=250, blank=False) # ex: BlackBerry Inc., Microsoft Inc.
@@ -23,6 +26,9 @@ class Stock(TimeStampMixin, models.Model):
     last_price = models.DecimalField(default=0.0, decimal_places=2, max_digits=6)
     date_last_price_updated = models.DateTimeField(default=datetime.now())
     market = models.ForeignKey(Market)
+
+    class Meta:
+        db_table = 'stocks'
 
     def __unicode__(self):
         return '%s:%s' % (self.name, self.symbol)

@@ -46,7 +46,11 @@ class User(AbstractBaseUser, PermissionsMixin, TimeStampMixin):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ('first_name', 'last_name',)
 
+    class Meta:
+        db_table = 'users'
+
     objects = UserManager()
+
 
     def get_full_name(self):
         full_name = "%s %s" % (self.first_name, self.last_name)

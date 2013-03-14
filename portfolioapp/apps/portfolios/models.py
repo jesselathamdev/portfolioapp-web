@@ -13,15 +13,21 @@ class Portfolio(TimeStampMixin, models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     name = models.CharField(max_length=200)
 
-    def __unicode__(self):
-        return self.name
+    class Meta:
+        db_table = 'portfolios'
 
     objects = PortfolioManager()
+
+    def __unicode__(self):
+        return self.name
 
 
 class Holding(TimeStampMixin, models.Model):
     portfolio = models.ForeignKey(Portfolio)
     stock = models.ForeignKey(Stock, default=1)
+
+    class Meta:
+        db_table = 'holdings'
 
     objects = HoldingManager()
 
@@ -52,6 +58,9 @@ class Transaction(TimeStampMixin, models.Model):
     comment = models.CharField(max_length=250, default='', blank=True, null=True)
     commission = models.DecimalField(default=0.0, decimal_places=2, max_digits=6)
     date_transacted = models.DateTimeField(default=datetime.datetime.now)
+
+    class Meta:
+        db_table = 'transactions'
 
     def __unicode__(self):
         return '%s %s on %s' % (self.get_type_display(), self.quantity, self.date_created.strftime("%m/%d/%Y"))
@@ -95,6 +104,7 @@ class Activity(models.Model):
     portfolio = models.ForeignKey(Portfolio)
 
     class Meta:
+        db_table = 'activities'
         managed = False
 
     def __unicode__(self):

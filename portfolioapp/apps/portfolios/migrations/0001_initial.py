@@ -9,7 +9,7 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
         # Adding model 'Portfolio'
-        db.create_table(u'portfolios_portfolio', (
+        db.create_table('portfolios', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('date_updated', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
             ('date_created', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
@@ -19,7 +19,7 @@ class Migration(SchemaMigration):
         db.send_create_signal(u'portfolios', ['Portfolio'])
 
         # Adding model 'Holding'
-        db.create_table(u'portfolios_holding', (
+        db.create_table('holdings', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('date_updated', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
             ('date_created', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
@@ -29,7 +29,7 @@ class Migration(SchemaMigration):
         db.send_create_signal(u'portfolios', ['Holding'])
 
         # Adding model 'Transaction'
-        db.create_table(u'portfolios_transaction', (
+        db.create_table('transactions', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('date_updated', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
             ('date_created', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
@@ -46,13 +46,13 @@ class Migration(SchemaMigration):
 
     def backwards(self, orm):
         # Deleting model 'Portfolio'
-        db.delete_table(u'portfolios_portfolio')
+        db.delete_table('portfolios')
 
         # Deleting model 'Holding'
-        db.delete_table(u'portfolios_holding')
+        db.delete_table('holdings')
 
         # Deleting model 'Transaction'
-        db.delete_table(u'portfolios_transaction')
+        db.delete_table('transactions')
 
 
     models = {
@@ -77,7 +77,7 @@ class Migration(SchemaMigration):
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
         u'markets.market': {
-            'Meta': {'object_name': 'Market'},
+            'Meta': {'object_name': 'Market', 'db_table': "'markets'"},
             'acr': ('django.db.models.fields.CharField', [], {'max_length': '20', 'blank': 'True'}),
             'active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'city': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
@@ -91,9 +91,9 @@ class Migration(SchemaMigration):
             'website': ('django.db.models.fields.CharField', [], {'max_length': '250', 'blank': 'True'})
         },
         u'markets.stock': {
-            'Meta': {'object_name': 'Stock'},
+            'Meta': {'object_name': 'Stock', 'db_table': "'stocks'"},
             'date_created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'date_last_price_updated': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2013, 2, 17, 0, 0)'}),
+            'date_last_price_updated': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2013, 3, 14, 0, 0)'}),
             'date_updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'last_price': ('django.db.models.fields.DecimalField', [], {'default': '0.0', 'max_digits': '6', 'decimal_places': '2'}),
@@ -101,8 +101,23 @@ class Migration(SchemaMigration):
             'name': ('django.db.models.fields.CharField', [], {'max_length': '250'}),
             'symbol': ('django.db.models.fields.CharField', [], {'max_length': '8'})
         },
+        u'portfolios.activity': {
+            'Meta': {'object_name': 'Activity', 'db_table': "'activities'", 'managed': 'False'},
+            'acr': ('django.db.models.fields.CharField', [], {'max_length': '10'}),
+            'comment': ('django.db.models.fields.CharField', [], {'max_length': '250'}),
+            'commission': ('django.db.models.fields.DecimalField', [], {'max_digits': '6', 'decimal_places': '2'}),
+            'date_transacted': ('django.db.models.fields.DateTimeField', [], {}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '250'}),
+            'portfolio': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['portfolios.Portfolio']"}),
+            'quantity': ('django.db.models.fields.DecimalField', [], {'max_digits': '6', 'decimal_places': '2'}),
+            'symbol': ('django.db.models.fields.CharField', [], {'max_length': '10'}),
+            'type': ('django.db.models.fields.PositiveSmallIntegerField', [], {}),
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['profiles.User']"}),
+            'value': ('django.db.models.fields.DecimalField', [], {'max_digits': '7', 'decimal_places': '2'})
+        },
         u'portfolios.holding': {
-            'Meta': {'object_name': 'Holding'},
+            'Meta': {'object_name': 'Holding', 'db_table': "'holdings'"},
             'date_created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'date_updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
@@ -110,7 +125,7 @@ class Migration(SchemaMigration):
             'stock': ('django.db.models.fields.related.ForeignKey', [], {'default': '1', 'to': u"orm['markets.Stock']"})
         },
         u'portfolios.portfolio': {
-            'Meta': {'object_name': 'Portfolio'},
+            'Meta': {'object_name': 'Portfolio', 'db_table': "'portfolios'"},
             'date_created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'date_updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
@@ -118,7 +133,7 @@ class Migration(SchemaMigration):
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['profiles.User']"})
         },
         u'portfolios.transaction': {
-            'Meta': {'object_name': 'Transaction'},
+            'Meta': {'object_name': 'Transaction', 'db_table': "'transactions'"},
             'comment': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '250', 'null': 'True', 'blank': 'True'}),
             'commission': ('django.db.models.fields.DecimalField', [], {'default': '0.0', 'max_digits': '6', 'decimal_places': '2'}),
             'date_created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
@@ -131,7 +146,7 @@ class Migration(SchemaMigration):
             'value': ('django.db.models.fields.DecimalField', [], {'default': '0.0', 'max_digits': '7', 'decimal_places': '2'})
         },
         u'profiles.user': {
-            'Meta': {'object_name': 'User'},
+            'Meta': {'object_name': 'User', 'db_table': "'users'"},
             'date_created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'date_updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'email': ('django.db.models.fields.EmailField', [], {'unique': 'True', 'max_length': '75', 'db_index': 'True'}),
