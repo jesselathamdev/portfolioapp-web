@@ -1,5 +1,6 @@
 # api/v2_api.py
 import json
+import uuid
 from django.core.serializers.json import DjangoJSONEncoder
 from django.http import HttpResponse
 
@@ -8,16 +9,23 @@ from portfolioapp.apps.markets.models import Market
 
 def get_portfolios(request):
     if request.method == 'GET':
-        portfolios = list(Portfolio.objects.filter(user_id=2).values('id', 'name', 'date_created'))
-        json_portfolios = json.dumps(portfolios, cls=DjangoJSONEncoder)
-        return HttpResponse(json_portfolios, mimetype='application/json', status=200)
+        portfolios = list(Portfolio.objects.filter(user_id=2).values('id', 'name', 'date_created').order_by('name'))
+        response = {
+            'data': {
+                'head': {
+                    'request_id': uuid.uuid1().hex
+                },
+                'portfolios': portfolios
+            }
+        }
+        return HttpResponse(json.dumps(response, cls=DjangoJSONEncoder), content_type='application/json', status=200)
 
 def get_markets(request):
     if request.method == 'GET':
         markets = list(Market.objects.all().values('id', 'name', 'date_created'))
         results = {}
         results['data'] = markets
-        return HttpResponse(json.dumps(results, cls=DjangoJSONEncoder), mimetype='application/json', status=200)
+        return HttpResponse(json.dumps(results, cls=DjangoJSONEncoder), content_type='application/json', status=200)
 
 
 class JSONResponseJSONDumps(HttpResponse):
