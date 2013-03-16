@@ -1,5 +1,4 @@
 -e git://github.com/django/django.git@stable/1.5.x#egg=Django
-Jinja2==2.6
 Pygments==1.6rc1
 South==0.7.6
 Unipath==0.2.1

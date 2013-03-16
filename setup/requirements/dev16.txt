@@ -6,6 +6,7 @@ django-extensions==1.0.3
 fake-factory==0.2
 ipython==0.13.1
 yolk==0.4.3
+gunicorn==0.17.2
 sqlparse==0.1.6
 guppy==0.1.9
 line-profiler==1.0b3
