@@ -1,12 +1,9 @@
 # api/v2_api.py
-import json
-import uuid
-from django.core.serializers.json import DjangoJSONEncoder
-from django.http import HttpResponse
+
+from .helpers import api_http_response
 
 from portfolioapp.apps.portfolios.models import Portfolio
 from portfolioapp.apps.markets.models import Market
-from .helpers import api_http_response
 
 
 def get_portfolios(request):
