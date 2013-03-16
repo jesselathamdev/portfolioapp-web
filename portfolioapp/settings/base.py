@@ -92,6 +92,7 @@ INSTALLED_APPS = (
     'portfolioapp.apps.cash',
     'portfolioapp.apps.core',
     'portfolioapp.apps.admin',
+    'portfolioapp.apps.api',
 
     # 3rd party addons
     'endless_pagination',
