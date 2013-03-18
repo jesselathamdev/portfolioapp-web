@@ -14,6 +14,7 @@ from portfolioapp.apps.core.decorators import is_admin
 from portfolioapp.apps.markets.models import Stock, Market
 from portfolioapp.apps.profiles.models import User
 from portfolioapp.apps.profiles.forms import AdminEditUserProfileForm
+from portfolioapp.apps.api.models import ApiLog
 from .forms import StockEditForm, StockSearchForm
 
 
@@ -103,3 +104,16 @@ def profile_edit(request, user_id):
     else:
         form = AdminEditUserProfileForm(instance=user)
         return render(request, 'admin/profiles/edit.html', {'form': form, 'user': user})
+
+
+@user_passes_test(is_admin)
+@page_template('admin/api/index_paged_content.html')
+def api_log_index(request, template='admin/api/index.html', extra_context=None):
+    apilog = ApiLog.objects.all().order_by('-date_created')
+
+    context = {'apilog': apilog, 'results_per_page': settings.RESULTS_PER_PAGE}
+
+    if extra_context is not None:
+            context.update(extra_context)
+
+    return render_to_response(template, context, context_instance=RequestContext(request))
