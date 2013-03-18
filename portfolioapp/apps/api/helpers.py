@@ -23,7 +23,8 @@ def log_api_event(request, response, api_key, api_version):
             api_key=api_key,
             api_version=api_version)
         l.save()
-    except:
+    except Exception, e:
+        print('There was an error logging: %s' % e.message)
         pass
 
 
