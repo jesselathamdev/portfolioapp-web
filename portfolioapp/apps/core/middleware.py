@@ -46,6 +46,7 @@ class UserBasedExceptionMiddleware(object):
 class SetRemoteAddrFromForwardedFor(object):
     """
     Borrowed from http://www.djangobook.com/en/2.0/chapter17.html
+    Could also use the following which ships with Django: django.middleware.http.SetRemoteAddrFromForwardedFor
     """
     def process_request(self, request):
         try:
