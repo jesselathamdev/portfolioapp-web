@@ -1,7 +1,7 @@
 # portfolios/forms.py
 from django import forms
 
-from .models import Portfolio, Holding
+from .models import Portfolio, Holding, Transaction
 
 class CreatePortfolioForm(forms.ModelForm):
     class Meta:
@@ -15,3 +15,9 @@ class CreateHoldingForm(forms.ModelForm):
     class Meta:
         model = Holding
         fields = ('stock', 'portfolio',)
+
+
+class CreateTransactionForm(forms.ModelForm):
+    class Meta:
+        model = Transaction
+        fields = ('date_transacted', 'type', 'quantity', 'value', 'comment', 'commission', 'holding',)

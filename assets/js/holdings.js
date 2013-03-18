@@ -32,11 +32,15 @@ $(document).ready(function() {
     }
 
     $('#holdings tbody tr').each(function() {
-        $(this).find('.makeup').text((parseFloat($(this).find('td:nth-child(5)').text().replace('$', '').replace(',', ''))/total_market_value * 100).toFixed(2) + '%');
+        var value = parseFloat($(this).find('td:nth-child(5)').text().replace('$', '').replace(',', ''))/total_market_value * 100;
+        if (isNaN(value)) { value = 0.00; }
+        $(this).find('.makeup').text(value.toFixed(2) + '%');
     });
 
     $('#holdings tfoot tr.cash').each(function() {
-        $(this).find('.makeup').text((parseFloat($(this).find('td:nth-child(5)').text().replace('$', '').replace(',', ''))/total_market_value * 100).toFixed(2) + '%');
+        var value = parseFloat($(this).find('td:nth-child(5)').text().replace('$', '').replace(',', ''))/total_market_value * 100;
+        if (isNaN(value)) { value = 0.00; }
+        $(this).find('.makeup').text(value.toFixed(2) + '%');
     });
 
     $('table.table-clickable tbody tr')
@@ -47,7 +51,7 @@ $(document).ready(function() {
             }
         });
 
-    $('table.table-clickable .table-context-menu a')
+    $('table.table-clickable .table-context-menu a.modalDeleteHolding')
             .click(function(e) {
                 e.preventDefault();
 
@@ -56,9 +60,22 @@ $(document).ready(function() {
                 var holding_name = $(this).data('name');
                 $('#portfolio_id').val(portfolio_id);
                 $('#holding_id').val(holding_id);
-                $('#holding_name').html(holding_name);
-                $('#modalDelete').modal('show');
+                $('.holding_name').html(holding_name);
+                $('#modalDeleteHolding').modal('show');
                 $('#modalDeleteButton').attr('href', '/portfolios/'+portfolio_id+'/holdings/'+holding_id+'/delete');
+            });
+
+    $('table.table-clickable .table-context-menu a.modalAddTransactions')
+            .click(function(e) {
+                e.preventDefault();
+
+                var portfolio_id = $(this).data('portfolio-id');
+                var holding_id = $(this).data('holding-id');
+                var holding_name = $(this).data('name');
+                $('#portfolio_id').val(portfolio_id);
+                $('#transaction_holding_id').val(holding_id);
+                $('.holding_name').html(holding_name);
+                $('#modalAddTransactions').modal('show');
             });
 
     $(document).bind({

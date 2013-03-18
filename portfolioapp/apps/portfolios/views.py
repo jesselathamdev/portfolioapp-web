@@ -13,7 +13,7 @@ from portfolioapp.apps.core import settings
 from portfolioapp.apps.cash.models import Cash
 from portfolioapp.apps.cash.managers import CashManager
 from .models import Portfolio, Holding, Transaction, Activity
-from .forms import CreatePortfolioForm, CreateHoldingForm
+from .forms import CreatePortfolioForm, CreateHoldingForm, CreateTransactionForm
 
 
 @login_required
@@ -65,8 +65,9 @@ def holding_index(request, portfolio_id):
     if other_value > 0:
         holding_chart.append(['Other', float(round(other_value, 1))])
 
-    form = CreateHoldingForm()
-    return render(request, 'portfolios/holdings/index.html', {'portfolio': portfolio, 'holdings': holdings, 'holding_chart': holding_chart, 'cash_summary': cash_summary, 'form': form})
+    holding_form = CreateHoldingForm()
+    transaction_form = CreateTransactionForm()
+    return render(request, 'portfolios/holdings/index.html', {'portfolio': portfolio, 'holdings': holdings, 'holding_chart': holding_chart, 'cash_summary': cash_summary, 'holding_form': holding_form, 'transaction_form': transaction_form})
 
 
 @login_required
@@ -105,6 +106,25 @@ def transaction_index(request, portfolio_id, holding_id, template='portfolios/tr
         context.update(extra_context)
 
     return render_to_response(template, context, context_instance=RequestContext(request))
+
+
+@login_required
+def transaction_create(request, portfolio_id, holding_id):
+    if request.is_ajax():
+        if request.method == 'POST':
+            form = CreateTransactionForm(request.POST)
+
+            response = {
+                'data': 'success'
+            }
+
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Successfully added transaction.')
+            else:
+                messages.error(request, 'There was a problem adding the transaction.')
+
+    return HttpResponse(response)
 
 
 @login_required
