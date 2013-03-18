@@ -10,19 +10,21 @@ from .models import ApiLog
 
 
 def log_api_event(request, response, api_key, api_version):
-
-    l = ApiLog(
-        request_id=response['response']['head']['request_id'],
-        request_ip_address=request.META['REMOTE_ADDR'],
-        request_path=request.path,
-        request_method=request.method,
-        request_query_string=request.META['QUERY_STRING'],
-        request_content_type=request.META['CONTENT_TYPE'],
-        request_http_user_agent=request.META['HTTP_USER_AGENT'],
-        response_status_code=response['response']['head']['status_code'],
-        api_key=api_key,
-        api_version=api_version)
-    l.save()
+    try:
+        l = ApiLog(
+            request_id=response['response']['head']['request_id'],
+            request_ip_address=request.META['REMOTE_ADDR'],
+            request_path=request.path,
+            request_method=request.method,
+            request_query_string=request.META['QUERY_STRING'],
+            request_http_user_agent=request.META['HTTP_USER_AGENT'],
+            response_status_code=response['response']['head']['status_code'],
+            api_key=api_key,
+            api_version=api_version)
+        l.save()
+    except Exception, e:
+        print("There was an error with the api logging module: %s" % e.message)
+        pass
 
 
 def api_http_response(request, response):
