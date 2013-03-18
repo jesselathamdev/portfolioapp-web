@@ -41,3 +41,19 @@ class UserBasedExceptionMiddleware(object):
     def process_exception(self, request, exception):
         if request.user.is_superuser or request.META.get('REMOTE_ADDR') in settings.INTERNAL_IPS:
             return technical_500_response(request, *sys.exc_info())
+
+
+class SetRemoteAddrFromForwardedFor(object):
+    """
+    Borrowed from http://www.djangobook.com/en/2.0/chapter17.html
+    """
+    def process_request(self, request):
+        try:
+            real_ip = request.META['HTTP_X_FORWARDED_FOR']
+        except KeyError:
+            pass
+        else:
+            # HTTP_X_FORWARDED_FOR can be a comma-separated list of IPs.
+            # Take just the first one.
+            real_ip = real_ip.split(",")[0]
+            request.META['REMOTE_ADDR'] = real_ip
