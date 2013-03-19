@@ -6,7 +6,8 @@ import uuid
 from django.core.serializers.json import DjangoJSONEncoder
 from django.http import HttpResponse
 
-from .models import ApiLog
+from .models import ApiLog, ApiToken
+from portfolioapp.apps.profiles.models import User
 
 
 def log_api_event(request, response, api_key, api_version):
@@ -41,3 +42,18 @@ def api_http_response(request, response):
 
     log_api_event(request, response, apikey, version)
     return HttpResponse(json.dumps(response, cls=DjangoJSONEncoder), content_type='application/json', status=status_code)
+
+# see https://pypi.python.org/pypi/django-tokenapi/0.1.6
+def create_token(user):
+    token = ''
+    identifier = '112233455'
+    try:
+        token = uuid.uuid1().hex
+        #ApiToken.objects.all().filter(user=user, identifier=identifier).delete()  # remove any tokens that have the same identifier for the user
+        t = ApiToken(user=user, token=token, identifier=identifier, date_expires=None)
+        t.save()
+    except Exception, e:
+        print('oopsie daisy')
+        token = ''
+
+    return token

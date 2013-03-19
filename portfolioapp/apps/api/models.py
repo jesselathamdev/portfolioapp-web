@@ -1,6 +1,10 @@
 # api/models.py
 
+import uuid
+
 from django.db import models
+from django.conf import settings
+
 from portfolioapp.apps.core.mixins import TimeStampMixin
 
 
@@ -21,3 +25,13 @@ class ApiLog(TimeStampMixin, models.Model):
 
     def __unicode__(self):
         return 'Logging event originating from %s' % self.request_ip_address
+
+
+class ApiToken(TimeStampMixin, models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    token = models.CharField(max_length=32, default=uuid.uuid1().hex, null=False)
+    identifier = models.CharField(max_length=50, default=uuid.uuid1().hex, null=False)
+    date_expires = models.DateTimeField(null=True)
+
+    class Meta:
+        db_table = 'api_tokens'
