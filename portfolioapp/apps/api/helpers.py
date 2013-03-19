@@ -4,22 +4,36 @@ import json
 import uuid
 
 from django.core.serializers.json import DjangoJSONEncoder
+from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
 
 from .models import ApiLog, ApiToken
-from portfolioapp.apps.profiles.models import User
+
+
+class HttpMessages(object):
+    OK = 'Ok'
+    SUCCESSFUL = 'Successful'
+    UNAUTHORIZED = 'Unauthorized'
 
 
 def log_api_event(request, response, api_key, api_version):
+    # watch out as this might blow up when it changes to a POST
+
+    # mask the password field so that it doesn't end up in the logs
+    q = request.GET.copy()
+    if 'password' in q:
+        q.__setitem__('password', '********')
+    query_string = q.urlencode()
+
     try:
         l = ApiLog(
-            request_id=response['response']['head']['request_id'],
+            request_id=response['response']['meta']['request_id'],
             request_ip_address=request.META['REMOTE_ADDR'],
             request_path=request.path,
             request_method=request.method,
-            request_query_string=request.META['QUERY_STRING'],
+            request_query_string=query_string,
             request_http_user_agent=request.META['HTTP_USER_AGENT'],
-            response_status_code=response['response']['head']['status_code'],
+            response_status_code=response['response']['meta']['status_code'],
             api_key=api_key,
             api_version=api_version)
         l.save()
@@ -31,29 +45,33 @@ def log_api_event(request, response, api_key, api_version):
 def api_http_response(request, response):
     version = 'v2'
     apikey = '111222333'
-    status_code = 500  # default to error first if we can't retrieve it from the payload
 
-    response['response']['head']['request_id'] = uuid.uuid1().hex
+    response['response']['meta']['request_id'] = uuid.uuid1().hex
 
-    try:
-        status_code = response['response']['head']['status_code']
-    except:
-        pass
+    status_code = response['response']['meta']['status_code']
 
     log_api_event(request, response, apikey, version)
     return HttpResponse(json.dumps(response, cls=DjangoJSONEncoder), content_type='application/json', status=status_code)
 
-# see https://pypi.python.org/pypi/django-tokenapi/0.1.6
-def create_token(user):
-    token = ''
-    identifier = '112233455'
+
+def create_token(user, identifier):
     try:
         token = uuid.uuid1().hex
-        #ApiToken.objects.all().filter(user=user, identifier=identifier).delete()  # remove any tokens that have the same identifier for the user
+        ApiToken.objects.all().filter(user=user, identifier=identifier).delete()  # remove any tokens that have the same identifier for the user
         t = ApiToken(user=user, token=token, identifier=identifier, date_expires=None)
         t.save()
     except Exception, e:
-        print('oopsie daisy')
-        token = ''
+        token = None
+        pass
 
     return token
+
+
+def verify_token(token, identifier):
+    try:
+        user = ApiToken.objects.select_related().get(token=token, identifier=identifier).user
+        if user.is_active:
+            return user
+    except ObjectDoesNotExist, e:
+        pass
+

@@ -6,18 +6,21 @@ from django.contrib.auth import authenticate
 from django.http import HttpResponse
 
 from .forms import AuthForm
-from .helpers import api_http_response, create_token
+from .helpers import api_http_response, create_token, HttpMessages
+from .decorators import token_required
 from portfolioapp.apps.portfolios.models import Portfolio
 from portfolioapp.apps.markets.models import Market
 
 
-def get_portfolios(request):
+@token_required
+def get_portfolios(request, user):
     if request.method == 'GET':
-        portfolios = list(Portfolio.objects.filter(user_id=2).values('id', 'name', 'date_created').order_by('name'))
+        portfolios = list(Portfolio.objects.filter(user_id=user.id).values('id', 'name', 'date_created').order_by('name'))
         response = {
             'response': {
                 'head': {
-                    'status_code': 200
+                    'status_code': 200,
+                    'message': HttpMessages.OK
                 },
                 'portfolios': portfolios
             }
@@ -25,13 +28,15 @@ def get_portfolios(request):
         return api_http_response(request, response)
 
 
-def get_markets(request):
+@token_required
+def get_markets(request, user):
     if request.method == 'GET':
         markets = list(Market.objects.all().values('id', 'name', 'date_created'))
         response = {
             'response': {
                 'head': {
-                    'status_code': 200
+                    'status_code': 200,
+                    'message': HttpMessages.OK
                 },
                 'markets': markets
             }
@@ -40,23 +45,34 @@ def get_markets(request):
 
 
 def token_create(request):
-    if request.method == 'GET': # change to POST, just playing with GET for now
-        token = ''
+    if request.method == 'GET':  # change to POST, just playing with GET for now
+        identifier = '258f1f7a905b11e28b45c82a14121df1'  # this will be removed and passed in during the request, generated and stored on the client device as a unique id
+
+        response = {
+            'response': {
+                'meta': {
+                    'status_code': 401,  # always default to unauthorized first
+                    'message': HttpMessages.UNAUTHORIZED
+                }
+            }
+        }
+
         form = AuthForm(request.GET)
+
         if form.is_valid():
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
             user = authenticate(username=email, password=password)
             if user is not None:
                 if user.is_active:
-                    token = create_token(user)
+                    token = create_token(user, identifier)
 
-        response = {
-            'response': {
-                'head': {
-                    'status_code': 201 # assuming success for initial case
-                },
-                'token': token
-            }
-        }
+                    response['response']['meta']['status_code'] = 201
+                    response['response']['meta']['message'] = HttpMessages.SUCCESSFUL
+                    response['response']['token'] = token
+                    response['response']['user'] = {}
+                    response['response']['user']['id'] = user.id
+                    response['response']['user']['first_name'] = user.first_name
+                    response['response']['user']['last_name'] = user.last_name
+
         return api_http_response(request, response)
