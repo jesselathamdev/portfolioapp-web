@@ -18,7 +18,7 @@ def get_portfolios(request, user):
         portfolios = list(Portfolio.objects.filter(user_id=user.id).values('id', 'name', 'date_created').order_by('name'))
         response = {
             'response': {
-                'head': {
+                'meta': {
                     'status_code': 200,
                     'message': HttpMessages.OK
                 },
@@ -34,7 +34,7 @@ def get_markets(request, user):
         markets = list(Market.objects.all().values('id', 'name', 'date_created'))
         response = {
             'response': {
-                'head': {
+                'meta': {
                     'status_code': 200,
                     'message': HttpMessages.OK
                 },
@@ -46,7 +46,6 @@ def get_markets(request, user):
 
 def token_create(request):
     if request.method == 'GET':  # change to POST, just playing with GET for now
-        identifier = '258f1f7a905b11e28b45c82a14121df1'  # this will be removed and passed in during the request, generated and stored on the client device as a unique id
 
         response = {
             'response': {
@@ -62,6 +61,7 @@ def token_create(request):
         if form.is_valid():
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
+            identifier = form.cleaned_data['identifier']
             user = authenticate(username=email, password=password)
             if user is not None:
                 if user.is_active:
@@ -70,6 +70,7 @@ def token_create(request):
                     response['response']['meta']['status_code'] = 201
                     response['response']['meta']['message'] = HttpMessages.SUCCESSFUL
                     response['response']['token'] = token
+                    response['response']['identifier'] = identifier
                     response['response']['user'] = {}
                     response['response']['user']['id'] = user.id
                     response['response']['user']['first_name'] = user.first_name

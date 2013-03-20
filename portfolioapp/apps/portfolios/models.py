@@ -104,7 +104,7 @@ class Activity(models.Model):
     portfolio = models.ForeignKey(Portfolio)
 
     class Meta:
-        db_table = 'activities'
+        db_table = 'activity'
         managed = False
 
     def __unicode__(self):

@@ -1,0 +1,141 @@
+{% extends "base_two_columns.html" %}
+
+{% block browser_title %}API Console{% endblock browser_title %}
+
+{% block breadcrumbs %}<a href="/">Home</a> &rarr; Dev &rarr; API Console{% endblock breadcrumbs %}
+
+{% block page_title %}<i class="icon-exchange"></i> API Console{% endblock page_title %}
+
+{% block helper_message %}Test out various API functionality{% endblock helper_message %}
+
+{% block content %}
+
+<div class="widget widget-simple">
+  <div class="widget-header">
+    <h4><i class="icon-beaker"></i> Request Builder</h4>
+  </div>
+  <div class="widget-body">
+    <form method="post" action="" class="form-horizontal">
+      {% csrf_token %}
+      <fieldset>
+        <ul class="dotted">
+          <li class="control-group">
+            <label class="control-label" for="">Email</label>
+            <div class="controls">
+              <input type="text" id="tbEmail" name="" value="user1@conceptmob.com" placeholder="email" class="input-xlarge">
+            </div>
+          </li>
+          <li class="control-group">
+            <label class="control-label" for="">Password</label>
+            <div class="controls">
+              <input type="password" id="tbPassword" name="" value="access" placeholder="password" class="input-xlarge">
+            </div>
+          </li>
+          <li class="control-group">
+            <label class="control-label" for="">Device Identifier</label>
+            <div class="controls">
+              <input type="text" id="tbDeviceIdentifier" name="" value="" placeholder="device identifier" class="input-xxlarge">
+              <button id="btnGenerateIdentifier" name="" class="btn">Generate</button>
+              <button type="submit" id="btnGenerateAuthToken" class="btn btn-success">Auth</button>
+            </div>
+          </li>
+          <li class="control-group">
+            <label class="control-label" for="">Auth Token</label>
+            <div class="controls">
+              <input type="text" id="tbAuthToken" name="" value="" placeholder="auth token (generated)" class="input-xxlarge" readonly>
+            </div>
+          </li>
+          <li class="control-group">
+            &nbsp;
+          </li>
+          <li class="control-group">
+            <label class="control-label" for="">Action / URL</label>
+            <div class="controls">
+              <select id="selMethod" class="span2">
+                <option value='GET'>GET</option>
+                <option value='POST'>POST</option>
+              </select>
+              <input type="text" id="tbRequestURL" name="" value="" placeholder="url" class="span5">
+            </div>
+          </li>
+          <li class="control-group">
+            <div class="controls">
+              <button type="submit" id="btnSubmitRequest" class="btn btn-success">Submit</button>
+            </div>
+          </li>
+          <li class="control-group">
+            <label class="control-label" for="">Raw Response</label>
+            <div class="controls">
+              <textarea id="tbRawResponse" rows="7" class="input-xxlarge"></textarea>
+            </div>
+          </li>
+        </ul>
+      </fieldset>
+    </form>
+  </div>
+</div>
+
+{% endblock content %}
+
+{% block script %}
+<script type="text/javascript">
+    var base_api_url = window.location.href.split('/')[0] + '//' + window.location.href.split('/')[2] + '/api/v2/';
+
+    function uuid() {
+        var result='';
+        for(var i=0; i<32; i++)
+            result += Math.floor(Math.random()*16).toString(16).toLowerCase();
+        return result
+    }
+
+    $(document).ready(function() {
+        $('#tbRequestURL').val(base_api_url);
+
+        $('#tbDeviceIdentifier').val(uuid());
+
+        $('#btnGenerateIdentifier').click(function(e) {
+            e.preventDefault();
+            $('#tbDeviceIdentifier').val(uuid());
+        });
+
+        $('#btnGenerateAuthToken').click(function(e) {
+            e.preventDefault();
+            $.ajax({
+                type: 'GET',
+                url: '/api/v2/auth/token/create/?email=' + $('#tbEmail').val() + '&password=' + $('#tbPassword').val() + '&identifier=' + $('#tbDeviceIdentifier').val(),
+                dataType: 'json',
+                data: {},
+                statusCode: {
+                    401: function(data) {
+                        $('#tbRawResponse').val(data['responseText']);
+                    }
+                }
+            })
+            .done(function(data) {
+                $('#tbAuthToken').val(data['response']['token']);
+                $('#tbRawResponse').val(JSON.stringify(data, null, 2));
+            })
+            .fail(function(jqXHR, data) { });
+        });
+
+        $('#btnSubmitRequest').click(function(e) {
+          e.preventDefault();
+          $.ajax({
+              type: $('#selMethod').val().toString(),
+              url: $('#tbRequestURL').val(),
+              dataType: 'json',
+              data: {},
+              statusCode: {
+                  401: function(data) {
+                      $('#tbRawResponse').val(data['responseText']);
+                  }
+              }
+          }).
+          done(function(data) {
+             alert(data);
+          });
+        });
+    });
+</script>
+{% endblock script %}
+

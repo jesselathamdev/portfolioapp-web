@@ -24,6 +24,7 @@ def log_api_event(request, response, api_key, api_version):
     if 'password' in q:
         q.__setitem__('password', '********')
     query_string = q.urlencode()
+    # change this to a "for each do" and string the pieces back together so that the querystring is readable and in the same format as it was received
 
     try:
         l = ApiLog(

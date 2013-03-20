@@ -34,7 +34,7 @@ WITH activity AS
 		'' AS acr,
 		0.00 quantity,
 		amount AS value,
-		0.00 as commission,
+		0.00 AS commission,
 		comment,
 		user_id,
 		portfolio_id
