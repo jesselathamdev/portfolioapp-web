@@ -21,10 +21,9 @@ class HttpMessages(object):
     NOT_IMPLEMENTED = 'Not Implemented'  # 501
 
 
-def log_api_event(request, response, api_key, api_version):
+def log_api_event(request, response, api_version, user=None):
     # watch out as this might blow up when it changes to a POST
 
-    # mask the password field so that it doesn't end up in the logs
     q = request.GET.copy()
     if 'password' in q:
         q.__setitem__('password', '********')
@@ -40,7 +39,7 @@ def log_api_event(request, response, api_key, api_version):
             request_query_string=query_string,
             request_http_user_agent=request.META['HTTP_USER_AGENT'],
             response_status_code=response['response']['meta']['status_code'],
-            api_key=api_key,
+            user=user,
             api_version=api_version)
         l.save()
     except Exception, e:
@@ -48,15 +47,15 @@ def log_api_event(request, response, api_key, api_version):
         pass
 
 
-def api_http_response(request, response):
+def api_http_response(request, response, user=None):
     version = 'v2'
-    apikey = '111222333'
 
     response['response']['meta']['request_id'] = uuid.uuid1().hex
 
     status_code = response['response']['meta']['status_code']
 
-    log_api_event(request, response, apikey, version)
+    log_api_event(request, response, version, user)
+
     return HttpResponse(json.dumps(response, cls=DjangoJSONEncoder), content_type='application/json', status=status_code)
 
 

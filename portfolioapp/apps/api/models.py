@@ -17,7 +17,7 @@ class ApiLog(TimeStampMixin, models.Model):
     request_query_string = models.CharField(max_length=250, default='', blank=True, null=True)
     request_http_user_agent = models.CharField(max_length=150, default='', blank=True, null=True)
     response_status_code = models.SmallIntegerField()
-    api_key = models.CharField(max_length=40, default='', null=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, default=None)
     api_version = models.CharField(max_length=5, null=True)
 
     class Meta:

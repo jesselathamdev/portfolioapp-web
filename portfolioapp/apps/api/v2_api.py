@@ -44,7 +44,7 @@ def token_create(request):
                     response['response']['user']['first_name'] = user.first_name
                     response['response']['user']['last_name'] = user.last_name
 
-        return api_http_response(request, response)
+        return api_http_response(request, response, user)
 
 
 @token_required
@@ -60,7 +60,7 @@ def get_portfolios(request, user):
                 'portfolios': portfolios
             }
         }
-        return api_http_response(request, response)
+        return api_http_response(request, response, user)
 
 
 @token_required
@@ -76,4 +76,4 @@ def get_markets(request, user):
                 'markets': markets
             }
         }
-        return api_http_response(request, response)
+        return api_http_response(request, response, user)
