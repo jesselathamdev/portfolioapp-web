@@ -11,9 +11,14 @@ from .models import ApiLog, ApiToken
 
 
 class HttpMessages(object):
-    OK = 'Ok'
-    SUCCESSFUL = 'Successful'
-    UNAUTHORIZED = 'Unauthorized'
+    OK = 'OK'  # 200
+    CREATED = 'Created'  # 201
+    UNAUTHORIZED = 'Unauthorized'  # 401
+    FORBIDDEN = 'Forbidden'  # 403
+    NOT_FOUND = 'Not Found'  # 404
+    METHOD_NOT_ALLOWED = 'Method Not Allowed'  # 405
+    INTERNAL_SERVER_ERROR = 'Internal Server Error'  # 500
+    NOT_IMPLEMENTED = 'Not Implemented'  # 501
 
 
 def log_api_event(request, response, api_key, api_version):

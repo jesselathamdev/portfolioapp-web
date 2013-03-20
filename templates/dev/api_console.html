@@ -64,6 +64,12 @@
             </div>
           </li>
           <li class="control-group">
+            <label class="control-label" for="">Status Code</label>
+            <div class="controls">
+              <input type="text" id="tbStatusCode" name="" value="" placeholder="status code" class="input-medium" readonly>
+            </div>
+          </li>
+          <li class="control-group">
             <label class="control-label" for="">Raw Response</label>
             <div class="controls">
               <textarea id="tbRawResponse" rows="7" class="input-xxlarge"></textarea>
@@ -114,6 +120,7 @@
             .done(function(data) {
                 $('#tbAuthToken').val(data['response']['token']);
                 $('#tbRawResponse').val(JSON.stringify(data, null, 2));
+                $('#tbStatusCode').val(data['response']['meta']['status_code'].toString());
             })
             .fail(function(jqXHR, data) { });
         });
@@ -132,7 +139,8 @@
               }
           }).
           done(function(data) {
-             alert(data);
+             $('#tbRawResponse').val(JSON.stringify(data, null, 2));
+             $('#tbStatusCode').val(data['response']['meta']['status_code'].toString());
           });
         });
     });
