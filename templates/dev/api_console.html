@@ -107,10 +107,14 @@
         $('#btnGenerateAuthToken').click(function(e) {
             e.preventDefault();
             $.ajax({
-                type: 'GET',
-                url: '/api/v2/auth/token/create/?email=' + $('#tbEmail').val() + '&password=' + $('#tbPassword').val() + '&identifier=' + $('#tbDeviceIdentifier').val(),
+                type: 'POST',
+                url: '/api/v2/auth/token/create/',
                 dataType: 'json',
-                data: {},
+                data: {
+                    'email': $('#tbEmail').val(),
+                    'password': $('#tbPassword').val(),
+                    'identifier': $('#tbDeviceIdentifier').val()
+                },
                 statusCode: {
                     401: function(data) {
                         $('#tbRawResponse').val(data['responseText']);

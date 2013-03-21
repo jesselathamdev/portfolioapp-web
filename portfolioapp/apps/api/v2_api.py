@@ -4,6 +4,7 @@ import uuid
 
 from django.contrib.auth import authenticate
 from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 
 from .forms import AuthForm
 from .helpers import api_http_response, create_token, HttpMessages
@@ -12,9 +13,14 @@ from portfolioapp.apps.portfolios.models import Portfolio
 from portfolioapp.apps.markets.models import Market
 
 
+@csrf_exempt
 def token_create(request):
-    if request.method == 'GET':  # change to POST, just playing with GET for now
+    if request.method == 'POST':
+        form = AuthForm(request.POST)
+    elif request.method == 'GET':  # leave this for debugging, correct way is to use POST as per REST and creating resources
+        form = AuthForm(request.GET)
 
+    if request.method == 'POST' or request.method =='GET':
         response = {
             'response': {
                 'meta': {
@@ -24,7 +30,7 @@ def token_create(request):
             }
         }
 
-        form = AuthForm(request.GET)
+        user = None
 
         if form.is_valid():
             email = form.cleaned_data['email']
