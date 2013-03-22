@@ -2,10 +2,7 @@
 
 from functools import wraps
 
-from django.http import HttpResponse
-from django.core.exceptions import ObjectDoesNotExist
-
-from .helpers import verify_token, api_http_response
+from .helpers import verify_token, api_http_response, HttpMessages
 
 
 def token_required(fn):
@@ -23,7 +20,7 @@ def token_required(fn):
             'response': {
                 'meta': {
                     'status_code': 401,
-                    'message': 'Unauthorized'
+                    'message': HttpMessages.UNAUTHORIZED
                 }
             }
         }

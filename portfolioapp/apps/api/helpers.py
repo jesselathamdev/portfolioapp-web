@@ -56,7 +56,18 @@ def api_http_response(request, response, user=None):
 
     log_api_event(request, response, version, user)
 
-    return HttpResponse(json.dumps(response, cls=DjangoJSONEncoder), content_type='application/json', status=status_code)
+    content = json.dumps(response, cls=DjangoJSONEncoder)
+
+    response = HttpResponse()
+    response.content = content
+    response['Content-Type'] = 'application/json'
+
+    if status_code == 401:
+        response.status_code = 403  # workaround for crappy android 401 issues
+        # response['WWW-Authenticate'] = 'Basic Realm="portfolioapp"'
+        # response['Content-Length'] = content.__len__()
+
+    return response
 
 
 def create_token(user, identifier):
