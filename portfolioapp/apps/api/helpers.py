@@ -51,23 +51,23 @@ def api_http_response(request, response, user=None):
     version = 'v2'
 
     response['response']['meta']['request_id'] = uuid.uuid1().hex
-
     status_code = response['response']['meta']['status_code']
 
     log_api_event(request, response, version, user)
 
-    content = json.dumps(response, cls=DjangoJSONEncoder)
+    # content = json.dumps(response, cls=DjangoJSONEncoder)
 
-    response = HttpResponse()
-    response.content = content
-    response['Content-Type'] = 'application/json'
+    # response = HttpResponse()
+    # response.content = content
+    # response.status_code = status_code
+    # response['Content-Type'] = 'application/json'
 
-    if status_code == 401:
-        response.status_code = 403  # workaround for crappy android 401 issues
+    # if status_code == 401:
+        # response.status_code = 403  # workaround for crappy android 401 issues
         # response['WWW-Authenticate'] = 'Basic Realm="portfolioapp"'
         # response['Content-Length'] = content.__len__()
 
-    return response
+    return HttpResponse(json.dumps(response, cls=DjangoJSONEncoder), content_type='application/json', status=status_code)
 
 
 def create_token(user, identifier):
