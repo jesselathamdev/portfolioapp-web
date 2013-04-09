@@ -70,6 +70,22 @@ def get_portfolios(request, user):
 
 
 @token_required
+def get_portfolios2(request, user):
+    if request.method == 'GET':
+        portfolios = Portfolio.objects.summary_view(user_id=user.id)
+        response = {
+            'response': {
+                'meta': {
+                    'status_code': 200,
+                    'message': HttpMessages.OK
+                },
+                'portfolios': portfolios
+            }
+        }
+        return api_http_response(request, response, user)
+
+
+@token_required
 def get_markets(request, user):
     if request.method == 'GET':
         markets = list(Market.objects.all().values('id', 'name', 'date_created'))
