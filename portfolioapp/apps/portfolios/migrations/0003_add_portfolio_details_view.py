@@ -8,12 +8,12 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
         basepath = os.path.dirname(os.path.dirname(__file__))
-        query = open(os.path.join(basepath, 'sql', '0002_add_activity_view.sql')).read()
+        query = open(os.path.join(basepath, 'sql', '0003_add_portfolio_details_view.sql')).read()
 
         db.execute(query)
 
     def backwards(self, orm):
-        db.execute('DROP VIEW IF EXISTS activity;')
+        db.execute('DROP VIEW IF EXISTS portfolios_activity;')
 
     models = {
         u'auth.group': {
@@ -53,7 +53,7 @@ class Migration(SchemaMigration):
         u'markets.stock': {
             'Meta': {'object_name': 'Stock', 'db_table': "'stocks'"},
             'date_created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'date_last_price_updated': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2013, 3, 14, 0, 0)'}),
+            'date_last_price_updated': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2013, 4, 10, 0, 0)'}),
             'date_updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'last_price': ('django.db.models.fields.DecimalField', [], {'default': '0.0', 'max_digits': '6', 'decimal_places': '2'}),
@@ -62,7 +62,7 @@ class Migration(SchemaMigration):
             'symbol': ('django.db.models.fields.CharField', [], {'max_length': '8'})
         },
         u'portfolios.activity': {
-            'Meta': {'object_name': 'Activity', 'db_table': "'activities'", 'managed': 'False'},
+            'Meta': {'object_name': 'Activity', 'db_table': "'activity'", 'managed': 'False'},
             'acr': ('django.db.models.fields.CharField', [], {'max_length': '10'}),
             'comment': ('django.db.models.fields.CharField', [], {'max_length': '250'}),
             'commission': ('django.db.models.fields.DecimalField', [], {'max_digits': '6', 'decimal_places': '2'}),

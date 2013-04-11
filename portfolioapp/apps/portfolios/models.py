@@ -22,6 +22,23 @@ class Portfolio(TimeStampMixin, models.Model):
         return self.name
 
 
+class PortfolioDetail(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    name = models.CharField(max_length=200)
+    holding_count = models.IntegerField()
+    book_value = models.DecimalField(default=0.0, decimal_places=5, max_digits=13)
+    market_value = models.DecimalField(default=0.0, decimal_places=5, max_digits=13)
+    net_gain_dollar = models.DecimalField(default=0.0, decimal_places=5, max_digits=13)
+    net_gain_percent = models.DecimalField(default=0.0, decimal_places=5, max_digits=13)
+
+    class Meta:
+        db_table = 'portfolio_details'
+        managed = False
+
+    def __unicode__(self):
+        return '%s (%s)' % (self.name, self.holding_count)
+
+
 class Holding(TimeStampMixin, models.Model):
     portfolio = models.ForeignKey(Portfolio)
     stock = models.ForeignKey(Stock, default=1)

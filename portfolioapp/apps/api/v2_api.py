@@ -9,7 +9,7 @@ from django.views.decorators.csrf import csrf_exempt
 from .forms import AuthForm
 from .helpers import api_http_response, create_token, HttpMessages
 from .decorators import token_required
-from portfolioapp.apps.portfolios.models import Portfolio
+from portfolioapp.apps.portfolios.models import Portfolio, PortfolioDetail
 from portfolioapp.apps.markets.models import Market
 
 
@@ -72,7 +72,7 @@ def get_portfolios(request, user):
 @token_required
 def get_portfolios2(request, user):
     if request.method == 'GET':
-        portfolios = Portfolio.objects.summary_view(user_id=user.id)
+        portfolios = list(PortfolioDetail.objects.filter(user_id=user.id).values().order_by('name'))
         response = {
             'response': {
                 'meta': {
