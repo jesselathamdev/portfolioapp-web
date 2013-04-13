@@ -56,22 +56,6 @@ def token_create(request):
 @token_required
 def get_portfolios(request, user):
     if request.method == 'GET':
-        portfolios = list(Portfolio.objects.filter(user_id=user.id).values('id', 'name', 'date_created').order_by('name'))
-        response = {
-            'response': {
-                'meta': {
-                    'status_code': 200,
-                    'message': HttpMessages.OK
-                },
-                'portfolios': portfolios
-            }
-        }
-        return api_http_response(request, response, user)
-
-
-@token_required
-def get_portfolios2(request, user):
-    if request.method == 'GET':
         portfolios = list(PortfolioDetail.objects.filter(user_id=user.id).values().order_by('name'))
         response = {
             'response': {

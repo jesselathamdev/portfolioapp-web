@@ -5,7 +5,7 @@ import datetime
 from django.conf import settings
 from django.db import models
 
-from .managers import PortfolioManager, HoldingManager
+from .managers import HoldingManager
 from portfolioapp.apps.markets.models import Stock
 from portfolioapp.apps.core.mixins import TimeStampMixin
 
@@ -15,8 +15,6 @@ class Portfolio(TimeStampMixin, models.Model):
 
     class Meta:
         db_table = 'portfolios'
-
-    objects = PortfolioManager()
 
     def __unicode__(self):
         return self.name
@@ -97,7 +95,7 @@ class Activity(models.Model):
     BUY = 5
     SELL = 6
     DEPOSIT = 10
-    WITHDRAWL = 11
+    WITHDRAWAL = 11
 
     TYPE_CHOICES = (
         (BUY, "Buy"),
@@ -105,7 +103,7 @@ class Activity(models.Model):
         (SHARES_IN, "Shares in"),
         (SHARES_OUT, "Shares out"),
         (DEPOSIT, 'Deposit'),
-        (WITHDRAWL, 'Withdrawal')
+        (WITHDRAWAL, 'Withdrawal')
     )
 
     type = models.PositiveSmallIntegerField(choices=TYPE_CHOICES)

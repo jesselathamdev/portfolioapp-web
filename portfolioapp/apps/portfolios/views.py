@@ -5,20 +5,18 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib import messages
-from django.db.models import Sum
 
 from endless_pagination.decorators import page_template
 
 from portfolioapp.apps.core import settings
 from portfolioapp.apps.cash.models import Cash
-from portfolioapp.apps.cash.managers import CashManager
-from .models import Portfolio, Holding, Transaction, Activity
+from .models import Portfolio, PortfolioDetail, Holding, Transaction, Activity
 from .forms import CreatePortfolioForm, CreateHoldingForm, CreateTransactionForm
 
 
 @login_required
 def portfolio_index(request):
-    portfolios = Portfolio.objects.summary_view(request.user.id)
+    portfolios = PortfolioDetail.objects.filter(user_id=request.user.id)
     form = CreatePortfolioForm()
     return render(request, 'portfolios/portfolios/index.html', {'portfolios': portfolios, 'form': form})
 

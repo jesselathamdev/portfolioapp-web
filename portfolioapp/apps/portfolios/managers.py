@@ -3,62 +3,6 @@ from django.db import models
 
 from portfolioapp.apps.core import mixins
 
-class PortfolioManager(models.Manager, mixins.ORMMixin):
-    def summary_view(self, user_id):
-        """
-        Returns a query that is used for the detailed list view with custom logic at the database
-        """
-        from django.db import connection
-
-        # from https://docs.djangoproject.com/en/dev/topics/db/managers/#adding-extra-manager-methods
-        cursor = connection.cursor()
-        cursor.execute('''
-            WITH portfolios AS
-            (SELECT
-                pp.id,
-                pp.name,
-                COUNT(DISTINCT ph.id) AS holding_count,
-                SUM(COALESCE(pt.quantity, 0.00) * COALESCE(pt.value, 0.00)) AS book_value,
-                SUM(COALESCE(pt.quantity, 0.00) * COALESCE(ms.last_price, 0.00)) AS market_value
-            FROM
-                portfolios pp
-                LEFT JOIN holdings ph ON ph.portfolio_id = pp.id
-                LEFT JOIN transactions pt ON pt.holding_id = ph.id
-                LEFT JOIN stocks ms ON ms.id = ph.stock_id
-            WHERE
-                pp.user_id = %(user_id)s
-            GROUP BY
-                pp.user_id, pp.id, pp.name)
-            SELECT
-                pp.id,
-                pp.name,
-                pp.holding_count,
-                COALESCE(SUM(cc.amount), 0.00) + pp.book_value AS book_value,
-                COALESCE(SUM(cc.amount), 0.00) + pp.market_value AS market_value,
-                (COALESCE(SUM(cc.amount), 0.00) + pp.market_value) - (COALESCE(SUM(cc.amount), 0.00) + pp.book_value) AS net_gain_dollar,
-                COALESCE(((COALESCE(SUM(cc.amount), 0.00) + pp.market_value) - (COALESCE(SUM(cc.amount), 0.00) + pp.book_value)) / NULLIF(COALESCE(SUM(cc.amount), 0.00) + pp.book_value, 0.00), 0.00) * 100 AS net_gain_percent
-            FROM
-                portfolios pp
-                LEFT JOIN cash cc ON cc.portfolio_id = pp.id
-            GROUP BY
-                pp.id, pp.name, pp.holding_count, pp.book_value, pp.market_value
-            ORDER BY
-                LOWER(pp.name)''', {'user_id': user_id})
-
-        # the following maps the arbitrary values back to the original model and then some extra attributes such as total_quantity, total_cost etc
-        # mentioned that there may be a potential performance hit somewhere
-        portfolios = []
-        for row in cursor.fetchall():
-            portfolio = self.model(id=row[0], name=row[1])
-            portfolio.holding_count = row[2]
-            portfolio.book_value = row[3]
-            portfolio.market_value = row[4]
-            portfolio.net_gain_dollar = row[5]
-            portfolio.net_gain_percent = row[6]
-            portfolios.append(portfolio)
-
-        return portfolios
-
 
 class HoldingManager(models.Manager, mixins.ORMMixin):
     def summary_view(self, user_id, portfolio_id):
