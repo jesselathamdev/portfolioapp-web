@@ -9,7 +9,7 @@ from django.views.decorators.csrf import csrf_exempt
 from .forms import AuthForm
 from .helpers import api_http_response, create_token, HttpMessages
 from .decorators import token_required
-from portfolioapp.apps.portfolios.models import Portfolio, PortfolioDetail
+from portfolioapp.apps.portfolios.models import PortfolioDetail, Activity
 from portfolioapp.apps.markets.models import Market
 
 
@@ -64,6 +64,22 @@ def get_portfolios(request, user):
                     'message': HttpMessages.OK
                 },
                 'portfolios': portfolios
+            }
+        }
+        return api_http_response(request, response, user)
+
+
+@token_required
+def get_activity(request, user):
+    if request.method == 'GET':
+        activity = list(Activity.objects.filter(user_id=user.id).values().order_by('date_transacted'))
+        response = {
+            'response': {
+                'meta': {
+                    'status_code': 200,
+                    'message': HttpMessages.OK
+                },
+                'activity': activity
             }
         }
         return api_http_response(request, response, user)
