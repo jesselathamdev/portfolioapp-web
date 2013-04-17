@@ -27,3 +27,18 @@ def token_required(fn):
 
         return api_http_response(request, response)
     return _wrapped_view
+
+
+def paginate(fn):
+    @wraps(fn)
+    def _wrapped_view(request, *args, **kwargs):
+        OFFSET = 0
+        LIMIT = 3
+        try:
+            LIMIT = int(request.GET.get('limit', LIMIT))
+            OFFSET = int(request.GET.get('offset', OFFSET))
+        except:
+            pass
+
+        return fn(request, *args, limit=LIMIT, offset=OFFSET, **kwargs)
+    return _wrapped_view

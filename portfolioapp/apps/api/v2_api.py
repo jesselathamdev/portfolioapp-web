@@ -8,7 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from .forms import AuthForm
 from .helpers import api_http_response, create_token, HttpMessages
-from .decorators import token_required
+from .decorators import token_required, paginate
 from portfolioapp.apps.portfolios.models import PortfolioDetail, Activity
 from portfolioapp.apps.markets.models import Market
 
@@ -70,9 +70,16 @@ def get_portfolios(request, user):
 
 
 @token_required
-def get_activity(request, user):
+@paginate
+def get_activity(request, user, **kwargs):
     if request.method == 'GET':
-        activity = list(Activity.objects.filter(user_id=user.id).values().order_by('date_transacted'))
+        limit = kwargs.get('limit')
+        offset = kwargs.get('offset')
+
+        print("LIMIT: %s; OFFSET: %s" % (limit, offset))
+
+        activity = list(Activity.objects.filter(user_id=user.id).values().order_by('date_transacted')[limit:offset])
+
         response = {
             'response': {
                 'meta': {
