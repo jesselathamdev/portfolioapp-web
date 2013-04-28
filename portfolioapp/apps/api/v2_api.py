@@ -9,7 +9,7 @@ from django.views.decorators.csrf import csrf_exempt
 from .forms import AuthForm
 from .helpers import api_http_response, create_token, HttpMessages
 from .decorators import token_required, paginate
-from portfolioapp.apps.portfolios.models import PortfolioDetail, Activity
+from portfolioapp.apps.portfolios.models import PortfolioDetail, Activity, Holding
 from portfolioapp.apps.markets.models import Market
 
 
@@ -78,7 +78,7 @@ def get_activity(request, user, **kwargs):
 
         print("LIMIT: %s; OFFSET: %s" % (limit, offset))
 
-        activity = list(Activity.objects.filter(user_id=user.id).values().order_by('date_transacted')[limit:offset])
+        activity = list(Activity.objects.filter(user_id=user.id).values().order_by('date_transacted'))
 
         response = {
             'response': {
@@ -90,6 +90,24 @@ def get_activity(request, user, **kwargs):
             }
         }
         return api_http_response(request, response, user)
+
+
+@token_required
+def get_holdings(request, user, portfolio_id, **kwargs):
+    if request.method == 'GET':
+        holdings = list(Holding.objects.filter(portfolio_id=portfolio_id).values())
+
+        response = {
+            'response': {
+                'meta': {
+                    'status_code': 200,
+                    'message': HttpMessages.OK
+                },
+                'holdings': holdings
+            }
+        }
+
+    return api_http_response(request, response, user)
 
 
 @token_required
