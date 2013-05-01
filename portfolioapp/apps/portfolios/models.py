@@ -5,7 +5,6 @@ import datetime
 from django.conf import settings
 from django.db import models
 
-from .managers import HoldingManager
 from portfolioapp.apps.markets.models import Stock
 from portfolioapp.apps.core.mixins import TimeStampMixin
 
@@ -37,14 +36,38 @@ class PortfolioDetail(models.Model):
         return '%s (%s)' % (self.name, self.holding_count)
 
 
+class PortfolioHolding(models.Model):
+    portfolio = models.ForeignKey(Portfolio)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    stock_name = models.CharField(max_length=200)
+    stock_symbol = models.CharField(max_length=10)
+    market_code = models.CharField(max_length=10)
+    last_price = models.DecimalField(decimal_places=2, max_digits=7)
+    date_last_price_updated = models.DateTimeField()
+    total_quantity = models.DecimalField(default=0.0, decimal_places=5, max_digits=13)
+    avg_cost = models.DecimalField(default=0.0, decimal_places=5, max_digits=13)
+    max_cost = models.DecimalField(default=0.0, decimal_places=5, max_digits=13)
+    min_cost = models.DecimalField(default=0.0, decimal_places=5, max_digits=13)
+    book_value = models.DecimalField(default=0.0, decimal_places=5, max_digits=13)
+    market_value = models.DecimalField(default=0.0, decimal_places=5, max_digits=13)
+    net_gain_dollar = models.DecimalField(default=0.0, decimal_places=5, max_digits=13)
+    net_gain_percent = models.DecimalField(default=0.0, decimal_places=5, max_digits=13)
+    portfolio_makeup_percent = models.DecimalField(default=0.0, decimal_places=5, max_digits=13)
+
+    class Meta:
+        db_table = 'portfolio_holdings'
+        managed = False
+
+    def __unicode__(self):
+        return '%s' % (self.portfolio.name)
+
+
 class Holding(TimeStampMixin, models.Model):
     portfolio = models.ForeignKey(Portfolio)
     stock = models.ForeignKey(Stock, default=1)
 
     class Meta:
         db_table = 'holdings'
-
-    objects = HoldingManager()
 
     def __unicode__(self):
         return self.full_name()

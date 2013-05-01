@@ -9,7 +9,7 @@ from django.views.decorators.csrf import csrf_exempt
 from .forms import AuthForm
 from .helpers import api_http_response, create_token, HttpMessages
 from .decorators import token_required, paginate
-from portfolioapp.apps.portfolios.models import PortfolioDetail, Activity, Holding
+from portfolioapp.apps.portfolios.models import PortfolioDetail, PortfolioHolding, Activity, Holding
 from portfolioapp.apps.markets.models import Market
 
 
@@ -72,14 +72,16 @@ def get_portfolios(request, user):
 @token_required
 def get_portfolio_holdings(request, user, portfolio_id, **kwargs):
     if request.method == 'GET':
-        print('hit endpoint portfolios/holdings')
+
+        portfolio_holdings = list(PortfolioHolding.objects.filter(user_id=user.id, portfolio_id=portfolio_id).values())
+
         response = {
             'response': {
                 'meta': {
                     'status_code': 200,
                     'message': HttpMessages.OK
                 },
-                'portfolio_id': int(portfolio_id)
+                'portfolio_holdings': portfolio_holdings
             }
         }
     return api_http_response(request, response, user)

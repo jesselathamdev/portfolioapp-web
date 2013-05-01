@@ -10,7 +10,7 @@ from endless_pagination.decorators import page_template
 
 from portfolioapp.apps.core import settings
 from portfolioapp.apps.cash.models import Cash
-from .models import Portfolio, PortfolioDetail, Holding, Transaction, Activity
+from .models import Portfolio, PortfolioDetail, PortfolioHolding, Holding, Transaction, Activity
 from .forms import CreatePortfolioForm, CreateHoldingForm, CreateTransactionForm
 
 
@@ -48,12 +48,12 @@ def portfolio_delete(request, portfolio_id):
 @login_required
 def holding_index(request, portfolio_id):
     portfolio = Portfolio.objects.get(pk=portfolio_id)
-    holdings = Holding.objects.summary_view(request.user.id, portfolio_id)
+    portfolio_holdings = PortfolioHolding.objects.filter(user_id=request.user.id, portfolio_id=portfolio_id)
     cash_summary = Cash.objects.summary_view(request.user.id, portfolio_id)
 
     holding_chart = []
     other_value = 0
-    for holding in holdings:
+    for holding in portfolio_holdings:
         if holding.portfolio_makeup_percent >= 4:
             holding_list = [str(holding.stock_symbol), float(round(holding.portfolio_makeup_percent, 1))]
             holding_chart.append(holding_list)
@@ -65,7 +65,7 @@ def holding_index(request, portfolio_id):
 
     holding_form = CreateHoldingForm()
     transaction_form = CreateTransactionForm()
-    return render(request, 'portfolios/holdings/index.html', {'portfolio': portfolio, 'holdings': holdings, 'holding_chart': holding_chart, 'cash_summary': cash_summary, 'holding_form': holding_form, 'transaction_form': transaction_form})
+    return render(request, 'portfolios/holdings/index.html', {'portfolio': portfolio, 'holdings': portfolio_holdings, 'holding_chart': holding_chart, 'cash_summary': cash_summary, 'holding_form': holding_form, 'transaction_form': transaction_form})
 
 
 @login_required

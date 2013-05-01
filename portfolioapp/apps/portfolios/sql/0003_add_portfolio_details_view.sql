@@ -1,6 +1,7 @@
 DROP VIEW IF EXISTS portfolio_details;
 
 CREATE VIEW portfolio_details AS
+
 WITH portfolios AS
 (SELECT
     pp.id,
@@ -16,6 +17,7 @@ FROM
     LEFT JOIN stocks ms ON ms.id = ph.stock_id
 GROUP BY
     pp.user_id, pp.id, pp.name)
+
 SELECT
     pp.id,
     pp.user_id,
