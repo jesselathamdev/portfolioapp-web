@@ -31,13 +31,23 @@ def log_api_event(request, response, api_version, user=None):
     query_string = '&'.join(['%s=%s' % (k, v) for k, v in q.items()])
 
     try:
+        request_ip_address = request.META['REMOTE_ADDR']
+    except Exception:
+        request_ip_address = 'NO REMOTE ADDR'
+
+    try:
+        request_user_agent = request.META['HTTP_USER_AGENT']
+    except Exception:
+        request_user_agent = 'NO USER AGENT'
+
+    try:
         l = ApiLog(
             request_id=response['response']['meta']['request_id'],
-            request_ip_address=getattr(request.META, 'REMOTE_ADDR', 'NO REMOTE ADDR'),
+            request_ip_address=request_ip_address,
             request_path=request.path,
             request_method=request.method,
             request_query_string=query_string,
-            request_http_user_agent=getattr(request.META, 'HTTP_USER_AGENT', 'NO USER AGENT'),
+            request_http_user_agent=request_user_agent,
             response_status_code=response['response']['meta']['status_code'],
             user=user,
             api_version=api_version)

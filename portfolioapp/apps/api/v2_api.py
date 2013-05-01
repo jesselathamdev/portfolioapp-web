@@ -70,6 +70,22 @@ def get_portfolios(request, user):
 
 
 @token_required
+def get_portfolio_holdings(request, user, portfolio_id, **kwargs):
+    if request.method == 'GET':
+        print('hit endpoint portfolios/holdings')
+        response = {
+            'response': {
+                'meta': {
+                    'status_code': 200,
+                    'message': HttpMessages.OK
+                },
+                'portfolio_id': int(portfolio_id)
+            }
+        }
+    return api_http_response(request, response, user)
+
+
+@token_required
 @paginate
 def get_activity(request, user, **kwargs):
     if request.method == 'GET':
