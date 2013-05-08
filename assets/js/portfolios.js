@@ -29,6 +29,7 @@ $(document).ready(function() {
         $('#total_net_gain_dollar').addClass('indicator-loss')
     }
 
+    /* make entire row clickable */
     $('table.table-clickable tbody tr')
         .click(function() {
             var href = $(this).find("a").attr('href');

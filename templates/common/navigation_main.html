@@ -11,7 +11,7 @@
 </ul>
 {% if user.is_admin %}
 <ul class="nav pull-right">
-  <li class="dropdown {% navactive request "admin_home_index admin_stock_index admin_stock_edit admin_market_index admin_profile_index admin_profile_edit" %}">
+  <li class="dropdown {% navactive request "admin_home_index admin_stock_index admin_api_log_index admin_api_log_show admin_stock_edit admin_market_index admin_profile_index admin_profile_edit" %}">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <b class="caret"></b></a>
     <ul class="dropdown-menu pull-right">
       <li><a role="menuitem" tabindex="-1" href="{% url 'portfolioapp.apps.admin.views.home_index' %}">Dashboard</a></li>

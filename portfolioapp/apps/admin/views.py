@@ -109,11 +109,18 @@ def profile_edit(request, user_id):
 @user_passes_test(is_admin)
 @page_template('admin/api/index_paged_content.html')
 def api_log_index(request, template='admin/api/index.html', extra_context=None):
-    apilog = ApiLog.objects.all().order_by('-date_created')
+    api_log = ApiLog.objects.all().order_by('-date_created')
 
-    context = {'apilog': apilog, 'results_per_page': settings.RESULTS_PER_PAGE}
+    context = {'apilog': api_log, 'results_per_page': settings.RESULTS_PER_PAGE}
 
     if extra_context is not None:
             context.update(extra_context)
 
     return render_to_response(template, context, context_instance=RequestContext(request))
+
+
+@user_passes_test(is_admin)
+def api_log_show(request, api_log_id):
+    api_log = ApiLog.objects.get(pk=api_log_id)
+
+    return render(request, 'admin/api/show.html', {'api_log': api_log})

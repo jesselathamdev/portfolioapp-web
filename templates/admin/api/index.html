@@ -9,6 +9,14 @@
 
 {% block content %}
 
+<div style="float: right; padding-bottom: 10px;">
+
+  <form method="POST">
+    <input type="submit" value="Clear API Logs" class="btn btn-primary" />
+  </form>
+
+</div>
+
 <div id="paginate" class="endless_page_template">
   {% include page_template %}
 </div>
@@ -17,4 +25,16 @@
 
 {% block script %}
   {% include "common/list_pagination_script.html" %}
+  <script type="text/javascript">
+
+      /* make entire row clickable */
+      $('table.table-clickable tbody tr')
+          .click(function() {
+              var href = $(this).find("a").attr('href');
+              if(href) {
+                  window.location = href;
+              }
+          });
+
+  </script>
 {% endblock script %}

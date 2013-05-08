@@ -13,4 +13,5 @@ urlpatterns = patterns('',
     url(r'^users/(?P<user_id>\d+)/$', 'portfolioapp.apps.admin.views.profile_edit', name='admin_profile_edit'),
 
     url(r'^api/$', 'portfolioapp.apps.admin.views.api_log_index', name='admin_api_log_index'),
+    url(r'^api/(?P<api_log_id>\d+)/$', 'portfolioapp.apps.admin.views.api_log_show', name='admin_api_log_show'),
 )

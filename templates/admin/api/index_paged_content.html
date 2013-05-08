@@ -1,6 +1,6 @@
 {% load endless %}
 
-<table class="table table-striped table-striped-white table-hover table-bordered table-condensed">
+<table class="table table-striped table-striped-white table-hover table-bordered table-condensed table-clickable">
   <thead>
     <tr>
       <th style="width: 18%">Request Date</th>
@@ -15,8 +15,8 @@
     {% paginate results_per_page apilog %}
     {% for al in apilog %}
     <tr>
-      <td>{{ al.date_created|date:"m/d/Y g:i:s A" }}</td>
-      <td>{{ al.request_id }}</td>
+      <td><a href="{% url 'admin_api_log_show' al.id %}">{{ al.date_created|date:"m/d/Y g:i:s A" }}</a></td>
+      <td>{{ al.request_id }}</a></td>
       <td>{{ al.request_ip_address }}</td>
       <td>{{ al.request_method }}</td>
       <td>{{ al.request_path }}</td>

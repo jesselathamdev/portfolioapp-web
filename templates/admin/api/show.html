@@ -1,0 +1,87 @@
+{% extends "base_one_column.html" %}
+{% load endless %}
+
+{% block browser_title %}Api Logs - Admin{% endblock browser_title %}
+
+{% block breadcrumbs %}<a href="/">Home</a> &rarr; <a href="{% url 'admin_home_index' %}">Admin</a> &rarr; <a href="{%url 'admin_api_log_index' %}">Api Logs</a>  &rarr; {{ api_log.request_id }}{% endblock breadcrumbs %}
+
+{% block page_title %}Api Logs{% endblock page_title %}
+
+{% block content %}
+
+<div class="row">
+  <div class="span7">
+    <h4>Request</h4>
+    <form class="form-horizontal">
+      <div class="control-group">
+        <label class="control-label" for="tbRequestDate">Request Date:</label>
+        <div class="controls">
+          <input id="tbRequestDate" type="text" value="{{ api_log.date_created|date:'m/d/Y g:i:s A' }}" class="input-xlarge">
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="tbRequestID">Request ID:</label>
+        <div class="controls">
+          <input id="tbRequestID" type="text" value="{{ api_log.request_id }}" class="input-xlarge">
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="tbRequestIPAddress">Request IP Address:</label>
+        <div class="controls">
+          <input id="tbRequestIPAddress" type="text" value="{{ api_log.request_ip_address }}" class="input-xlarge">
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="tbRequestUserAgent">Request User Agent:</label>
+        <div class="controls">
+          <input id="tbRequestUserAgent" type="text" value="{{ api_log.request_http_user_agent }}" class="input-xlarge">
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="tbRequestMethod">Request Method:</label>
+        <div class="controls">
+          <input id="tbRequestMethod" type="text" value="{{ api_log.request_method }}" class="input-xlarge">
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="tbRequestUser">Request User:</label>
+        <div class="controls">
+          <input id="tbRequestUser" type="text" value="{{ api_log.user_id }}" class="input-xlarge">
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="tbRequestPath">Request Path:</label>
+        <div class="controls">
+          <input id="tbRequestPath" type="text" value="{{ api_log.request_path }}" class="input-xlarge">
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="tbRequestQueryString">Request Query String:</label>
+        <div class="controls">
+          <input id="tbRequestQueryString" type="text" value="{{ api_log.request_query_string }}" class="input-xlarge">
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="span1">
+    &nbsp;
+  </div>
+  <div class="span7">
+    <h4>Response</h4>
+    <form class="form-horizontal">
+      <div class="control-group">
+        <label class="control-label" for="tbResponseStatusCode">Response Status Code:</label>
+        <div class="controls">
+          <input id="tbResponseStatusCode" type="text" value="{{ api_log.response_status_code }}" class="input-xlarge">
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+{% endblock content %}
+
+{% block script %}
+
+{% endblock script %}
