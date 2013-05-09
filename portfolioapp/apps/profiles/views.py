@@ -21,7 +21,7 @@ def login(request):
                     if not request.POST.get('remember_me', False):
                         request.session.set_expiry(0)
                     django_login(request, user)
-                    return HttpResponseRedirect(reverse('portfolio_index')) # success
+                    return HttpResponseRedirect(reverse('portfolios_index')) # success
             else:
                 form.errors['login'] = 'The email and/or password provided was invalid.'
                 return render(request, 'profiles/signin.html', {'form': form})
@@ -47,7 +47,7 @@ def profile_create(request):
             if user is not None:
                 if user.is_active:
                     django_login(request, user)
-                    return HttpResponseRedirect(reverse('portfolio_index'))
+                    return HttpResponseRedirect(reverse('portfolios_index'))
         else:
             return render(request, 'profiles/signup.html', {'form': form})
 

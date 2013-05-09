@@ -1,0 +1,19 @@
+{% extends "base_two_columns.html" %}
+{% load humanize %}
+
+{% block browser_title %}Holdings{% endblock browser_title %}
+
+{% block breadcrumbs %}<a href="/">Home</a> &rarr; <a href="{% url 'portfolios_index' %}">Portfolios</a> &rarr; <a href="{% url 'portfolio_holdings_index' holding.portfolio.id %}">{{ holding.portfolio.name }}</a> &rarr; {{ holding.full_name }}{% endblock breadcrumbs %}
+
+{% block page_title %}<i class="icon-book"></i> Holding{% endblock page_title %}
+
+{% block content %}
+<p>This is the show page for {{ holding.full_name }}</p>
+
+{% if holding_transaction_count > 0 %}
+<p><a href="{% url 'transactions_index' holding.portfolio.id holding.id %}">View transactions</a></p>
+{% else %}
+<p>No transactions</p>
+{% endif %}
+
+{% endblock content %}

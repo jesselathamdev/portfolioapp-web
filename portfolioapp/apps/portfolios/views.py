@@ -47,8 +47,11 @@ def portfolio_delete(request, portfolio_id):
 
 @login_required
 def portfolio_holdings_index(request, portfolio_id):
+    # do this check once at the start of the request
     portfolio = get_object_or_404(Portfolio, user_id=request.user.id, id=portfolio_id)
-    portfolio_holdings = get_list_or_404(PortfolioHolding, user_id=request.user.id, portfolio_id=portfolio_id)
+
+    # don't do a 404 check here with user and portfolio id as we want to be able to still see a list page displaying cash even if the user does not have any holdings (yet)
+    portfolio_holdings = PortfolioHolding.objects.filter(user_id=request.user.id, portfolio_id=portfolio_id)
 
     cash_summary = Cash.objects.summary_view(request.user.id, portfolio_id)
 
@@ -66,8 +69,16 @@ def portfolio_holdings_index(request, portfolio_id):
 
     holding_form = CreateHoldingForm()
     transaction_form = CreateTransactionForm()
+
     return render(request, 'portfolios/holdings/index.html', {'portfolio': portfolio, 'holdings': portfolio_holdings, 'holding_chart': holding_chart, 'cash_summary': cash_summary, 'holding_form': holding_form, 'transaction_form': transaction_form})
 
+
+@login_required
+def portfolio_holding_show(request, portfolio_id, holding_id):
+    holding = get_object_or_404(Holding.objects.select_related('holding', 'holding__portfolio'), portfolio__user_id=request.user.id, portfolio_id=portfolio_id, id=holding_id)
+    holding_transaction_count = Transaction.objects.select_related('holding', 'holding__portfolio').filter(holding__portfolio__user_id=request.user.id, holding__portfolio__id=portfolio_id, holding__id=holding_id).count()
+
+    return render(request, 'portfolios/holdings/show.html', {'holding': holding, 'holding_transaction_count': holding_transaction_count})
 
 @login_required
 def holding_create(request, portfolio_id):
@@ -84,7 +95,7 @@ def holding_create(request, portfolio_id):
         else:
             messages.info(request, form.errors)
 
-    return HttpResponseRedirect(reverse('holding_index', args=(int(portfolio_id),)))
+    return HttpResponseRedirect(reverse('portfolio_holdings_index', args=(int(portfolio_id),)))
 
 
 @login_required
@@ -92,7 +103,7 @@ def holding_delete(request, portfolio_id, holding_id):
     h = Holding.objects.get(pk=holding_id)
 
     h.delete()
-    return HttpResponseRedirect(reverse('holding_index', args=(int(portfolio_id),)))
+    return HttpResponseRedirect(reverse('portfolio_holdings_index', args=(int(portfolio_id),)))
 
 
 @login_required
