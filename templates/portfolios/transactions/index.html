@@ -2,7 +2,7 @@
 
 {% block browser_title %}Transactions{% endblock browser_title %}
 
-{% block breadcrumbs %}<a href="/">Home</a> &rarr; <a href="{% url 'portfolio_index' %}">Portfolios</a> &rarr; <a href="{% url 'holding_index' holding.portfolio.id %}">{{ holding.portfolio.name }}</a> &rarr; {{ holding.full_name }}{% endblock breadcrumbs %}
+{% block breadcrumbs %}<a href="/">Home</a> &rarr; <a href="{% url 'portfolios_index' %}">Portfolios</a> &rarr; <a href="{% url 'portfolio_holdings_index' holding.portfolio.id %}">{{ holding.portfolio.name }}</a> &rarr; {{ holding.full_name }}{% endblock breadcrumbs %}
 
 {% block page_title %}<i class="icon-list"></i> Transactions{% endblock page_title %}
 

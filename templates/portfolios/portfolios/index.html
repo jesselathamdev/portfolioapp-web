@@ -1,4 +1,4 @@
-{% extends "base_two_columns.html" %}
+{% extends 'base_two_columns.html' %}
 {% load humanize %}
 
 {% block browser_title %}Portfolios{% endblock browser_title %}
@@ -24,7 +24,7 @@
   <tbody>
   {% for portfolio in portfolios %}
     <tr>
-      <td><a class="large" href="{% url 'holding_index' portfolio.id %}">{{ portfolio.name }}</a></td>
+      <td><a class="large" href="{% url 'portfolio_holdings_index' portfolio.id %}">{{ portfolio.name }}</a></td>
       <td class="align-right"><span class="medium">{{ portfolio.holding_count }}</span></td>
       <td class="align-right"><span class="medium">${{ portfolio.book_value|floatformat:2|intcomma }}</span></td>
       <td class="align-right"><span class="medium">${{ portfolio.market_value|floatformat:2|intcomma }}</span></td>

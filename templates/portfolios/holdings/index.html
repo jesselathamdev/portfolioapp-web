@@ -3,7 +3,7 @@
 
 {% block browser_title %}Holdings{% endblock browser_title %}
 
-{% block breadcrumbs %}<a href="/">Home</a> &rarr; <a href="{% url 'portfolio_index' %}">Portfolios</a> &rarr; {{ portfolio.name }}{% endblock breadcrumbs %}
+{% block breadcrumbs %}<a href="/">Home</a> &rarr; <a href="{% url 'portfolios_index' %}">Portfolios</a> &rarr; {{ portfolio.name }}{% endblock breadcrumbs %}
 
 {% block page_title %}<i class="icon-book"></i> Holdings <small><a href="#modalAddHolding" role="button" data-toggle="modal">add</a></small>{% endblock page_title %}
 
@@ -26,7 +26,7 @@
     {% for holding in holdings %}
     <tr>
       <td>
-        <a class="large" href="{% url 'transaction_index' portfolio.id holding.id %}">{{ holding.stock_symbol }}:{{ holding.market_code }}</a><br />
+        <a class="large" href="{% url 'transactions_index' portfolio.id holding.id %}">{{ holding.stock_symbol }}:{{ holding.market_code }}</a><br />
         {{ holding.stock_name }}
       </td>
       <td class="align-right"><span class="medium">

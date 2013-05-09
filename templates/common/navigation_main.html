@@ -2,9 +2,9 @@
 
 <ul class="nav">
   {% if user.is_authenticated %}
-  <li class="{% navactive request "dashboard_index" %}"><a href="{% url "dashboard_index" %}">Dashboard</a></li>
-  <li class="{% navactive request "portfolio_index portfolio_create holding_index transaction_index" %}"><a href="/portfolios">Portfolios</a></li>
-  <li class="{% navactive request "activity_index" %}"><a href="{% url 'activity_index' %}">Activity</a></li>
+  <li class="{% navactive request 'dashboard_index' %}"><a href="{% url 'dashboard_index' %}">Dashboard</a></li>
+  <li class="{% navactive request 'portfolios_index portfolio_create portfolio_holdings_index transactions_index' %}"><a href="{% url 'portfolios_index' %}">Portfolios</a></li>
+  <li class="{% navactive request 'activity_index' %}"><a href="{% url 'activity_index' %}">Activity</a></li>
   {% else %}
   <li class=""><a href="/">Home</a></li>
   {% endif %}
