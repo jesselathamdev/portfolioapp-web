@@ -13,6 +13,7 @@ DATABASES = {
         'PASSWORD': 'access',
         'HOST': '',
         'PORT': '5432',
+        'TEST_NAME': 'portfolioapp_test',
     }
 }
 

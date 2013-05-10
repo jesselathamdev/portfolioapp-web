@@ -98,9 +98,9 @@ INSTALLED_APPS = (
     # 3rd party addons
     'endless_pagination',
     'south',
-    'tastypie',
 )
 
+########### AUTHENTICATION CONFIGURATION
 AUTH_USER_MODEL = 'profiles.User'
 AUTHENTICATION_BACKENDS = ('portfolioapp.apps.profiles.backends.Auth',)
 LOGIN_REDIRECT_URL = '/'

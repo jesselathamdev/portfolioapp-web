@@ -5,6 +5,10 @@ from south.v2 import SchemaMigration
 
 
 class Migration(SchemaMigration):
+    depends_on = (
+        ('cash', '0001_initial'),
+    )
+
 
     def forwards(self, orm):
         basepath = os.path.dirname(os.path.dirname(__file__))

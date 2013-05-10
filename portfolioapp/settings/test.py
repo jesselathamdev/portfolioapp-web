@@ -2,22 +2,27 @@
 
 from .base import *
 
-########## TEST SETTINGS
-TEST_RUNNER = 'discover_runner.DiscoverRunner'
-TEST_DISCOVER_TOP_LEVEL = PROJECT_ROOT
-TEST_DISCOVER_ROOT = PROJECT_ROOT
-TEST_DISCOVER_PATTERN = '*'
 
-SOUTH_TESTS_MIGRATE = False
-
-########## IN-MEMORY TEST DATABASE
+########## DATABASE SETTINGS
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': ':memory:',
-        'USER': '',
-        'PASSWORD': '',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'portfolioapp',
+        'USER': 'portfolioapp',
+        'PASSWORD': 'access',
         'HOST': '',
-        'PORT': '',
+        'PORT': '5432',
+        'TEST_NAME': 'portfolioapp_test',
     }
 }
+
+
+########## INSTALLED APPS REQUIRED FOR TESTING ENVIRONMENT
+INSTALLED_APPS += (
+    'django_nose',
+)
+
+
+########## TEST SETTINGS
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+SOUTH_TESTS_MIGRATE = True
