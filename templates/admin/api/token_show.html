@@ -1,0 +1,56 @@
+{% extends "base_one_column.html" %}
+{% load endless %}
+
+{% block browser_title %}API Authentication Token - Admin{% endblock browser_title %}
+
+{% block breadcrumbs %}<a href="/">Home</a> &rarr; <a href="{% url 'admin_home_index' %}">Admin</a> &rarr; <a href="{%url 'admin_api_token_index' %}">API Authentication Tokens</a>  &rarr; {{ api_token.date_created }}{% endblock breadcrumbs %}
+
+{% block page_title %}API Authentication Token Entry{% endblock page_title %}
+
+{% block content %}
+
+<form class="form-horizontal" method="post" action="">
+  {% csrf_token %}
+  <div class="control-group">
+    <label class="control-label" for="tbDateCreated">Token Date Created:</label>
+    <div class="controls">
+      <input id="tbDateCreated" type="text" value="{{ api_token.date_created|date:'m/d/Y g:i:s A' }}" class="input-xlarge">
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="tbUserFullName">User Name:</label>
+    <div class="controls">
+      <input id="tbUserFullName" type="text" value="{{ api_token.user.full_name }}" class="input-xlarge">
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="tbToken">Token:</label>
+    <div class="controls">
+      <input id="tbToken" type="text" value="{{ api_token.token }}" class="input-xlarge">
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="tbDeviceIdentifier">Device Identifier:</label>
+    <div class="controls">
+      <input id="tbDeviceIdentifier" type="text" value="{{ api_token.identifier }}" class="input-xlarge">
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="tbDateExpires">Date Expires:</label>
+    <div class="controls">
+      <input id="tbDateExpires" type="text" value="{% if at.date_expires == None %}Never expires{% else %}{{ at.date_expires }}{%  endif %} " class="input-xlarge">
+    </div>
+  </div>
+  <div class="control-group">
+    <div class="controls">
+      <input type="submit" id="btnBack" name="btnBack" value="Back" class="btn">
+      <input type="submit" id="btnDelete" name="btnDelete" value="Delete" class="btn btn-danger">
+    </div>
+  </div>
+</form>
+
+{% endblock content %}
+
+{% block script %}
+
+{% endblock script %}

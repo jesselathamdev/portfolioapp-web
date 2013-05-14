@@ -1,0 +1,38 @@
+{% load endless %}
+
+<table class="table table-striped table-striped-white table-hover table-bordered table-condensed table-clickable">
+  <thead>
+    <tr>
+      <th style="width: 16%">Date Created</th>
+      <th style="width: 14%">User Name</th>
+      <th style="width: 27%">Token</th>
+      <th style="width: 27%">Device Identifier</th>
+      <th style="width: 16%">Date Expires</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% paginate results_per_page api_tokens %}
+    {% for at in api_tokens %}
+    <tr>
+      <td><a href="{% url 'admin_api_token_show' at.id %}">{{ at.date_created|date:"m/d/Y g:i:s A" }}</a></td>
+      <td>{{ at.user.full_name }}</td>
+      <td>{{ at.token }}</td>
+      <td>{{ at.identifier }}</td>
+      <td>
+        {% if at.date_expires == None %}
+          Never expires
+        {% else %}
+          {{ at.date_expires }}
+        {%  endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+  <tfoot>
+    <tr class="footer">
+      <th colspan="5">
+        {% include 'common/list_pagination.html' %}
+      </th>
+    </tr>
+  </tfoot>
+</table>

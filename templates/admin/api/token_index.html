@@ -1,0 +1,41 @@
+{% extends "base_one_column.html" %}
+{% load endless %}
+
+{% block browser_title %}API Authentication Tokens - Admin{% endblock browser_title %}
+
+{% block breadcrumbs %}<a href="/">Home</a> &rarr; <a href="{% url "admin_home_index" %}">Admin</a> &rarr; API Authentication Tokens{% endblock breadcrumbs %}
+
+{% block page_title %}API Authentication Tokens{% endblock page_title %}
+
+{% block content %}
+
+<!--
+<div style="float: right; padding-bottom: 10px;">
+
+  <form method="POST">
+    <input type="submit" value="Clear API Logs" class="btn btn-primary" />
+  </form>
+
+</div> -->
+
+<div id="paginate" class="endless_page_template">
+  {% include page_template %}
+</div>
+
+{% endblock content %}
+
+{% block script %}
+  {% include "common/list_pagination_script.html" %}
+  <script type="text/javascript">
+
+      /* make entire row clickable */
+      $('table.table-clickable tbody tr')
+          .click(function() {
+              var href = $(this).find("a").attr('href');
+              if(href) {
+                  window.location = href;
+              }
+          });
+
+  </script>
+{% endblock script %}

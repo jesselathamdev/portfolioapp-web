@@ -14,4 +14,7 @@ urlpatterns = patterns('',
 
     url(r'^api/$', 'portfolioapp.apps.admin.views.api_log_index', name='admin_api_log_index'),
     url(r'^api/(?P<api_log_id>\d+)/$', 'portfolioapp.apps.admin.views.api_log_show', name='admin_api_log_show'),
+
+    url(r'^api-tokens/$', 'portfolioapp.apps.admin.views.api_token_index', name='admin_api_token_index'),
+    url(r'^api-tokens/(?P<api_token_id>\d+)/$', 'portfolioapp.apps.admin.views.api_token_show', name='admin_api_token_show'),
 )
