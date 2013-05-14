@@ -101,3 +101,10 @@ def verify_token(token, identifier):
     except ObjectDoesNotExist, e:
         pass
 
+
+def delete_token(token):
+    try:
+        t = ApiToken.objects.get(token=token)
+        t.delete()
+    except ObjectDoesNotExist, e:
+        pass

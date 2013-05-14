@@ -18,10 +18,14 @@ from portfolioapp.apps.api.models import ApiLog, ApiToken
 from .forms import StockEditForm, StockSearchForm, ApiTokenDeleteForm
 
 
+######################## DASHBOARD
+
 @user_passes_test(is_admin)
 def home_index(request):
     return render(request, 'admin/index.html', {})
 
+
+######################## STOCKS
 
 @user_passes_test(is_admin)
 @page_template('admin/markets/stocks/index_paged_content.html')
@@ -76,11 +80,16 @@ def stock_edit(request, stock_id):
         return render(request, 'admin/markets/stocks/edit.html', {'stock': stock, 'form': form})
 
 
+######################## MARKETS
+
+
 @user_passes_test(is_admin)
 def market_index(request):
     markets = Market.objects.annotate(stock_count=Count('stock'))
     return render(request, 'admin/markets/markets/index.html', {'markets': markets})
 
+
+######################## USERS AND PROFILES
 
 @user_passes_test(is_admin)
 def profile_index(request):
@@ -107,9 +116,17 @@ def profile_edit(request, user_id):
         return render(request, 'admin/profiles/edit.html', {'form': form, 'user': user})
 
 
+######################## API LOGS
+
 @user_passes_test(is_admin)
 @page_template('admin/api/index_paged_content.html')
 def api_log_index(request, template='admin/api/index.html', extra_context=None):
+    if request.method == 'POST':
+        if 'btnClearLog' in request.POST:
+            ApiLog.objects.all().delete()
+
+            return HttpResponseRedirect(reverse('admin_api_log_index'))
+
     api_log = ApiLog.objects.all().order_by('-date_created')
 
     context = {'apilog': api_log, 'results_per_page': settings.RESULTS_PER_PAGE}
@@ -122,10 +139,12 @@ def api_log_index(request, template='admin/api/index.html', extra_context=None):
 
 @user_passes_test(is_admin)
 def api_log_show(request, api_log_id):
-    api_log = ApiLog.objects.get(pk=api_log_id)
+    api_log = ApiLog.objects.select_related('user').get(pk=api_log_id)
 
     return render(request, 'admin/api/show.html', {'api_log': api_log})
 
+
+######################## API TOKENS
 
 @user_passes_test(is_admin)
 @page_template('admin/api/token_index_paged_content.html')

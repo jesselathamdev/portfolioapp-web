@@ -49,13 +49,19 @@
             &nbsp;
           </li>
           <li class="control-group">
-            <label class="control-label" for="">Action / URL</label>
+            <label class="control-label" for="">Method / URL</label>
             <div class="controls">
               <select id="selMethod" class="span2">
-                <option value='GET'>GET</option>
-                <option value='POST'>POST</option>
+                <option value="GET">GET</option>
+                <option value="POST">POST</option>
               </select>
               <input type="text" id="tbRequestURL" name="" value="" placeholder="url" class="span5">
+            </div>
+          </li>
+          <li class="control-group" id="rowPostBody" style="display: none;">
+            <label class="control-label" for="">Post Body</label>
+            <div class="controls">
+              <textarea id="tbPostBody" rows="7" class="input-xxlarge"></textarea>
             </div>
           </li>
           <li class="control-group">
@@ -95,6 +101,10 @@
     }
 
     $(document).ready(function() {
+        $('#selMethod').change(function() {
+            $('#rowPostBody').toggle();
+        });
+
         $('#tbRequestURL').val(base_api_url);
 
         $('#tbDeviceIdentifier').val(uuid());
@@ -131,14 +141,26 @@
 
         $('#btnSubmitRequest').click(function(e) {
           e.preventDefault();
+
+          requestData = {}
+
+          if ($('#selMethod').val() == 'POST') {
+              requestData = $('#tbPostBody');
+          };
+
           $.ajax({
               type: $('#selMethod').val().toString(),
               url: $('#tbRequestURL').val(),
               dataType: 'json',
-              data: {},
+              data: requestData,
               statusCode: {
                   401: function(data) {
+                      $('#tbStatusCode').val('401');
                       $('#tbRawResponse').val(data['responseText']);
+                  },
+                  404: function(data) {
+                      $('#tbStatusCode').val('404');
+                      $('#tbRawResponse').val('Page not found');
                   }
               }
           }).

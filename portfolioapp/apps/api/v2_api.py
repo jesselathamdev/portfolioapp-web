@@ -7,7 +7,7 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
 from .forms import AuthForm
-from .helpers import api_http_response, create_token, HttpMessages
+from .helpers import api_http_response, create_token, delete_token, HttpMessages
 from .decorators import token_required, paginate
 from portfolioapp.apps.portfolios.models import PortfolioDetail, PortfolioHolding, Activity, Holding
 from portfolioapp.apps.markets.models import Market
@@ -53,10 +53,30 @@ def token_create(request):
         return api_http_response(request, response, user)
 
 
+@csrf_exempt
+@token_required
+def token_delete(request, user, token):
+    if request.method == 'POST':
+
+        delete_token(token)
+
+        response = {
+            'response': {
+                'meta': {
+                    'status_code': 200,
+                    'message': HttpMessages.OK
+                }
+            }
+        }
+
+        return api_http_response(request, response, user)
+
+
 @token_required
 def get_portfolios(request, user):
     if request.method == 'GET':
         portfolios = list(PortfolioDetail.objects.filter(user_id=user.id).values().order_by('name'))
+
         response = {
             'response': {
                 'meta': {
@@ -66,13 +86,13 @@ def get_portfolios(request, user):
                 'portfolios': portfolios
             }
         }
+
         return api_http_response(request, response, user)
 
 
 @token_required
 def get_portfolio_holdings(request, user, portfolio_id, **kwargs):
     if request.method == 'GET':
-
         portfolio_holdings = list(PortfolioHolding.objects.filter(user_id=user.id, portfolio_id=portfolio_id).values())
 
         response = {
@@ -84,7 +104,8 @@ def get_portfolio_holdings(request, user, portfolio_id, **kwargs):
                 'portfolio_holdings': portfolio_holdings
             }
         }
-    return api_http_response(request, response, user)
+
+        return api_http_response(request, response, user)
 
 
 @token_required
@@ -107,6 +128,7 @@ def get_activity(request, user, **kwargs):
                 'activity': activity
             }
         }
+
         return api_http_response(request, response, user)
 
 
@@ -125,13 +147,14 @@ def get_holdings(request, user, portfolio_id, **kwargs):
             }
         }
 
-    return api_http_response(request, response, user)
+        return api_http_response(request, response, user)
 
 
 @token_required
 def get_markets(request, user):
     if request.method == 'GET':
         markets = list(Market.objects.all().values('id', 'name', 'date_created'))
+
         response = {
             'response': {
                 'meta': {
@@ -141,4 +164,5 @@ def get_markets(request, user):
                 'markets': markets
             }
         }
+
         return api_http_response(request, response, user)

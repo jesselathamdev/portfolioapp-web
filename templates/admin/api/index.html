@@ -1,18 +1,19 @@
-{% extends "base_two_columns.html" %}
+{% extends "base_one_column.html" %}
 {% load endless %}
 
-{% block browser_title %}Api Logs - Admin{% endblock browser_title %}
+{% block browser_title %}API Logs - Admin{% endblock browser_title %}
 
-{% block breadcrumbs %}<a href="/">Home</a> &rarr; <a href="{% url "admin_home_index" %}">Admin</a> &rarr; Api Logs{% endblock breadcrumbs %}
+{% block breadcrumbs %}<a href="/">Home</a> &rarr; <a href="{% url "admin_home_index" %}">Admin</a> &rarr; API Logs{% endblock breadcrumbs %}
 
-{% block page_title %}Api Logs{% endblock page_title %}
+{% block page_title %}API Logs{% endblock page_title %}
 
 {% block content %}
 
 <div style="float: right; padding-bottom: 10px;">
 
-  <form method="POST">
-    <input type="submit" value="Clear API Logs" class="btn btn-primary" />
+  <form method="post" action="">
+    {% csrf_token %}
+    <input type="submit" name="btnClearLog" value="Clear API Logs" class="btn btn-primary" />
   </form>
 
 </div>
