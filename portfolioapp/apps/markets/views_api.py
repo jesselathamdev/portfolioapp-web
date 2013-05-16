@@ -43,6 +43,7 @@ def stock_index2(request):
             stock_json = {}
             stock_json['id'] = stock.id
             stock_json['value'] = '%s (%s:%s)' % (stock.name, stock.symbol, stock.market.acr)
+            stock_json['displayValue'] = '%s (%s:%s)' % (stock.name, stock.symbol, stock.market.acr)
             stock_json['name'] = stock.name
             stock_json['symbol'] = stock.symbol
             stock_json['acr'] = stock.market.acr

@@ -10,7 +10,7 @@
 
 {% block content %}
 
-<input class="typeahead" type="text">
+<input class="twitter-typeahead" type="text">
 
 <div id="paginate" class="endless_page_template">
   {% include page_template %}
@@ -36,12 +36,18 @@
 
   {% verbatim %}
   <script type="text/javascript">
-      $(document).ready(function(){
-          $('.typeahead').typeahead({
+      $(document).ready(function() {
+          $('.twitter-typeahead').typeahead({
               name: 'stocks',
               remote: '/api/markets/stocks2?q=%QUERY',
+              valueKey: 'displayValue',
               template: '<p><strong>{{ name }}</strong> ({{ symbol }}:{{ acr }})<br /><small>Last price: ${{ last_price }}</small></p>',
-              engine: Hogan
+              engine: Hogan,
+              limit: 10,
+              dataType: 'json'
+          })
+          .on('typeahead:selected', function(e, data) {
+              alert(data['id'].toString());
           });
       });
   </script>
