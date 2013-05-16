@@ -10,7 +10,7 @@ from django.db.models import Q
 from .models import Stock
 
 
-######################## STOCK TYPEAHEAD
+######################## INTERNAL, SUPPORTS STOCK TYPEAHEAD ON /ADMIN/STOCKS
 
 @login_required
 def stock_index(request):
@@ -31,6 +31,8 @@ def stock_index(request):
     return HttpResponse(data, mimetype)
 
 
+######################## INTERNAL, SUPPORTS STOCK TYPEAHEAD ON /STOCKS
+
 @login_required
 def stock_index2(request):
     if request.is_ajax():
@@ -41,6 +43,10 @@ def stock_index2(request):
             stock_json = {}
             stock_json['id'] = stock.id
             stock_json['value'] = '%s (%s:%s)' % (stock.name, stock.symbol, stock.market.acr)
+            stock_json['name'] = stock.name
+            stock_json['symbol'] = stock.symbol
+            stock_json['acr'] = stock.market.acr
+            stock_json['last_price'] = str(stock.last_price)
             results.append(stock_json)
         data = json.dumps(results)
     else:
