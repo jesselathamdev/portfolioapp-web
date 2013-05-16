@@ -10,6 +10,8 @@
 
 {% block content %}
 
+<input class="typeahead" type="text">
+
 <div id="paginate" class="endless_page_template">
   {% include page_template %}
 </div>
@@ -29,5 +31,15 @@
 {% endblock sidebar %}
 
 {% block script %}
+  <script src="{{ STATIC_URL }}js/twitter-typeahead/typeahead.min.js" type="text/javascript"></script>
+  <script type="text/javascript">
+      $(document).ready(function(){
+          $('.typeahead').typeahead({
+              name: 'stocks',
+              remote: '/api/markets/stocks2?q=%QUERY'
+          });
+      });
+  </script>
+
   {% include "common/list_pagination_script.html" %}
 {% endblock script %}
