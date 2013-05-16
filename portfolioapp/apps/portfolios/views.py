@@ -14,6 +14,8 @@ from .models import Portfolio, PortfolioDetail, PortfolioHolding, Holding, Trans
 from .forms import CreatePortfolioForm, CreateHoldingForm, CreateTransactionForm
 
 
+######################## PORTFOLIOS
+
 @login_required
 def portfolios_index(request):
     portfolios = PortfolioDetail.objects.filter(user_id=request.user.id)
@@ -45,6 +47,8 @@ def portfolio_delete(request, portfolio_id):
     return HttpResponseRedirect(reverse('portfolio_index'))
 
 
+######################## PORTFOLIO HOLDINGS
+
 @login_required
 def portfolio_holdings_index(request, portfolio_id):
     # do this check once at the start of the request
@@ -75,10 +79,11 @@ def portfolio_holdings_index(request, portfolio_id):
 
 @login_required
 def portfolio_holding_show(request, portfolio_id, holding_id):
-    holding = get_object_or_404(Holding.objects.select_related('holding', 'holding__portfolio'), portfolio__user_id=request.user.id, portfolio_id=portfolio_id, id=holding_id)
-    holding_transaction_count = Transaction.objects.select_related('holding', 'holding__portfolio').filter(holding__portfolio__user_id=request.user.id, holding__portfolio__id=portfolio_id, holding__id=holding_id).count()
+    holding = get_object_or_404(Holding.objects.select_related('holding', 'portfolio', 'stock', 'stock__market'), portfolio__user_id=request.user.id, portfolio_id=portfolio_id, id=holding_id)
+    holding_transaction_count = Transaction.objects.filter(holding__id=holding_id).count()
 
     return render(request, 'portfolios/holdings/show.html', {'holding': holding, 'holding_transaction_count': holding_transaction_count})
+
 
 @login_required
 def holding_create(request, portfolio_id):
@@ -106,11 +111,14 @@ def holding_delete(request, portfolio_id, holding_id):
     return HttpResponseRedirect(reverse('portfolio_holdings_index', args=(int(portfolio_id),)))
 
 
+######################## PORTFOLIO HOLDING TRANSACTIONS
+
 @login_required
 @page_template('portfolios/transactions/index_paged_content.html')
 def transactions_index(request, portfolio_id, holding_id, template='portfolios/transactions/index.html', extra_context=None):
     holding = get_object_or_404(Holding.objects.select_related('holding', 'holding__portfolio'), portfolio__user_id=request.user.id, id=holding_id)
     transactions = get_list_or_404(Transaction.objects.select_related('holding', 'holding__portfolio').order_by('-date_transacted'), holding__portfolio__user_id=request.user.id, holding__portfolio__id=portfolio_id, holding__id=holding_id)
+
     context = {'holding': holding, 'transactions': transactions, 'results_per_page': settings.RESULTS_PER_PAGE}
 
     if extra_context is not None:
@@ -137,6 +145,8 @@ def transaction_create(request, portfolio_id, holding_id):
 
     return HttpResponse(response)
 
+
+######################## TRANSACTION ACTIVITY
 
 @login_required
 @page_template('portfolios/activity/index_paged_content.html')

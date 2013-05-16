@@ -1,8 +1,7 @@
 # urls.py
+
 from django.conf.urls import patterns, include, url
 from django.conf import settings
-
-from tastypie.api import Api
 
 urlpatterns = patterns('',
     # profiles (sign in, profile, etc)
@@ -14,19 +13,23 @@ urlpatterns = patterns('',
     # home page
     url(r'^$', 'portfolioapp.apps.home.views.index', name='dashboard_index'),
 
+    # stocks (markets)
+    url(r'^stocks/', include('portfolioapp.apps.markets.urls')),
+
     # portfolios
     url(r'^portfolios/', include('portfolioapp.apps.portfolios.urls')),
 
-    # activity through portfolios
+    # activity
     url(r'^activity/$', 'portfolioapp.apps.portfolios.views.activity_index', name='activity_index'),
 
     # custom admin
     url(r'^admin/', include('portfolioapp.apps.admin.urls')),
 
-    # apis
+    # apis (internal)
     url(r'^api/markets/stocks2/?', 'portfolioapp.apps.markets.views_api.stock_index2', name='api_stock_index2'),
     url(r'^api/markets/stocks/?', 'portfolioapp.apps.markets.views_api.stock_index', name='api_stock_index'),
 
+    # apis (external)
     url(r'^api/v2/', include('portfolioapp.apps.api.v2_urls')),
 )
 

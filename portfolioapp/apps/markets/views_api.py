@@ -9,6 +9,9 @@ from django.db.models import Q
 
 from .models import Stock
 
+
+######################## STOCK TYPEAHEAD
+
 @login_required
 def stock_index(request):
     if request.is_ajax():
