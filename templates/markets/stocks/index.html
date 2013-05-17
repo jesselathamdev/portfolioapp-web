@@ -10,7 +10,12 @@
 
 {% block content %}
 
-<input class="twitter-typeahead" type="text">
+<form method="post" action="" class="form-inline">
+  {% csrf_token %}
+  <input type="text" id="tbSearch" name="search_term" class="twitter-typeahead" >
+  <input type="submit" name="btnSearch" value="Search" class="btn">
+  <input type="hidden" id="hidStockId" name="stock_id" value="">
+</form>
 
 <div id="paginate" class="endless_page_template">
   {% include page_template %}
@@ -47,7 +52,10 @@
               dataType: 'json'
           })
           .on('typeahead:selected', function(e, data) {
-              alert(data['id'].toString());
+              $('#hidStockId').val(data['id']);
+          })
+          .on('typeahead:autocompleted', function(e, data) {
+              alert('autocompleted');
           });
       });
   </script>

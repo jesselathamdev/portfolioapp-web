@@ -33,9 +33,11 @@ def stock_index(request, template='admin/markets/stocks/index.html', extra_conte
 
     if request.method == 'POST':
         search_form = StockSearchForm(request.POST)
+
         if search_form.is_valid():
             term = search_form.cleaned_data['search_term']
             stocks = Stock.objects.select_related('stock__name', 'stock__symbol', 'market__acr').filter(Q(name__icontains=term)).order_by('name')
+
         else:
             stocks = Stock.objects.select_related('stock__name', 'stock__symbol', 'market__acr').order_by('name')
 

@@ -48,6 +48,7 @@ def stock_index2(request):
             stock_json['symbol'] = stock.symbol
             stock_json['acr'] = stock.market.acr
             stock_json['last_price'] = str(stock.last_price)
+            stock_json['tokens'] = [stock.name, stock.symbol, stock.market.acr, ("%s:%s" % (stock.symbol, stock.market.acr))]
             results.append(stock_json)
         data = json.dumps(results)
     else:
