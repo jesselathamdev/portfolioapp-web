@@ -98,6 +98,7 @@ def holding_create(request, portfolio_id):
             messages.success(request, 'Your holding %s was created.' % form.cleaned_data['stock_name'])
 
         else:
+            print('form was invalid')
             messages.info(request, form.errors)
 
     return HttpResponseRedirect(reverse('portfolio_holdings_index', args=(int(portfolio_id),)))
@@ -108,6 +109,7 @@ def holding_delete(request, portfolio_id, holding_id):
     h = Holding.objects.get(pk=holding_id)
 
     h.delete()
+
     return HttpResponseRedirect(reverse('portfolio_holdings_index', args=(int(portfolio_id),)))
 
 

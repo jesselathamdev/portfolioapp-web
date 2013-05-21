@@ -1,0 +1,13 @@
+{% extends 'base_static.html' %}
+
+{% block content_parent %}
+
+  <section role="body" class="body container">
+    <div class="row">
+      <div class="span16">
+        {% block content %}{% endblock content %}
+      </div>
+    </div>
+  </section>
+
+{% endblock content_parent %}
