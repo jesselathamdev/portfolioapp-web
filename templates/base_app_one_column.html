@@ -1,0 +1,22 @@
+{% extends 'base_app.html' %}
+
+{% block page_title_base %}
+  <header id="bottom">
+    <div class="container">
+      <div class="page-title">
+        <h1>{% block page_title %}{% endblock page_title %}</h1>
+        <p>{% block helper_message %}{% endblock helper_message %}</p>
+      </div>
+    </div>
+  </header>
+{% endblock page_title_base %}
+
+{% block content_base %}
+  <section role="body" class="body container">
+    <div class="row">
+      <div class="span16">
+        {% block content %}{% endblock content %}
+      </div>
+    </div>
+  </section>
+{% endblock content_base %}

@@ -3,15 +3,16 @@
 from django.conf.urls import patterns, include, url
 from django.conf import settings
 
+
 urlpatterns = patterns('',
+    # site and generial static pages
+    url(r'^$', include('portfolioapp.apps.site.urls')),
+
     # profiles (sign in, profile, etc)
     url(r'^sign-up/$', 'portfolioapp.apps.profiles.views.profile_create', name='profile_create'),
     url(r'^sign-in/$', 'portfolioapp.apps.profiles.views.login', name='profile_signin'),
     url(r'^sign-out/$', 'django.contrib.auth.views.logout', {'template_name': 'profiles/signout.html'}, name='profile_signout'),
     url(r'^profile/$', 'portfolioapp.apps.profiles.views.profile_edit', name='profile_edit'),
-
-    # home page
-    url(r'^$', 'portfolioapp.apps.home.views.index', name='dashboard_index'),
 
     # stocks (markets)
     url(r'^stocks/', include('portfolioapp.apps.markets.urls')),

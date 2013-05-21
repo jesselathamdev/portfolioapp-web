@@ -1,14 +1,16 @@
-{% extends "base_unauthenticated_profile.html" %}
+{% extends 'base_static_one_column.html' %}
 
 {% block browser_title %}Sign out{% endblock browser_title %}
 
 {% block content %}
 
-<div class="auth-container">
-  <h1>Sign out</h1>
-  <div class="widget-auth">
-    You have successfully signed out. <a href="{% url 'profile_signin' %}">Sign in</a>
+  <div class="authentication">
+    <div class="auth-container">
+      <h1>Sign out</h1>
+      <div class="widget-auth">
+        You have successfully signed out. <a href="{% url 'profile_signin' %}">Sign in</a>
+      </div>
+    </div>
   </div>
-</div>
 
 {% endblock content %}

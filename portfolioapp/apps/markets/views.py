@@ -12,7 +12,7 @@ from .forms import StockSearchForm
 
 
 @login_required
-@page_template('admin/markets/stocks/index_paged_content.html')
+@page_template('markets/stocks/index_paged_content.html')
 def stock_index(request, template='markets/stocks/index.html', extra_context=None):
     stocks = Stock.objects.select_related('stock__name', 'stock__symbol', 'market__acr').order_by('name')
 

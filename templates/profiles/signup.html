@@ -1,4 +1,4 @@
-{% extends "base_two_columns.html" %}
+{% extends 'base_static_one_column.html' %}
 
 {% block browser_title %}Sign up{% endblock browser_title %}
 
@@ -7,6 +7,8 @@
 {% block page_title %}Sign up{% endblock page_title %}
 
 {% block content %}
+
+<h1>Sign Up</h1>
 
 {% if form.errors %}
 <div class="alert alert-error">

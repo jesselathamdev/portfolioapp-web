@@ -1,21 +1,23 @@
-{% extends "base_two_columns.html" %}
+{% extends 'base_app_two_columns.html' %}
 
 {% block browser_title %}Transactions{% endblock browser_title %}
 
-{% block breadcrumbs %}<a href="/">Home</a> &rarr; <a href="{% url 'portfolios_index' %}">Portfolios</a> &rarr; <a href="{% url 'portfolio_holdings_index' holding.portfolio.id %}">{{ holding.portfolio.name }}</a> &rarr; <a href="{% url 'portfolio_holding_show' holding.portfolio.id holding.id %}">{{ holding.full_name }}</a> &rarr; Transactions{% endblock breadcrumbs %}
+{% block breadcrumbs %}<a href="/">Dashboard</a> &rarr; <a href="{% url 'portfolios_index' %}">Portfolios</a> &rarr; <a href="{% url 'portfolio_holdings_index' holding.portfolio.id %}">{{ holding.portfolio.name }}</a> &rarr; <a href="{% url 'portfolio_holding_show' holding.portfolio.id holding.id %}">{{ holding.full_name }}</a> &rarr; Transactions{% endblock breadcrumbs %}
 
 {% block page_title %}<i class="icon-list"></i> Transactions{% endblock page_title %}
 
 {% block content %}
 
-<div id="paginate" class="endless_page_template">
-  {% include page_template %}
-</div>
+  <div id="paginate" class="endless_page_template">
+    {% include page_template %}
+  </div>
 
 {% endblock content %}
 
 {% block sidebar %}
-Sidebar
+
+  Sidebar
+
 {% endblock sidebar %}
 
 {% block script %}

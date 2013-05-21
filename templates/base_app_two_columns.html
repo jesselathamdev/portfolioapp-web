@@ -1,0 +1,16 @@
+{% extends 'base_app.html' %}
+
+{% block content_parent %}
+
+  <section role="body" class="body container">
+    <div class="row">
+      <div class="span12">
+        {% block content %}{% endblock content %}
+      </div>
+      <div class="span4">
+        {% block sidebar %}{% endblock sidebar %}
+      </div>
+    </div>
+  </section>
+
+{% endblock content_parent %}

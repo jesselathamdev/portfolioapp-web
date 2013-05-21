@@ -1,9 +1,9 @@
-{% extends "base_two_columns.html" %}
+{% extends "base_app_two_columns.html" %}
 {% load humanize %}
 
 {% block browser_title %}Holdings{% endblock browser_title %}
 
-{% block breadcrumbs %}<a href="/">Home</a> &rarr; <a href="{% url 'portfolios_index' %}">Portfolios</a> &rarr; {{ portfolio.name }}{% endblock breadcrumbs %}
+{% block breadcrumbs %}<a href="/">Dashboard</a> &rarr; <a href="{% url 'portfolios_index' %}">Portfolios</a> &rarr; {{ portfolio.name }}{% endblock breadcrumbs %}
 
 {% block page_title %}<i class="icon-book"></i> Holdings <small><a href="#modalAddHolding" role="button" data-toggle="modal">add</a></small>{% endblock page_title %}
 

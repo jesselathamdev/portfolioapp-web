@@ -1,20 +1,28 @@
-{% extends 'base_dashboard.html' %}
+{% extends base_template %}
 
 {% block browser_title %}Home{% endblock browser_title %}
 
+{% block page_title %}
 {% if user.is_authenticated %}
-{% block page_title %}<i class="icon-dashboard"></i> Dashboard <small>Subtitle</small>{% endblock page_title %}
+  <i class="icon-dashboard"></i> Dashboard <small>Subtitle</small>
+{% else %}
+  Howdy
 {% endif %}
+{% endblock page_title %}
 
 {% block content %}
 
-{% if user.is_authenticated %}
+{% if user.is_authenticated %}  {# authenticated dashboard #}
+
 <h2>Title <small>Subtitle</small></h2>
 <p>This is a paragraph of helper text.</p>
 <p>This is my overview content</p>
-{% else %}
+
+{% else %}  {# unauthenticated home page #}
+
 <h1>PortfolioApp</h1>
 <h2>The easy to use, (semi)full featured portfolio tracker</h2>
+
 {% endif %}
 
 {% endblock content %}
