@@ -173,14 +173,16 @@
 {% endblock content %}
 
 {% block sidebar %}
-<div class="widget widget-simple">
-  <div class="widget-header">
-    <h3>Portfolio Makeup</h3>
+
+  <div class="widget widget-simple">
+    <div class="widget-header">
+      <h3>Portfolio Makeup</h3>
+    </div>
+    <div class="widget-body">
+      <div id="holdings-chart" style="height: 260px;"></div>
+    </div>
   </div>
-  <div class="widget-body">
-    <div id="holdings-chart" style="height: 260px;"></div>
-  </div>
-</div>
+
 {% endblock sidebar %}
 
 {% block script %}

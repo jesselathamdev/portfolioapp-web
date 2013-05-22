@@ -13,6 +13,6 @@ def base_template_selector(request):
     # unauthenticated template suitable for a home page and other static files
     if request.user:
         if request.user.is_authenticated():
-            return {'base_template': 'base_app_one_column.html'}
+            return {'base_template': 'base_app_two_columns.html'}
 
     return {'base_template': 'base_static_one_column.html'}

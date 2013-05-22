@@ -19,10 +19,63 @@
 <p>This is my overview content</p>
 
 {% else %}  {# unauthenticated home page #}
-
+<br />
 <h1>PortfolioApp</h1>
 <h2>The easy to use, (semi)full featured portfolio tracker</h2>
+<br />
+<div class="row">
+  <div class="span7">
+    <img src="{{ STATIC_URL }}img/portfolioapp-homepage-view-461x400.png">
+  </div>
+  <div class="span9">
+    <div class="hero-unit">
+      <h3>Attempting to solve the following problems</h3>
+      <h4>Bloomberg</h4>
+      <ul>
+        <li>Does not carry website profile over to Android app</li>
+        <li>Does not handle reinvestments (to cash or dividends)</li>
+        <li>Difficult to add new or modify existing multiple transactions to a new or existing holding</li>
+      </ul>
+      <h4>Yahoo Finance</h4>
+      <ul>
+        <li>Does not handle reinvestments (to cash or dividends)</li>
+      </ul>
+      <h4>Google Finance</h4>
+      <ul>
+        <li>While Google Finance allows reinvestments to cash, it does not allow reinvestments back to shares</li>
+        <li>While powerful, the Google Finance web interface is kludgy and confusing</li>
+        <li>Android app does not allow stocks to be selected from TSX, nor does it allow your Google Finance profile to show TSX stocks you've already selected on the web</li>
+      </ul>
+    </div>
+  </div>
+</div>
 
 {% endif %}
 
 {% endblock content %}
+
+{% block sidebar %}
+
+{% if user.is_authenticated %}
+
+  <div class="widget widget-simple">
+    <div class="widget-header">
+      <h3>Latest Activity</h3>
+    </div>
+    <div class="widget-body">
+      <div id="holdings-chart" style="height: 260px;"></div>
+    </div>
+  </div>
+
+  <div class="widget widget-simple">
+    <div class="widget-header">
+      <h3>Portfolio Makeup</h3>
+    </div>
+    <div class="widget-body">
+      <div id="holdings-chart" style="height: 260px;"></div>
+    </div>
+  </div>
+
+{% endif %}
+
+{% endblock sidebar %}

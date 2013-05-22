@@ -12,14 +12,14 @@ $(function() {
 var fixed = false;
 
 $(document).scroll(function() {
-    if( $(this).scrollTop() > 70 ) {
+    if ($(this).scrollTop() > 70) {
         if( !fixed ) {
             fixed = true;
             $('#fixed-nav').addClass('fixed-navbar');
             $('#bottom').css('marginTop', '78px');
         }
     } else {
-        if( fixed ) {
+        if(fixed) {
             fixed = false;
             $('#fixed-nav').removeClass('fixed-navbar');
             $('#bottom').css('marginTop', '0px');
