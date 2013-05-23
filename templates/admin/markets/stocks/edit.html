@@ -3,7 +3,7 @@
 
 {% block browser_title %}Edit Stock - Admin{% endblock browser_title %}
 
-{% block breadcrumbs %}<a href="/">Home</a> &rarr; <a href="{% url "admin_home_index" %}">Admin</a> &rarr; <a href="{% url "admin_stock_index" %}">Stocks</a> &rarr; {{ stock.name }}{% endblock breadcrumbs %}
+{% block breadcrumbs %}<a href="/">Dashboard</a> &rarr; <a href="{% url 'admin_home_index' %}">Admin</a> &rarr; <a href="{% url "admin_stock_index" %}">Stocks</a> &rarr; {{ stock.name }}{% endblock breadcrumbs %}
 
 {% block page_title %}Edit Stock{% endblock page_title %}
 

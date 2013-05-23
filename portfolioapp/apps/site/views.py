@@ -3,5 +3,5 @@
 from django.shortcuts import render
 
 
-def home_index(request):
-    return render(request, 'site/home_index.html')
+def site_index(request):
+    return render(request, 'site/site_index.html')

@@ -4,7 +4,7 @@
 
 {% block browser_title %}API Logs - Admin{% endblock browser_title %}
 
-{% block breadcrumbs %}<a href="/">Home</a> &rarr; <a href="{% url 'admin_home_index' %}">Admin</a> &rarr; <a href="{%url 'admin_api_log_index' %}">API Logs</a>  &rarr; {{ api_log.request_id }}{% endblock breadcrumbs %}
+{% block breadcrumbs %}<a href="/">Dashboard</a> &rarr; <a href="{% url 'admin_home_index' %}">Admin</a> &rarr; <a href="{%url 'admin_api_log_index' %}">API Logs</a>  &rarr; {{ api_log.request_id }}{% endblock breadcrumbs %}
 
 {% block page_title %}API Log Entry{% endblock page_title %}
 

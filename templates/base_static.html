@@ -1,9 +1,7 @@
 {% extends 'base.html' %}
 
 {% block main_navigation %}
-  <ul class="nav">
-    <li><a href="/">Home</a></li>
-  </ul>
+  {% include "common/navigation_main.html" %}
 {% endblock main_navigation %}
 
 {% block page_title_base %}
