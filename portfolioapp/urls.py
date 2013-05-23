@@ -37,7 +37,6 @@ urlpatterns = patterns('',
 # only available in debug mode
 if settings.DEBUG:
     urlpatterns += patterns('',
-        url(r'^dummy/?', 'portfolioapp.apps.core.views.dummy', name='dummy'),
         url(r'^dev/', include('portfolioapp.apps.dev.urls')),
     )
 

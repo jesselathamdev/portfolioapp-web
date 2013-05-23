@@ -1,4 +1,5 @@
 # profiles/views.py
+
 from django.shortcuts import render, render_to_response
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
@@ -7,6 +8,7 @@ from django.contrib.auth import authenticate, login as django_login, logout
 from django.contrib import messages
 
 from .forms import LoginForm, CreateUserProfileForm, EditUserProfileForm
+
 
 def login(request):
     if request.method == 'POST':
@@ -21,10 +23,12 @@ def login(request):
                     if not request.POST.get('remember_me', False):
                         request.session.set_expiry(0)
                     django_login(request, user)
-                    return HttpResponseRedirect(reverse('portfolios_index')) # success
+                    return HttpResponseRedirect(reverse('site_index')) # success
+
             else:
                 form.errors['login'] = 'The email and/or password provided was invalid.'
                 return render(request, 'profiles/signin.html', {'form': form})
+
         else:
             form.errors['login'] = 'The email and/or password provided was invalid.'
             return render(request, 'profiles/signin.html', {'form': form})
@@ -47,7 +51,7 @@ def profile_create(request):
             if user is not None:
                 if user.is_active:
                     django_login(request, user)
-                    return HttpResponseRedirect(reverse('portfolios_index'))
+                    return HttpResponseRedirect(reverse('site_index'))
         else:
             return render(request, 'profiles/signup.html', {'form': form})
 
@@ -60,7 +64,7 @@ def profile_create(request):
 def profile_edit(request):
     if request.method == 'POST':
         if 'cancel' in request.POST:
-            return HttpResponseRedirect(reverse('home_index'))
+            return HttpResponseRedirect(reverse('site_index'))
 
         form = EditUserProfileForm(request.POST, instance=request.user)
 

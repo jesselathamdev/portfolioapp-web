@@ -1,3 +1,5 @@
+# core/context_processors.py
+
 from portfolioapp.apps.profiles.forms import LoginForm
 
 
