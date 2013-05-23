@@ -37,7 +37,7 @@ class PortfolioDetail(models.Model):
 
 
 class PortfolioHolding(models.Model):
-    portfolio = models.ForeignKey(Portfolio)
+    portfolio = models.ForeignKey(Portfolio, on_delete=models.DO_NOTHING)
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     stock_name = models.CharField(max_length=200)
     stock_symbol = models.CharField(max_length=10)
@@ -139,7 +139,7 @@ class Activity(models.Model):
     commission = models.DecimalField(decimal_places=2, max_digits=6)
     comment = models.CharField(max_length=250)
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
-    portfolio = models.ForeignKey(Portfolio)
+    portfolio = models.ForeignKey(Portfolio, on_delete=models.DO_NOTHING)
 
     class Meta:
         db_table = 'activity'

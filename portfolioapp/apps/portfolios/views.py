@@ -20,6 +20,7 @@ from .forms import CreatePortfolioForm, CreateHoldingForm, CreateTransactionForm
 def portfolios_index(request):
     portfolios = PortfolioDetail.objects.filter(user_id=request.user.id)
     form = CreatePortfolioForm()
+
     return render(request, 'portfolios/portfolios/index.html', {'portfolios': portfolios, 'form': form})
 
 
@@ -37,14 +38,15 @@ def portfolio_create(request):
         else:
             messages.error(request, 'There was an error creating your portfolio.')
 
-    return HttpResponseRedirect(reverse('portfolio_index'))
+    return HttpResponseRedirect(reverse('portfolios_index'))
 
 
 @login_required
 def portfolio_delete(request, portfolio_id):
     p = Portfolio.objects.get(pk=portfolio_id)
     p.delete()
-    return HttpResponseRedirect(reverse('portfolio_index'))
+
+    return HttpResponseRedirect(reverse('portfolios_index'))
 
 
 ######################## PORTFOLIO HOLDINGS
