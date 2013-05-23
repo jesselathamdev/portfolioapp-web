@@ -1,9 +1,16 @@
-    # settings/local.py
+# settings/dev.py
 
 from .base import *
 
+
+########## MISC CONFIGURATION
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
+TEMPLATE_STRING_IF_INVALID = 'INVALID EXPRESSION: %s'
+
+
+########## DATABASE SETTINGS
 
 DATABASES = {
     'default': {
@@ -17,17 +24,29 @@ DATABASES = {
     }
 }
 
-MIDDLEWARE_CLASSES += (
-  'portfolioapp.apps.core.middleware.ProfilerMiddleware',
-  'debug_toolbar.middleware.DebugToolbarMiddleware',
-)
+
+########## INSTALLED APPS
 
 INSTALLED_APPS += (
     # development tools
     'django_extensions',
     'debug_toolbar',
     'devserver',
+
+    # testing tools
+    'django_nose',
 )
+
+
+########## MIDDLEWARE
+
+MIDDLEWARE_CLASSES += (
+  'portfolioapp.apps.core.middleware.ProfilerMiddleware',
+  'debug_toolbar.middleware.DebugToolbarMiddleware',
+)
+
+
+########## DEVSERVER MODULES AND CONFIGURATION
 
 DEVSERVER_MODULES = (
     'devserver.modules.sql.SQLRealTimeModule',
@@ -43,8 +62,8 @@ DEVSERVER_MODULES = (
 DEVSERVER_TRUNCATE_SQL = False
 DEVSERVER_ARGS = ['--werkzeug']
 
-# Required for debug_toolbar
-INTERNAL_IPS = ('127.0.0.1',)
+
+########## DEBUG TOOLBAR CONFIGURATION
 
 DEBUG_TOOLBAR_PANELS = (
     'debug_toolbar.panels.version.VersionDebugPanel',
@@ -58,8 +77,15 @@ DEBUG_TOOLBAR_PANELS = (
     'debug_toolbar.panels.logger.LoggingPanel',
 )
 
+INTERNAL_IPS = ('127.0.0.1',)  # Required for debug_toolbar
+
 DEBUG_TOOLBAR_CONFIG = {
     'INTERCEPT_REDIRECTS': False,
 }
 
-TEMPLATE_STRING_IF_INVALID = 'INVALID EXPRESSION: %s'
+
+########## TEST SETTINGS
+# currently an issue exists here when running ./manage.py test, "conflicting option strings between core Django and django-nose I suspect - 2013-05-22
+
+# TEST_RUNNER = 'django_nose.BasicNoseRunner'
+# SOUTH_TESTS_MIGRATE = True

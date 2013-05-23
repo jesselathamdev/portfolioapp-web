@@ -9,6 +9,11 @@ class TestPorfolio(object):
     def setup(self):
         pass
 
+    def test1(self):
+        assert True
+
+    def test2(self):
+        assert True
 
     def teardown(self):
         pass
