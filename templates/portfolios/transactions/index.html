@@ -1,4 +1,4 @@
-{% extends 'base_app_two_columns.html' %}
+{% extends 'base_app_one_column.html' %}
 
 {% block browser_title %}Transactions{% endblock browser_title %}
 
@@ -13,12 +13,6 @@
   </div>
 
 {% endblock content %}
-
-{% block sidebar %}
-
-  Sidebar
-
-{% endblock sidebar %}
 
 {% block script %}
   {% include "common/list_pagination_script.html" %}
