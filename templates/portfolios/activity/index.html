@@ -1,4 +1,4 @@
-{% extends 'base_app_two_columns.html' %}
+{% extends 'base_app_one_column.html' %}
 
 {% load endless %}
 {% load humanize %}
@@ -13,25 +13,12 @@
 
 {% block content %}
 
-<div id="paginate" class="endless_page_template">
-  {% include page_template %}
-</div>
+  <div id="paginate" class="endless_page_template">
+    {% include page_template %}
+  </div>
 
 {% endblock content %}
 
-{% block sidebar %}
-<div class="widget widget-simple">
-  <div class="widget-header">
-    <h4>Optional title of widget <small>subtitle</small></h4>
-  </div>
-  <div class="widget-body">
-    <p class="lead">This is a subtitle of the widget</p>
-    <p>Lorem ipsum dolor sit amet consectetuer pede tempor ligula sem tempus. A nascetur gravida parturient est Aenean facilisis In est consectetuer Nam. Adipiscing odio tincidunt ac ornare pellentesque metus diam laoreet sollicitudin vel.</p>
-  </div>
-</div>
-
-{% endblock sidebar %}
-
 {% block script %}
-{% include "common/list_pagination_script.html" %}
+  {% include "common/list_pagination_script.html" %}
 {% endblock script %}
