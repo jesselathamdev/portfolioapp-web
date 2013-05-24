@@ -1,7 +1,7 @@
 # markets/views.py
 
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render_to_response, RequestContext
+from django.shortcuts import render_to_response, RequestContext, get_object_or_404, render
 from django.db.models import Q
 
 from endless_pagination.decorators import page_template
@@ -46,3 +46,10 @@ def stock_index(request, template='markets/stocks/index.html', extra_context=Non
         context.update(extra_context)
 
     return render_to_response(template, context, context_instance=RequestContext(request))
+
+
+@login_required
+def stock_show(request, stock_id):
+    stock = get_object_or_404(Stock, pk=stock_id)
+
+    return render(request, 'markets/stocks/show.html', {'stock': stock})

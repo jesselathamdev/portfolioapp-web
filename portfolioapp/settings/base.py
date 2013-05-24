@@ -88,6 +88,10 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.humanize',
 
+    # 3rd party addons
+    'endless_pagination',
+    'south',
+
     # portfolioapp specific
     'portfolioapp.apps.profiles',
     'portfolioapp.apps.portfolios',
@@ -96,10 +100,6 @@ INSTALLED_APPS = (
     'portfolioapp.apps.core',
     'portfolioapp.apps.admin',
     'portfolioapp.apps.api',
-
-    # 3rd party addons
-    'endless_pagination',
-    'south',
 )
 
 ########### AUTHENTICATION CONFIGURATION

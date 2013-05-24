@@ -41,7 +41,6 @@ INSTALLED_APPS += (
 ########## MIDDLEWARE
 
 MIDDLEWARE_CLASSES += (
-  'portfolioapp.apps.core.middleware.ProfilerMiddleware',
   'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 

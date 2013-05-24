@@ -25,15 +25,34 @@
 {% endblock content %}
 
 {% block sidebar %}
-<div class="widget widget-simple">
-  <div class="widget-header">
-    <h4>Optional title of widget <small>subtitle</small></h4>
+
+  <div class="widget widget-simple">
+    <div class="widget-header">
+      <h4>Best Performers</h4>
+    </div>
+    <div class="widget-body">
+      <table class="table">
+        <thead>
+          <tr>
+            <td>Stock</td>
+            <td class="align-right">Yesterday</td>
+            <td class="align-right">Today</td>
+          </tr>
+        </thead>
+        <tr>
+          <td><a href="#">BB:TSX</a></td>
+          <td class="align-right">$14.93</td>
+          <td class="align-right indicator-gain">$15.33 (+6.70%)</td>
+        </tr>
+        <tr>
+          <td><a href="#">FLWS:NASDAQ</a></td>
+          <td class="align-right">$39.23</td>
+          <td class="align-right indicator-gain">$42.18 (+7.52%)</td>
+        </tr>
+      </table>
+    </div>
   </div>
-  <div class="widget-body">
-    <p class="lead">This is a subtitle of the widget</p>
-    <p>Lorem ipsum dolor sit amet consectetuer pede tempor ligula sem tempus. A nascetur gravida parturient est Aenean facilisis In est consectetuer Nam. Adipiscing odio tincidunt ac ornare pellentesque metus diam laoreet sollicitudin vel.</p>
-  </div>
-</div>
+
 {% endblock sidebar %}
 
 {% block script %}
@@ -58,6 +77,8 @@
           .on('typeahead:autocompleted', function(e, data) {
               alert('autocompleted');
           });
+
+          $('#tbSearch').focus();
       });
   </script>
   {% endverbatim %}
