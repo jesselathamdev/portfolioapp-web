@@ -113,7 +113,7 @@ def profile_edit(request, user_id):
         if form.is_valid():
             form.save()
             messages.success(request, 'Profile saved successfully.')
-            
+
             return HttpResponseRedirect(reverse('admin_profile_index'))
     else:
         form = AdminEditUserProfileForm(instance=user)
