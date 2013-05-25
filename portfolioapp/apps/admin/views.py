@@ -96,6 +96,7 @@ def market_index(request):
 @user_passes_test(is_admin)
 def profile_index(request):
     users = User.objects.all().order_by('email')
+
     return render(request, 'admin/profiles/index.html', {'users': users})
 
 
@@ -112,9 +113,11 @@ def profile_edit(request, user_id):
         if form.is_valid():
             form.save()
             messages.success(request, 'Profile saved successfully.')
+            
             return HttpResponseRedirect(reverse('admin_profile_index'))
     else:
         form = AdminEditUserProfileForm(instance=user)
+
         return render(request, 'admin/profiles/edit.html', {'form': form, 'user': user})
 
 

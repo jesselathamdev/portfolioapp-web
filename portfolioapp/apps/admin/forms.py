@@ -1,4 +1,5 @@
 # admin/forms.py
+
 from django import forms
 
 from portfolioapp.apps.markets.models import Stock

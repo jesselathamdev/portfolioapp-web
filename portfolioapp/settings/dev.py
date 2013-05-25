@@ -86,5 +86,5 @@ DEBUG_TOOLBAR_CONFIG = {
 ########## TEST SETTINGS
 # currently an issue exists here when running ./manage.py test, "conflicting option strings between core Django and django-nose I suspect - 2013-05-22
 
-# TEST_RUNNER = 'django_nose.BasicNoseRunner'
-# SOUTH_TESTS_MIGRATE = True
+TEST_RUNNER = 'django_nose.BasicNoseRunner'
+SOUTH_TESTS_MIGRATE = True
