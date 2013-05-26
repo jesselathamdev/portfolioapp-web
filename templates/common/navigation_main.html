@@ -3,7 +3,7 @@
 <ul class="nav">
   {% if user.is_authenticated %}
   <li class="{% navactive request 'site_index' %}"><a href="{% url 'site_index' %}">Dashboard</a></li>
-  <li class="{% navactive request 'markets_stocks_index markets_stocks_show' %}"><a href="{% url 'markets_stocks_index' %}">Stocks</a></li>
+  <li class="{% navactive request 'markets_stocks_index markets_stocks_show markets_stocks_historical_prices_index' %}"><a href="{% url 'markets_stocks_index' %}">Stocks</a></li>
   <li class="{% navactive request 'portfolios_index portfolio_create portfolio_holdings_index portfolio_holding_show transactions_index' %}"><a href="{% url 'portfolios_index' %}">Portfolios</a></li>
   <li class="{% navactive request 'activity_index' %}"><a href="{% url 'activity_index' %}">Activity</a></li>
   {% else %}
