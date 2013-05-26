@@ -1,0 +1,21 @@
+{% extends 'base_app_two_columns.html' %}
+
+{% load endless %}
+
+{% block browser_title %}Historical Stock Prices{% endblock browser_title %}
+
+{% block breadcrumbs %}<a href="/">Dashboard</a> &rarr; <a href="{% url 'markets_stocks_index' %}">Stocks</a> &rarr; <a href="{% url 'markets_stocks_show' stock.id %}">{{ stock.name }} ({{ stock.symbol }}:{{ stock.market.acr }})</a> &rarr; Historical Stock Prices{% endblock breadcrumbs %}
+
+{% block page_title %}<i class="icon-list"></i> Historical Stock Prices{% endblock page_title %}
+
+{% block content %}
+
+<div id="paginate" class="endless_page_template">
+  {% include page_template %}
+</div>
+
+{% endblock content %}
+
+{% block script %}
+  {% include "common/list_pagination_script.html" %}
+{% endblock script %}
