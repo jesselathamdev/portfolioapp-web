@@ -153,6 +153,7 @@ section.body .main h2 {
   font-weight: normal;
 }
 
+
 /********************************/
 /* WIDGETS
 /********************************/
@@ -537,17 +538,35 @@ form.form-horizontal input { box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) inset; }
   width: 40px;
 }
 
-.table .indicator-gain,
-.table tfoot .total th.indicator-gain { color: #57a957; }
-.table .indicator-loss,
-.table tfoot .total th.indicator-loss { color: #db6464; }
-
 .table tr th.align-right,
 .table tr td.align-right { text-align: right; }
 
 .table tr td .large { font-size: 19px; }
 .table tr td .medium { font-size: 14px; font-weight: bold; }
 .table tr td .small { font-size: 12px; }
+
+
+/********************************/
+/* STOCKS, HOLDINGS SHOW PAGE
+/********************************/
+
+.stock-header {
+  margin-bottom: 20px;
+}
+
+.stock-name {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.stock-symbol {
+  font-weight: bold;
+}
+.stock-current-price {}
+.stock-currency {}
+.stock-change
+.stock-change-price {}
+.stock-change-percent {}
 
 
 /********************************/
@@ -744,6 +763,14 @@ form.form-horizontal input { box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) inset; }
   color: #333333;
   line-height: 20px;
 }
+
+
+/********************************/
+/* GLOBALS
+/********************************/
+
+.indicator-gain { color: #57a957; }
+.indicator-loss { color: #db6464; }
 
 
 /********************************/

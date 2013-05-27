@@ -1,5 +1,7 @@
 # markets/views.py
 
+import time
+
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response, RequestContext, get_object_or_404, render
 from django.db.models import Q
@@ -42,8 +44,13 @@ def stock_index(request, template='markets/stocks/index.html', extra_context=Non
 @login_required
 def stock_show(request, stock_id):
     stock = get_object_or_404(Stock.objects.select_related('market__acr'), pk=stock_id)
+    prices = StockPriceHistory.objects.filter(stock_id=stock_id).order_by('date_created')
 
-    return render(request, 'markets/stocks/show.html', {'stock': stock})
+    stock_chart = []
+    for price in prices:
+        stock_chart.append([int(1000*time.mktime(price.date_created.timetuple())), float(price.price_closing)])
+
+    return render(request, 'markets/stocks/show.html', {'stock': stock, 'stock_chart': stock_chart})
 
 
 @login_required

@@ -11,34 +11,34 @@
 
   <div class="stock-header clearfix">
     <div style="float: left;">
-      <span class="stock-name">{{ holding.stock.name }}</span> <span class="stock-symbol">({{ holding.stock.symbol }}:{{ holding.stock.market.acr }})</span> <span class="stock-current-price">$15.43</span> <span class="stock-currency">CAD</span> <span class="stock-something">-$0.1200 (-0.77%)</span>
+      <span class="stock-name">{{ holding.stock.name }}</span> <span class="stock-symbol">({{ holding.stock.symbol }}:{{ holding.stock.market.acr }})</span> <span class="stock-current-price">$15.43</span> <span class="stock-currency">CAD</span> <span class="stock-change indicator-loss"><span class="stock-change-price">-$0.1200</span> <span class="stock-change-percent">(-0.77%)</span></span>
     </div>
-    {% if holding_transaction_count > 0 %}
-      <div style="float: right;">
-        <p><a href="{% url 'transactions_index' holding.portfolio.id holding.id %}">View Transactions</a> &nbsp;|&nbsp; <a href="{% url 'markets_stocks_historical_prices_index' holding.stock.id %}">View Historical Prices</a></p>
-      </div>
-    {% endif %}
+    <div style="float: right;">
+      {% if holding_transaction_count > 0 %}
+        <a href="{% url 'transactions_index' holding.portfolio.id holding.id %}">View Transactions</a> &nbsp;|&nbsp;
+      {% endif %}
+        <a href="{% url 'markets_stocks_historical_prices_index' holding.stock.id %}">View Historical Prices</a>
+    </div>
   </div>
-
-  <h4>Fundamentals</h4>
 
 {% endblock content %}
 
 {% block sidebar %}
 
-<div class="widget widget-simple">
-  <div class="widget-header">
-    <h3>Holding Snapshot</h3>
+  <div class="widget widget-simple">
+    <div class="widget-header">
+      <h3>Holding Snapshot</h3>
+    </div>
+    <div class="widget-body">
+      <ul>
+        <li>Total Shares: 100.0000</li>
+        <li>Average Cost: $13.33</li>
+        <li>Book Value: $1000.22</li>
+        <li>Last Price: $14.32</li>
+        <li>Market Value: $14.32</li>
+      </ul>
+    </div>
   </div>
-  <div class="widget-body">
-    <ul>
-      <li>Shares: 100.0000</li>
-      <li>Book Value: $1000.22</li>
-      <li>Last Price: $14.32</li>
-      <li>Market Value: $14.32</li>
-    </ul>
-  </div>
-</div>
 
 <div class="widget widget-simple">
   <div class="widget-header">
