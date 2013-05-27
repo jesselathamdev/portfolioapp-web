@@ -13,7 +13,7 @@
 
 <form method="post" action="" class="form-inline">
   {% csrf_token %}
-  <input type="text" id="tbSearch" name="search_term" class="twitter-typeahead" >
+  <input type="text" id="tbSearch" name="search_term" class="twitter-typeahead" placeholder="stock name, symbol, or market" >
   <input type="submit" name="btnSearch" value="Search" class="btn">
   <input type="hidden" id="hidStockId" name="stock_id" value="">
 </form>

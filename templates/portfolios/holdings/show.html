@@ -15,7 +15,7 @@
     </div>
     {% if holding_transaction_count > 0 %}
       <div style="float: right;">
-        <p><a href="{% url 'transactions_index' holding.portfolio.id holding.id %}">View Transactions</a></p>
+        <p><a href="{% url 'transactions_index' holding.portfolio.id holding.id %}">View Transactions</a> &nbsp;|&nbsp; <a href="{% url 'markets_stocks_historical_prices_index' holding.stock.id %}">View Historical Prices</a></p>
       </div>
     {% endif %}
   </div>
