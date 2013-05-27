@@ -41,7 +41,7 @@ def stock_index(request, template='markets/stocks/index.html', extra_context=Non
 
 @login_required
 def stock_show(request, stock_id):
-    stock = get_object_or_404(Stock, pk=stock_id)
+    stock = get_object_or_404(Stock.objects.select_related('market__acr'), pk=stock_id)
 
     return render(request, 'markets/stocks/show.html', {'stock': stock})
 
