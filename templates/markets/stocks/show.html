@@ -12,7 +12,8 @@
 
   <div class="stock-header clearfix">
     <div style="float: left;">
-      <span class="stock-name">{{ stock.name }}</span> <span class="stock-symbol">({{ stock.symbol }}:{{ stock.market.acr }})</span> <span class="stock-current-price">$15.43</span> <span class="stock-currency">CAD</span> <span class="stock-change indicator-loss"><span class="stock-change-price">-$0.1200</span> <span class="stock-change-percent">(-0.77%)</span></span>
+      <div class="stock-header-row-1"><span class="stock-name">{{ stock.name }}</span> <span class="stock-symbol">({{ stock.symbol }}:{{ stock.market.acr }})</span></div>
+      <div class="stock-header-row-2"><span class="stock-current-price">$15.43</span> <span class="stock-currency">CAD</span> <span class="stock-change indicator-loss"><span class="stock-change-price">-$0.1200</span> <span class="stock-change-percent">(-0.77%)</span></span> <span class="stock-change-time">Last: May 24th, 2013 12:34 PDT</span></div>
     </div>
     <div style="float: right;">
       <a href="{% url 'markets_stocks_historical_prices_index' stock.id %}">View Historical Prices</a>
@@ -25,17 +26,68 @@
 
 {% block sidebar %}
 
-  <div class="widget widget-simple">
+  <div class="widget widget-stats">
     <div class="widget-header">
-      <h3>Key Statistics</h3>
+      <h4><i class="icon-info-sign"></i> Key Statistics</h4>
     </div>
     <div class="widget-body">
-      <ul>
-        <li>Item 1: 10</li>
-        <li>Item 2: 20</li>
-        <li>Item 3: 30</li>
-        <li>Item 4: 40</li>
-      </ul>
+      <div class="stats-row">
+        <div class="stats-label">
+          Previous Close
+        </div>
+        <div class="stats-value">
+          ${{ price_previous_day|floatformat:2 }}
+        </div>
+      </div>
+      <div class="stats-row">
+        <div class="stats-label">
+          52 Week Range
+        </div>
+        <div class="stats-value">
+          ${{ price_52_week_low }} - ${{ price_52_week_high }}
+        </div>
+      </div>
+      <div class="stats-row">
+        <div class="stats-label">
+          1 Year Return
+        </div>
+        <div class="stats-value">
+          {{ one_year_return_percent|intcomma }}%
+        </div>
+      </div>
+      <div class="stats-row">
+        <div class="stats-label">
+          Shares Outstanding
+        </div>
+        <div class="stats-value">
+          {{ outstanding_shares|floatformat:2|intcomma }}M
+        </div>
+      </div>
+      <div class="stats-row">
+        <div class="stats-label">
+          Market Cap
+        </div>
+        <div class="stats-value">
+          ${{ market_cap|floatformat:3|intcomma }}B
+        </div>
+      </div>
+      <div class="stats-row">
+        <div class="stats-label">
+          P/E
+        </div>
+        <div class="stats-value">
+          {{ stock.pe|floatformat:2 }}
+        </div>
+      </div>
+      <div class="stats-row">
+        <div class="stats-label">
+          EPS
+        </div>
+        <div class="stats-value">
+          {{ stock.eps|floatformat:2 }}
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -64,13 +116,6 @@
               rangeSelector: {
                   selected: 4
               },
-{#              plotOptions: {#}
-{#                  series: {#}
-{#                      pointStart: Date.UTC(2012, 4, 1),#}
-{#                      pointInterval: 86400000,#}
-{#                      pointRange: 432000000#}
-{#                  }#}
-{#              },#}
               xAxis: {
                   ordinal: false
               },
@@ -79,6 +124,16 @@
                   data: {{ stock_chart }},
                   tooltip: {
                       valueDecimals: 2
+                  },
+                  type: 'area',
+                  fillColor : {
+                      linearGradient : {
+                          x1: 0,
+                          y1: 0,
+                          x2: 0,
+                          y2: 1
+                      },
+                      stops : [[0, Highcharts.getOptions().colors[0]], [1, 'rgba(0,0,0,0)']]
                   }
               }]
           });

@@ -74,11 +74,15 @@ def stock_edit(request, stock_id):
         if form.is_valid():
             form.save()
             messages.success(request, 'Your form was saved.')
+
             return HttpResponseRedirect(reverse('admin_stock_index'))
         else:
+            messages.error(request, 'There were errors while saving: %s' % form.errors)
+
             return render(request, 'admin/markets/stocks/edit.html', {'stock': stock, 'form': form})
     else:
         form = StockEditForm(instance=stock)
+
         return render(request, 'admin/markets/stocks/edit.html', {'stock': stock, 'form': form})
 
 

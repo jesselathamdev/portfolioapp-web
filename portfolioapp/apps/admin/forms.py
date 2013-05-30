@@ -9,7 +9,7 @@ from portfolioapp.apps.api.models import ApiToken
 class StockEditForm(forms.ModelForm):
     class Meta:
         model = Stock
-        fields = ('name', 'symbol', 'last_price',)
+        fields = ('name', 'symbol', 'last_price', 'date_last_price_updated', 'pe', 'eps', 'outstanding_shares',)
 
 
 class StockSearchForm(forms.Form):

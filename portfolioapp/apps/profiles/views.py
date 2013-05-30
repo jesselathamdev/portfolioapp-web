@@ -14,28 +14,34 @@ def login(request):
     if request.method == 'POST':
 
         form = LoginForm(request.POST)
+
         if form.is_valid():
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
             user = authenticate(username=email, password=password)
+
             if user is not None:
                 if user.is_active:
                     if not request.POST.get('remember_me', False):
                         request.session.set_expiry(0)
                     django_login(request, user)
+
                     return HttpResponseRedirect(reverse('site_index')) # success
 
             else:
                 form.errors['login'] = 'The email and/or password provided was invalid.'
+
                 return render(request, 'profiles/signin.html', {'form': form})
 
         else:
             form.errors['login'] = 'The email and/or password provided was invalid.'
+
             return render(request, 'profiles/signin.html', {'form': form})
 
     else:
         logout(request)
         form = LoginForm()
+
         return render(request, 'profiles/signin.html', {'form': form})
 
 
@@ -71,7 +77,9 @@ def profile_edit(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Profile saved successfully.')
+
             return HttpResponseRedirect(reverse('profile_edit'))
     else:
         form = EditUserProfileForm(instance=request.user)
+
         return render(request, 'profiles/edit.html', {'form': form})

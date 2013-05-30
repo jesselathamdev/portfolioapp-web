@@ -35,6 +35,30 @@
         </div>
       </div>
       <div class="control-group">
+        <label class="control-label" for="{{ form.date_last_price_updated.auto_id }}">Date Last Price Updated</label>
+        <div class="controls">
+          <input type="text" id="{{ form.date_last_price_updated.auto_id }}" name="{{ form.date_last_price_updated.html_name }}" value="{{ form.date_last_price_updated.value }}" placeholder="date last price updated" class="input-xlarge">
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="{{ form.pe.auto_id }}">PE</label>
+        <div class="controls">
+          <input type="text" id="{{ form.pe.auto_id }}" name="{{ form.pe.html_name }}" value="{{ form.pe.value }}" placeholder="pe" class="input-small">
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="{{ form.eps.auto_id }}">EPS</label>
+        <div class="controls">
+          <input type="text" id="{{ form.eps.auto_id }}" name="{{ form.eps.html_name }}" value="{{ form.eps.value }}" placeholder="eps" class="input-small">
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="{{ form.outstanding_shares.auto_id }}">Shares Outstanding:</label>
+        <div class="controls">
+          <input type="text" id="{{ form.outstanding_shares.auto_id }}" name="{{ form.outstanding_shares.html_name }}" value="{{ form.outstanding_shares.value }}" placeholder="shares outstanding" class="input-medium">
+        </div>
+      </div>
+      <div class="control-group">
         <div class="controls">
           <button type="submit" class="btn btn-success">Save stock</button>
           <button type="submit" class="btn" name="cancel">Cancel</button>
