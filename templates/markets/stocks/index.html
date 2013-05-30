@@ -58,6 +58,7 @@
 {% block script %}
   <script src="{{ STATIC_URL }}js/twitter-hogan/hogan-2.0.0.min.js" type="text/javascript"></script>
   <script src="{{ STATIC_URL }}js/twitter-typeahead/typeahead.min.js" type="text/javascript"></script>
+  <script src="{{ STATIC_URL }}js/stocks.js" type="text/javascript" ></script>
 
   {% verbatim %}
   <script type="text/javascript">
@@ -73,6 +74,7 @@
           })
           .on('typeahead:selected', function(e, data) {
               $('#hidStockId').val(data['id']);
+              window.location.href = '/stocks/' + data['id'];
           })
           .on('typeahead:autocompleted', function(e, data) {
               alert('autocompleted');

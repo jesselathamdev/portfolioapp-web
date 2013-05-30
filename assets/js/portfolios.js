@@ -1,4 +1,5 @@
 $(document).ready(function() {
+
     $.fn.digits = function(){
         return this.each(function(){
             $(this).text( $(this).text().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") );
@@ -33,6 +34,7 @@ $(document).ready(function() {
     $('table.table-clickable tbody tr')
         .click(function() {
             var href = $(this).find("a").attr('href');
+
             if(href) {
                 window.location = href;
             }
@@ -73,4 +75,5 @@ $(document).ready(function() {
             $(this).find('.table-context-menu').toggle();
             $(this).parent().siblings().find('.table-context-menu').toggle().hide();
         });
+
 });
