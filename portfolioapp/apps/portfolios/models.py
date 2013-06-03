@@ -140,6 +140,7 @@ class Activity(models.Model):
     comment = models.CharField(max_length=250)
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     portfolio = models.ForeignKey(Portfolio, on_delete=models.DO_NOTHING)
+    stock = models.ForeignKey(Stock, on_delete=models.DO_NOTHING)
 
     class Meta:
         db_table = 'activity'

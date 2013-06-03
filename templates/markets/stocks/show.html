@@ -31,59 +31,59 @@
       <h4><i class="icon-info-sign"></i> Key Statistics</h4>
     </div>
     <div class="widget-body">
-      <div class="stats-row">
-        <div class="stats-label">
+      <div class="item-row">
+        <div class="item-label">
           Previous Close
         </div>
-        <div class="stats-value">
+        <div class="item-value">
           ${{ price_previous_day|floatformat:2 }}
         </div>
       </div>
-      <div class="stats-row">
-        <div class="stats-label">
+      <div class="item-row">
+        <div class="item-label">
           52 Week Range
         </div>
-        <div class="stats-value">
+        <div class="item-value">
           ${{ price_52_week_low }} - ${{ price_52_week_high }}
         </div>
       </div>
-      <div class="stats-row">
-        <div class="stats-label">
+      <div class="item-row">
+        <div class="item-label">
           1 Year Return
         </div>
-        <div class="stats-value">
+        <div class="item-value">
           {{ one_year_return_percent|intcomma }}%
         </div>
       </div>
-      <div class="stats-row">
-        <div class="stats-label">
+      <div class="item-row">
+        <div class="item-label">
           Shares Outstanding
         </div>
-        <div class="stats-value">
+        <div class="item-value">
           {{ outstanding_shares|floatformat:2|intcomma }}M
         </div>
       </div>
-      <div class="stats-row">
-        <div class="stats-label">
+      <div class="item-row">
+        <div class="item-label">
           Market Cap
         </div>
-        <div class="stats-value">
+        <div class="item-value">
           ${{ market_cap|floatformat:3|intcomma }}B
         </div>
       </div>
-      <div class="stats-row">
-        <div class="stats-label">
+      <div class="item-row">
+        <div class="item-label">
           P/E
         </div>
-        <div class="stats-value">
+        <div class="item-value">
           {{ stock.pe|floatformat:2 }}
         </div>
       </div>
-      <div class="stats-row">
-        <div class="stats-label">
+      <div class="item-row">
+        <div class="item-label">
           EPS
         </div>
-        <div class="stats-value">
+        <div class="item-value">
           {{ stock.eps|floatformat:2 }}
         </div>
       </div>

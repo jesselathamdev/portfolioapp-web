@@ -218,51 +218,65 @@ section.body .main h2 {
   border-bottom: none;
 }
 
-.widget-stats {
+.widget-stats,
+.widget-activity {
   background-color: #f4f4f5;
   border: 1px solid #ffffff;
   box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.35);
 }
 
-.widget-stats .widget-header {
-  padding: 10px;
-}
+.widget-stats .widget-header,
+.widget-activity .widget-header { padding: 10px; }
 
-.widget-stats .widget-body {
-  padding-top: 0px;
-}
+.widget-activity .widget-body,
+.widget-stats .widget-body { padding-top: 0px; }
 
 .widget-stats .widget-body:before,
 .widget-stats .widget-body:after,
-.widget-stats .stats-row:before,
-.widget-stats .stats-row:after { display:table; content:""; line-height:0; }
-.widget-stats .widget-body:after,
-.widget-stats .stats-row:after { clear:both; }
+.widget-stats .item-row:before,
+.widget-stats .item-row:after,
+.widget-activity .widget-body:before,
+.widget-activity .widget-body:after,
+.widget-activity .item-row:before,
+.widget-activity .item-row:after { display:table; content:""; line-height:0; }
 
-.widget-stats .stats-row {
+.widget-stats .widget-body:after,
+.widget-stats .item-row:after,
+.widget-activity .widget-body:after,
+.widget-activity .item-row:after { clear:both; }
+
+.widget-stats .item-row,
+.widget-activity .item-row {
   padding: 7px 10px;
   border-top: 1px solid #ffffff;
   border-bottom: 1px solid #bbbbbb;
 }
 
-.widget-stats .stats-row:first-child {
-  border-top: none;
-}
+.widget-stats .item-row:first-child,
+.widget-activity .item-row:first-child { border-top: none; }
 
+.widget-stats .item-row:last-child,
+.widget-activity .item-row:last-child { border-bottom: none; }
 
-.widget-stats .stats-row:last-child {
-  border-bottom: none;
-}
-
-.widget-stats .stats-label {
+.widget-stats .item-label,
+.widget-activity .item-label {
   float: left;
   font-size: 14px;
-  line-height: 25px;
-  font-weight: bold;
+  line-height: 22px;
   text-shadow: 0px 1px 1px rgba(255, 255, 255, 1.0);
 }
 
-.widget-stats .stats-value {
+.widget-stats .item-label {
+  line-height: 25px;
+  font-weight: bold;
+}
+
+.widget-activity .item-label a {
+  font-weight: bold;
+}
+
+.widget-stats .item-value,
+.widget-activity .item-value {
   float: right;
   font-size: 17px;
   line-height: 25px;
