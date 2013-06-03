@@ -79,7 +79,7 @@
 
 {% if user.is_authenticated %}  {# authenticated dashboard #}
 
-  <div class="widget widget-stats"">
+  <div class="widget widget-stats">
     <div class="widget-header">
       <h4><i class="icon-folder-open-alt"></i> Portfolios</h4>
     </div>
@@ -105,7 +105,7 @@
       {% else %}
         <div class="item-row">
           <div class="item-label">
-            No portfolios found, create one now!
+            <span style="font-weight: normal">No portfolios found, <a href="{% url 'portfolios_index' %}">create one now!</a>
           </div>
         </div>
       {% endif %}
@@ -125,22 +125,19 @@
                 On <a href="#">{{ activity.date_transacted|date:"F j, Y" }}</a>, {{ activity.quantity|floatformat:2 }} share{{ activity.quantity|pluralize }} of <a href="{% url 'markets_stocks_show' activity.stock_id %}">{{ activity.stock.name }} ({{ activity.stock.symbol }}:{{ activity.stock.market.acr }})</a> was purchased for ${{ activity.value|floatformat:2 }} each under <a href="{% url 'portfolio_holdings_index' activity.portfolio_id %}">{{ activity.portfolio.name }}</a>
               </div>
             </div>
-          {% endif %}
-          {% if activity.type == 6 %}  {# shares sold #}
+          {% elif activity.type == 6 %}  {# shares sold #}
             <div class="item-row">
               <div class="item-label">
                 On <a href="#">{{ activity.date_transacted|date:"F j, Y" }}</a>, {{ activity.quantity|floatformat:2 }} share{{ activity.quantity|pluralize }} of <a href="{% url 'markets_stocks_show' activity.stock_id %}">{{ activity.stock.name }} ({{ activity.stock.symbol }}:{{ activity.stock.market.acr }})</a> was sold for ${{ activity.value|floatformat:2 }} each from <a href="{% url 'portfolio_holdings_index' activity.portfolio_id %}">{{ activity.portfolio.name }}</a>
               </div>
             </div>
-          {% endif %}
-          {% if activity.type == 0 %}  {# shares in #}
+          {% elif activity.type == 0 %}  {# shares in #}
             <div class="item-row">
               <div class="item-label">
                 On <a href="#">{{ activity.date_transacted|date:"F j, Y" }}</a>, {{ activity.quantity|floatformat:2 }} share{{ activity.quantity|pluralize }} of <a href="{% url 'markets_stocks_show' activity.stock_id %}">{{ activity.stock.name }} ({{ activity.stock.symbol }}:{{ activity.stock.market.acr }})</a> was added to <a href="{% url 'portfolio_holdings_index' activity.portfolio_id %}">{{ activity.portfolio.name }}</a>
               </div>
             </div>
-          {% endif %}
-          {% if activity.type == 1 %}  {# shares out #}
+          {% elif activity.type == 1 %}  {# shares out #}
             <div class="item-row">
               <div class="item-label">
                 On <a href="#">{{ activity.date_transacted|date:"F j, Y" }}</a>, {{ activity.quantity|floatformat:2 }} share{{ activity.quantity|pluralize }} of <a href="{% url 'markets_stocks_show' activity.stock_id %}">{{ activity.stock.name }} ({{ activity.stock.symbol }}:{{ activity.stock.market.acr }})</a> was removed from <a href="{% url 'portfolio_holdings_index' activity.portfolio_id %}">{{ activity.portfolio.name }}</a>
@@ -148,6 +145,12 @@
             </div>
           {% endif %}
         {% endfor %}
+      {% else %}
+        <div class="item-row">
+          <div class="item-label">
+            No recent activity
+          </div>
+        </div>
       {% endif %}
     </div>
   </div>
