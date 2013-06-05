@@ -88,7 +88,7 @@
         {% for portfolio in portfolios %}
           <div class="item-row">
             <div class="item-label">
-              {{ portfolio.name }}
+              <a href="{% url 'portfolio_holdings_index' portfolio.id %}">{{ portfolio.name }}</a>
             </div>
             <div class="item-value">
               {% if portfolio.market_value > portfolio.book_value %}
