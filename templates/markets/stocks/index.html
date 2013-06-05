@@ -11,16 +11,18 @@
 
 {% block content %}
 
-<form method="post" action="" class="form-inline">
-  {% csrf_token %}
-  <input type="text" id="tbSearch" name="search_term" class="twitter-typeahead" placeholder="stock name, symbol, or market" >
-  <input type="submit" name="btnSearch" value="Search" class="btn">
-  <input type="hidden" id="hidStockId" name="stock_id" value="">
-</form>
+  <div class="list-search-bar">
+    <form method="post" action="" class="form-inline">
+      {% csrf_token %}
+      <input type="text" id="tbSearch" name="search_term" class="twitter-typeahead" placeholder="stock name, symbol, or market..." >
+      <input type="submit" name="btnSearch" value="Search" class="btn btn-large btn-primary" style="vertical-align: top;">
+      <input type="hidden" id="hidStockId" name="stock_id" value="">
+    </form>
+  </div>
 
-<div id="paginate" class="endless_page_template">
-  {% include page_template %}
-</div>
+  <div id="paginate" class="endless_page_template">
+    {% include page_template %}
+  </div>
 
 {% endblock content %}
 
