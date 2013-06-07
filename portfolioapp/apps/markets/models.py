@@ -3,6 +3,7 @@
 from datetime import datetime
 
 from django.db import models
+from django.template.defaultfilters import floatformat
 
 from portfolioapp.apps.core.mixins import TimeStampMixin
 
@@ -36,6 +37,12 @@ class Stock(TimeStampMixin, models.Model):
 
     def __unicode__(self):
         return '%s:%s' % (self.name, self.symbol)
+
+    def clean_outstanding_shares(self):
+        return '%sM' % floatformat(float(self.outstanding_shares) / 1000000.00, 2)
+
+    def clean_market_cap(self):
+        return '%sB' % floatformat(float(self.outstanding_shares * self.last_price) / 1000000000.00, 2)
 
 
 class StockPriceHistory(TimeStampMixin, models.Model):

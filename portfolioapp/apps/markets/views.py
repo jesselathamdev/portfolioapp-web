@@ -1,6 +1,8 @@
 # markets/views.py
 
 import time
+import pickle
+
 from datetime import date, datetime, timedelta
 
 from django.contrib.auth.decorators import login_required
@@ -31,7 +33,7 @@ def stock_index(request, template='markets/stocks/index.html', extra_context=Non
             if stock_id:
                 stocks = Stock.objects.select_related('stock__name', 'stock__symbol', 'market__acr').filter(id=stock_id).order_by('name')
             elif search_term:
-                stocks = Stock.objects.select_related('stock__name', 'stock__symbol', 'market__acr').filter(Q(name__icontains = search_term) | Q(symbol__icontains = search_term)).order_by('name')
+                stocks = Stock.objects.select_related('stock__name', 'stock__symbol', 'market__acr').filter(Q(name__icontains=search_term) | Q(symbol__icontains=search_term)).order_by('name')
 
     else:
         form = StockSearchForm()
@@ -50,13 +52,6 @@ def stock_index(request, template='markets/stocks/index.html', extra_context=Non
 def stock_show(request, stock_id):
     stock = get_object_or_404(Stock.objects.select_related('market__acr'), pk=stock_id)
     prices_historical = StockPriceHistory.objects.filter(stock_id=stock_id, date_created__range=[date.today() - timedelta(days=365.24), date.today()]).order_by('date_created')
-
-    if stock.outstanding_shares > 0:
-        outstanding_shares = float(stock.outstanding_shares) / 1000000.00
-        market_cap = float(stock.outstanding_shares * stock.last_price) / 1000000000.00
-    else:
-        outstanding_shares = 0
-        market_cap = 0
 
     if prices_historical.count() > 0:
         price_previous_day = prices_historical.reverse()[1].price_closing
@@ -78,7 +73,6 @@ def stock_show(request, stock_id):
 
     return render(request, 'markets/stocks/show.html', {'stock': stock, 'price_previous_day': price_previous_day,
                                                         'price_52_week_low': price_52_week_low, 'price_52_week_high': price_52_week_high,
-                                                        'market_cap': market_cap, 'outstanding_shares': outstanding_shares,
                                                         'one_year_return_percent': one_year_return_percent, 'stock_chart': stock_chart})
 
 

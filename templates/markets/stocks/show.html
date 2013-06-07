@@ -60,7 +60,7 @@
           Shares Outstanding
         </div>
         <div class="item-value">
-          {{ outstanding_shares|floatformat:2|intcomma }}M
+          {{ stock.clean_outstanding_shares|intcomma }}
         </div>
       </div>
       <div class="item-row">
@@ -68,7 +68,7 @@
           Market Cap
         </div>
         <div class="item-value">
-          ${{ market_cap|floatformat:3|intcomma }}B
+          ${{ stock.clean_market_cap|intcomma }}
         </div>
       </div>
       <div class="item-row">
