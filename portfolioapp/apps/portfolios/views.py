@@ -1,15 +1,21 @@
 # portfolios/views.py
 
+import time
+from datetime import date, timedelta
+
 from django.shortcuts import render, render_to_response, get_object_or_404, get_list_or_404, RequestContext
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib import messages
+from django.db.models import Max, Min
 
 from endless_pagination.decorators import page_template
 
 from portfolioapp.apps.core import settings
 from portfolioapp.apps.cash.models import Cash
+from portfolioapp.apps.markets.models import Stock, StockPriceHistory
+
 from .models import Portfolio, PortfolioDetail, PortfolioHolding, Holding, Transaction, Activity
 from .forms import CreatePortfolioForm, CreateHoldingForm, CreateTransactionForm
 
@@ -84,7 +90,30 @@ def portfolio_holding_show(request, portfolio_id, holding_id):
     holding = get_object_or_404(Holding.objects.select_related('holding', 'portfolio', 'stock', 'stock__market'), portfolio__user_id=request.user.id, portfolio_id=portfolio_id, id=holding_id)
     holding_transaction_count = Transaction.objects.filter(holding__id=holding_id).count()
 
-    return render(request, 'portfolios/holdings/show.html', {'holding': holding, 'holding_transaction_count': holding_transaction_count})
+    prices_historical = StockPriceHistory.objects.filter(stock_id=holding.stock_id, date_created__range=[date.today() - timedelta(days=365.24), date.today()]).order_by('date_created')
+
+    if prices_historical.count() > 0:
+        price_previous_day = prices_historical.reverse()[1].price_closing
+        hl = prices_historical.aggregate(price_high=Max('price_high'), price_low=Min('price_low'))
+        price_52_week_low = hl['price_low']
+        price_52_week_high = hl['price_high']
+        oldest_prices = prices_historical[0]  # oldest prices
+        newest_prices = prices_historical.reverse()[0]  # newest prices
+        one_year_return_percent = round(float(newest_prices.price_closing - oldest_prices.price_closing) / float(newest_prices.price_closing) * 100.00, 2)
+    else:
+        price_previous_day = 0.00
+        price_52_week_low = 0.00
+        price_52_week_high = 0.00
+        one_year_return_percent = 0.00
+
+    stock_chart = []
+    for price in prices_historical:
+        stock_chart.append([int(1000*time.mktime(price.date_created.timetuple())), float(price.price_closing)])
+
+    return render(request, 'portfolios/holdings/show.html', {'holding': holding, 'holding_transaction_count': holding_transaction_count,
+                                                             'stock': holding.stock, 'price_previous_day': price_previous_day,
+                                                             'price_52_week_low': price_52_week_low, 'price_52_week_high': price_52_week_high,
+                                                             'one_year_return_percent': one_year_return_percent, 'stock_chart': stock_chart})
 
 
 @login_required

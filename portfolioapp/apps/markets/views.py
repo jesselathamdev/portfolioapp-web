@@ -1,9 +1,7 @@
 # markets/views.py
 
 import time
-import pickle
-
-from datetime import date, datetime, timedelta
+from datetime import date, timedelta
 
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response, RequestContext, get_object_or_404, render
